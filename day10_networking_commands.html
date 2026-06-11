@@ -1,0 +1,520 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:88%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary);line-height:1.3}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:165px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.layer-row{display:flex;align-items:center;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.layer-row:last-child{border-bottom:none}
+.layer-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.layer-name{font-size:13px;font-weight:500;color:var(--color-text-primary);min-width:130px;flex-shrink:0}
+.layer-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge" style="background:var(--color-background-info);color:var(--color-text-info)"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 2 · Day 10</div>
+    <h1>Networking Commands</h1>
+    <p>Today you learn to read, map, and interrogate the network layer — using <code>ip</code>, <code>ss</code>, <code>netstat</code>, <code>dig</code>, <code>curl</code>, <code>ping</code>, and <code>traceroute</code>. This is where the attack surface extends beyond the local machine to everything it talks to.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 10 of ~90</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">OSI model · TCP/IP · IP addressing · DNS · ports</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>The OSI model — the networking map</h3>
+      <p>Every network communication, every attack, and every defence operates at one or more OSI layers. Knowing which layer a tool or attack operates at tells you what data it can see and what it can manipulate.</p>
+      <div style="margin:.5rem 0">
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-danger);color:var(--color-text-danger)">7</div><div class="layer-name">Application</div><div class="layer-desc">HTTP, DNS, FTP, SSH — what the user sees. Most attacks target this layer.</div></div>
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-danger);color:var(--color-text-danger)">6</div><div class="layer-name">Presentation</div><div class="layer-desc">Encryption (TLS/SSL), encoding, compression. Where HTTPS decryption happens.</div></div>
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-warning);color:var(--color-text-warning)">5</div><div class="layer-name">Session</div><div class="layer-desc">Manages connections and sessions between applications.</div></div>
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-warning);color:var(--color-text-warning)">4</div><div class="layer-name">Transport</div><div class="layer-desc">TCP (reliable) and UDP (fast, unreliable). Ports live here. <code>ss</code> and <code>netstat</code> operate at this layer.</div></div>
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-info);color:var(--color-text-info)">3</div><div class="layer-name">Network</div><div class="layer-desc">IP addressing and routing. <code>ip route</code>, <code>ping</code>, <code>traceroute</code> operate here.</div></div>
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-info);color:var(--color-text-info)">2</div><div class="layer-name">Data Link</div><div class="layer-desc">MAC addresses, Ethernet frames. ARP operates here. <code>ip link</code>, <code>arp</code>.</div></div>
+        <div class="layer-row"><div class="layer-num" style="background:var(--color-background-success);color:var(--color-text-success)">1</div><div class="layer-name">Physical</div><div class="layer-desc">Cables, wireless signals, hardware. Beyond what Linux commands can directly control.</div></div>
+      </div>
+
+      <h3>Key networking concepts — all required knowledge</h3>
+      <div class="g2">
+        <div class="mc"><div class="lbl">IP Address</div><div class="val">Unique network identifier. IPv4: 4 octets (192.168.1.1). IPv6: 128-bit hex. A machine can have multiple IPs across multiple interfaces.</div></div>
+        <div class="mc"><div class="lbl">Subnet / CIDR</div><div class="val"><code>/24</code> = 256 addresses. <code>/16</code> = 65,536. <code>/32</code> = single host. The mask defines which bits are network vs host.</div></div>
+        <div class="mc"><div class="lbl">Port</div><div class="val">0–65535. Ports 1–1023 are privileged (need root to bind). 1024–49151 registered. 49152–65535 ephemeral (client-side connections).</div></div>
+        <div class="mc"><div class="lbl">TCP vs UDP</div><div class="val">TCP: handshake, reliable, ordered (HTTP, SSH, FTP). UDP: fire-and-forget, fast (DNS, VoIP, gaming). Both use ports.</div></div>
+        <div class="mc"><div class="lbl">DNS</div><div class="val">Translates domain names to IPs. A record = IPv4, AAAA = IPv6, MX = mail, CNAME = alias, NS = nameserver, TXT = verification/SPF.</div></div>
+        <div class="mc"><div class="lbl">ARP</div><div class="val">Maps IP addresses to MAC addresses on local networks. ARP poisoning/spoofing is a Layer 2 attack used for MITM.</div></div>
+      </div>
+
+      <h3>Command to layer mapping</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">ip addr / ip link</div><div class="cmd-desc">Layer 2/3 — show interfaces, IP and MAC addresses</div></div>
+        <div class="cmd-row"><div class="cmd">ip route</div><div class="cmd-desc">Layer 3 — routing table, how traffic leaves the machine</div></div>
+        <div class="cmd-row"><div class="cmd">ss / netstat</div><div class="cmd-desc">Layer 4 — TCP/UDP sockets, listening ports, active connections</div></div>
+        <div class="cmd-row"><div class="cmd">ping</div><div class="cmd-desc">Layer 3 — ICMP echo, basic reachability test</div></div>
+        <div class="cmd-row"><div class="cmd">traceroute / tracepath</div><div class="cmd-desc">Layer 3 — path packets take to a destination, hop by hop</div></div>
+        <div class="cmd-row"><div class="cmd">dig / nslookup / host</div><div class="cmd-desc">Layer 7 — DNS queries, domain name resolution</div></div>
+        <div class="cmd-row"><div class="cmd">curl / wget</div><div class="cmd-desc">Layer 7 — HTTP/S requests, downloading content, API testing</div></div>
+        <div class="cmd-row"><div class="cmd">arp / ip neigh</div><div class="cmd-desc">Layer 2 — ARP table, MAC-to-IP mappings on local network</div></div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=qiQR5rTSshw')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Computer Networking Full Course — OSI Model</div><div class="yt-c">NetworkChuck · The most engaging networking fundamentals course for beginners</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=UjCDWCeHCzY')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux Networking Commands Explained</div><div class="yt-c">HackerSploit · Security-focused walkthrough of ip, ss, netstat, dig</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">ip · ss · netstat · dig · ping · traceroute · curl</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — ip: the modern interface tool</h3>
+      <div class="cb">ip addr                          # all interfaces + IP addresses
+ip addr show eth0                # specific interface only
+ip -4 addr                       # IPv4 addresses only
+ip -6 addr                       # IPv6 addresses only
+ip link                          # link layer info (MAC, state UP/DOWN)
+ip link show eth0                # specific interface link info
+ip route                         # routing table (where does traffic go?)
+ip route show default            # default gateway only
+ip neigh                         # ARP table: IP → MAC mappings on local network
+ip -s link                       # interface statistics: bytes in/out, errors</div>
+
+      <h3>Exercise 2 — ss: socket statistics (modern netstat)</h3>
+      <div class="cb">ss -tuln                         # TCP+UDP, listening, numeric (no DNS lookup)
+ss -tulnp                        # same + show process name and PID
+ss -tan                          # all TCP connections, numeric
+ss -s                            # summary statistics (established, closed, etc)
+ss -tp                           # TCP connections with process info
+ss -tulnp | grep :80             # who is listening on port 80?
+ss -tulnp | grep :443            # who is listening on HTTPS?
+ss state established             # only established connections
+ss dst 8.8.8.8                   # connections to a specific destination IP</div>
+
+      <h3>Exercise 3 — netstat: the classic (still useful)</h3>
+      <div class="cb">netstat -tuln                    # listening ports (similar to ss)
+netstat -tulnp                   # with process names (needs sudo for full info)
+netstat -an | grep ESTABLISHED   # all established connections
+netstat -an | grep LISTEN        # all listening ports
+netstat -rn                      # routing table (same as ip route)
+netstat -i                       # interface statistics
+netstat -s                       # protocol statistics (TCP/UDP/ICMP)</div>
+
+      <h3>Exercise 4 — dig: DNS interrogation tool</h3>
+      <div class="cb">dig google.com                   # A record (IPv4) for google.com
+dig google.com A                 # explicit A record query
+dig google.com AAAA              # IPv6 address record
+dig google.com MX                # mail server records
+dig google.com NS                # nameserver records
+dig google.com TXT               # text records (SPF, DMARC, verification)
+dig google.com ANY               # all record types
+dig @8.8.8.8 google.com          # query using specific DNS server (Google's)
+dig +short google.com            # output IP only, no extra info
+dig -x 8.8.8.8                   # reverse DNS: IP to hostname</div>
+
+      <h3>Exercise 5 — ping, traceroute, and path analysis</h3>
+      <div class="cb">ping google.com                  # basic reachability + latency
+ping -c 4 google.com             # send exactly 4 packets then stop
+ping -i 0.2 google.com           # fast ping every 0.2 seconds
+ping6 google.com                 # IPv6 ping
+
+traceroute google.com            # hop-by-hop path to destination
+traceroute -n google.com         # numeric only (no DNS lookups, faster)
+tracepath google.com             # similar, no root needed
+mtr google.com                   # real-time combined ping+traceroute (install: apt install mtr)</div>
+
+      <h3>Exercise 6 — curl and wget for HTTP investigation</h3>
+      <div class="cb">curl https://example.com                   # GET request, print body
+curl -I https://example.com                # HEAD only — response headers
+curl -v https://example.com               # verbose: show full request+response
+curl -s https://ifconfig.me               # your public IP address
+curl -L https://example.com              # follow redirects
+curl -u user:pass https://api.example.com # basic auth
+curl -H "Authorization: Bearer token" URL # custom header
+curl -o /tmp/file.zip https://example.com/file.zip  # download to file
+
+wget -q -O /dev/null -S https://example.com  # check headers via wget</div>
+
+      <h3>Exercise 7 — ARP and local network mapping</h3>
+      <div class="cb">arp -n                           # ARP table (IP → MAC)
+ip neigh show                    # same via ip command
+cat /proc/net/arp                # raw ARP table from kernel
+ip neigh | awk '{print $1,$5}'   # just IP and MAC pairs</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">Detecting data exfiltration via network command analysis</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>A SOC alert fires: unusually high outbound traffic from a production database server. The on-call analyst connects and begins triage using only the networking commands from today.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 1 — what connections are active right now?</div>
+        <p>The analyst runs <code>ss -tulnp</code> and spots an established connection on an unusual port — TCP to an external IP on port 4444. Port 4444 is a classic default for reverse shells and C2 frameworks. The connection is owned by <code>python3</code>.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 2 — identify the destination</div>
+        <p><code>dig -x [external-IP]</code> returns no PTR record — the IP has no reverse DNS, consistent with a VPS used for malicious purposes. <code>curl -s https://ipinfo.io/[external-IP]</code> reveals it's registered to a cloud provider in an unexpected country.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 3 — trace the traffic volume</div>
+        <p><code>ip -s link show eth0</code> shows TX bytes far exceeding RX — much more data is going out than coming in. Combined with the established connection to an external IP, this confirms active data exfiltration in progress.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 4 — cross-reference with process and persistence</div>
+        <p>The analyst combines Day 8 and Day 9 skills: <code>ps aux | grep python3</code> reveals the PID, <code>/proc/[PID]/exe</code> shows it came from <code>/var/tmp/.update</code>, and <code>crontab -l -u postgres</code> reveals a persistence mechanism launching it every 10 minutes.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">Resolution</div>
+        <p>Block the destination IP at the firewall immediately, kill the process, remove the cron entry, investigate the initial access vector. The entire triage — from alert to containment decision — used only built-in Linux networking commands.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">Network reconnaissance · Pivoting · C2 detection evasion</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>Internal network mapping after foothold</h3>
+      <p>Once inside a machine, a pentester maps the internal network to find other targets — without uploading any tools.</p>
+      <div class="cb">ip addr                          # what networks am I connected to?
+ip route                         # what subnets are routable from here?
+cat /etc/hosts                   # internal hostnames — reveals other servers
+cat /etc/resolv.conf             # internal DNS server IP
+ip neigh                         # who else is on this local segment (ARP table)
+
+for i in $(seq 1 254); do
+  ping -c1 -W1 192.168.1.$i &>/dev/null && echo "192.168.1.$i is up"
+done  # subnet sweep using only ping</div>
+
+      <h3>Identifying outbound egress paths</h3>
+      <div class="cb">curl -s https://ifconfig.me          # what's the public IP? (confirms outbound HTTP works)
+curl -s http://portquiz.net:80       # test outbound TCP 80
+curl -s http://portquiz.net:443      # test outbound TCP 443
+curl -s http://portquiz.net:8080     # test outbound TCP 8080
+dig @8.8.8.8 google.com +short       # confirms outbound DNS (UDP 53) works</div>
+      <p>Knowing which ports can reach out determines which protocol to use for a reverse shell or C2 channel. If only 443 is allowed outbound, the attacker uses HTTPS-based C2.</p>
+
+      <h3>DNS as an intelligence source</h3>
+      <div class="cb">dig target.com ANY               # all DNS records in one query
+dig target.com MX                # mail servers
+dig target.com TXT               # SPF records reveal email infrastructure
+dig target.com NS                # nameservers (registrar info)
+host -t AXFR target.com ns1.target.com  # zone transfer attempt (often disabled but worth trying)
+dig +short target.com            # clean IP list for scripting</div>
+
+      <h3>Staying quiet — avoiding noisy network behaviour</h3>
+      <ul>
+        <li>Use <code>ss</code> and <code>ip</code> instead of running external scanners — they're built-in and leave no new process traces</li>
+        <li>Slow down reconnaissance — rapid ping sweeps trigger IDS alerts</li>
+        <li>Use DNS over HTTPS or trusted resolvers to blend DNS queries into normal traffic</li>
+        <li>Route C2 traffic over port 443 to blend with HTTPS — the most consistently allowed outbound port</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Network baselining · Anomaly detection · Firewall hardening</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Establish a network baseline</h3>
+      <div class="cb">ss -tulnp > /root/network-baseline.txt        # save clean listening port baseline
+diff /root/network-baseline.txt <(ss -tulnp)  # compare current vs baseline
+ip route > /root/route-baseline.txt           # save routing baseline</div>
+
+      <h3>Detect anomalous outbound connections</h3>
+      <div class="cb">ss -tan state established | awk 'NR>1{print $5}' | cut -d: -f1 | sort | uniq -c | sort -rn
+# which external IPs have the most established connections?
+
+ss -tan | grep -vE "127\.|::1|0\.0\.0\.0" | awk '{print $5}' | grep -oE "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | sort | uniq
+# all unique external IPs currently connected</div>
+
+      <h3>Firewall hardening with ufw and iptables</h3>
+      <div class="cb">sudo ufw enable                    # enable firewall
+sudo ufw default deny incoming    # block all inbound by default
+sudo ufw default allow outgoing   # allow all outbound (tighten later)
+sudo ufw allow 22/tcp             # allow SSH
+sudo ufw allow 80/tcp             # allow HTTP
+sudo ufw allow 443/tcp            # allow HTTPS
+sudo ufw deny 23/tcp              # block Telnet explicitly
+sudo ufw status verbose           # review all rules
+sudo ufw logging on               # enable firewall logging</div>
+
+      <h3>Monitor DNS for suspicious lookups</h3>
+      <div class="cb">dig -x [suspicious-IP]                    # reverse DNS — does it have a legitimate name?
+cat /var/log/syslog | grep "named\|resolve" # local DNS queries in syslog
+ss -unlp | grep :53               # what is listening on DNS port locally?</div>
+
+      <h3>Add network audit to recon.sh</h3>
+      <div class="cb">banner "NETWORK AUDIT"
+echo "--- Listening ports ---"
+ss -tulnp
+
+echo "--- Established external connections ---"
+ss -tan state established | awk 'NR>1{print $5}' \
+  | grep -vE "^127\.|^::1|^0\." | sort | uniq -c | sort -rn
+
+echo "--- Routing table ---"
+ip route
+
+echo "--- ARP neighbours ---"
+ip neigh</div>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · HackTheBox · Wireshark</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "What is Networking?" (Free)</div><div class="ld">Covers IP addressing, subnets, OSI model, and the tools from today in a guided beginner format. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/whatisnetworking')">tryhackme.com/room/whatisnetworking ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Introductory Networking" (Free)</div><div class="ld">OSI and TCP/IP models, key protocols, and practical tools. Direct match for today's theory section. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/introtonetworking')">tryhackme.com/room/introtonetworking ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "DNS in Detail" (Free)</div><div class="ld">Dedicated room on DNS record types, resolution process, and how attackers abuse DNS. Perfect companion for dig. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/dnsindetail')">tryhackme.com/room/dnsindetail ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "HTTP in Detail" (Free)</div><div class="ld">How HTTP works, status codes, headers, methods — directly applies to the curl exercises today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/httpindetail')">tryhackme.com/room/httpindetail ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">HackTheBox — Starting Point "Fawn" (Free tier)</div><div class="ld">A beginner machine where network enumeration and service identification are central to the solution. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://app.hackthebox.com/starting-point')">app.hackthebox.com/starting-point ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 11</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Run <code>ss -tulnp</code> on your system and map every listening port to its service. For each port, answer: what service is it, does it need to be exposed, and what would an attacker learn from it? Save this as your network attack-surface map in <code>~/security-lab/notes/day10-network-surface.txt</code>.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Use <code>dig</code> to query 3 different real domains and collect every record type — A, MX, NS, TXT. For each domain explain what the TXT records tell you (SPF policy, DMARC, any verification tokens). This is exactly what an attacker does during external DNS reconnaissance.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Use <code>curl -I</code> to retrieve response headers from 5 different websites. Note the <code>Server</code> header (reveals web server software + version), <code>X-Powered-By</code> (reveals backend stack), and any security headers like <code>Strict-Transport-Security</code> or <code>Content-Security-Policy</code>. Missing security headers are a finding in real web application assessments.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Add the full "NETWORK AUDIT" section from the Blue Team area to your <code>recon.sh</code> script. Test that it runs cleanly and produces useful output. Your script now covers: system identity, processes, persistence, users, SUID, and network exposure — that's a real reconnaissance tool.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Complete the TryHackMe "DNS in Detail" and "Introductory Networking" rooms. Both are free and cover the theory behind today's tools. After completing them, write a one-paragraph explanation of how DNS resolution works from start to finish — what happens between typing <code>google.com</code> and seeing the IP — in your own words.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div style="display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem">
+        <div style="width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-info)"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">How Linux Works — Brian Ward (Chapter 9: Understanding Your Network)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Chapter 9 covers everything from today's practical section at a deeper conceptual level — IP addresses and subnets, routing, how TCP connections are established, and the role of DNS. Ward explains <em>why</em> the commands output what they do, which turns command memorisation into genuine understanding. After reading this chapter, running <code>ip route</code> or <code>ss -tulnp</code> will feel intuitive rather than mechanical.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tb">Chapter 9 tonight</span><span class="tag tg">Networking fundamentals</span><span class="tag ta">Builds on Days 8–9</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">LinkedIn — the exfiltration detection scenario is a compelling, practical story</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">Twitter/X — OSI model cheatsheet image or the ss vs netstat comparison gets strong engagement</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Annotated screenshot of <code>ss -tulnp</code> output with arrows identifying each service and its security relevance</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"One Linux command shows you every door into — and out of — your server"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">Day 10 of my cybersecurity journey — Linux Networking Commands
+
+One command every security analyst should run immediately on any server they're investigating:
+
+ss -tulnp
+
+It shows every port that's listening for connections, every active network session, and — critically — which process owns each one.
+
+If you see an established connection to an external IP on an unusual port, owned by python3 or bash — that's your investigation starting point.
+
+Today I learned the full networking command toolkit:
+
+ip addr — what interfaces and IP addresses does this machine have?
+ip route — how does traffic leave? where's the gateway?
+ss -tulnp — what's listening? what's connected right now?
+dig — query DNS records to map a target's infrastructure
+curl -I — read HTTP response headers (reveals server software, missing security headers)
+traceroute — trace the path packets take to any destination
+
+These 6 commands give you a complete picture of a machine's network exposure — no special tools required.
+
+Added a full NETWORK AUDIT section to my recon.sh script today.
+
+Day 10 of 90. 🛡️
+
+#Linux #Networking #Cybersecurity #BlueTeam #SOC #IncidentResponse #LearnInPublic #100DaysOfCyber #InfoSec</div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">How professionals think about networking</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Use <code>ss</code> instead of <code>netstat</code> on modern systems. <code>netstat</code> is from the old <code>net-tools</code> package — deprecated, often not installed by default, and slower. <code>ss</code> reads directly from the kernel socket tables and is faster, more informative, and always available. Learn both because you'll encounter both in the real world, but default to <code>ss</code>.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Always use <code>-n</code> (numeric) flags with <code>ss</code>, <code>netstat</code>, and <code>traceroute</code> unless you specifically want hostname resolution. DNS lookups for every IP address slow these commands dramatically on systems with poor DNS connectivity — on a compromised server during an incident, that delay could be costly.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p><code>dig</code> is vastly more powerful than <code>nslookup</code>. Learn <code>dig</code>. The <code>+short</code> flag makes it scriptable — <code>dig +short target.com</code> returns just the IP with no noise, perfect for piping into other commands or scripts.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: thinking open ports equal vulnerabilities. An open port is only a vulnerability if the service behind it has a weakness or is misconfigured. A properly patched, correctly configured SSH on port 22 is not a vulnerability — it is a managed access point. The question is always: does this port need to be open, to whom, and is the service behind it secure?</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: using <code>ping</code> alone to confirm a host is down. Many firewalls and servers block ICMP. A host that doesn't respond to <code>ping</code> may still have open TCP ports. Use <code>curl</code> or <code>ss</code> to confirm actual service availability, not just ICMP reachability.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: think of the network layer as a second attack surface map that exists independently from the filesystem. Days 1–7 mapped the local attack surface (files, permissions, users). Days 8–10 are mapping the runtime attack surface (processes, services, network connections). A complete security picture requires both — and <code>recon.sh</code> is growing to capture both in one tool.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer all 5 from memory. These are standard interview and CTF questions for any security role.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>ss -tulnp</code> show? What does each flag stand for, and what additional information does <code>-p</code> provide?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Name 5 DNS record types, what each contains, and give one security use case for querying each (e.g. MX for mail server discovery, TXT for SPF policy).</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between TCP and UDP? Give one protocol that uses each and explain why that protocol chose TCP or UDP.</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>ip route</code> show? What is a default gateway and what happens to traffic that doesn't match any more specific route?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>curl -I https://example.com</code> do differently from <code>curl https://example.com</code>? What security-relevant information can you extract from HTTP response headers?</div></div>
+      <div class="div"></div>
+      <p>5/5 and Day 10 is complete. Tomorrow is <strong>Day 11: SSH + Remote Access</strong> — how SSH works cryptographically, key-based authentication, tunnelling, and how attackers abuse remote access to pivot through networks.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 11 →</span><span class="tag tg">SSH · Key auth · Tunnelling · Remote access security</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const isOpen=b.classList.contains('open');
+  b.classList.toggle('open',!isOpen);
+  if(c)c.classList.toggle('open',!isOpen);
+}
+tog('theory');
+</script>
