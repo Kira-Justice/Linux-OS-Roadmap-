@@ -1,0 +1,529 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:72%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary);line-height:1.3}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:155px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.sig-row{display:flex;align-items:flex-start;gap:10px;padding:.35rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.sig-row:last-child{border-bottom:none}
+.sig-num{font-family:var(--font-mono);font-size:12px;font-weight:500;width:55px;flex-shrink:0;color:var(--color-text-primary)}
+.sig-name{font-family:var(--font-mono);font-size:12px;width:90px;flex-shrink:0;color:var(--color-text-info)}
+.sig-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.proc-state{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 8px;border-radius:var(--border-radius-md);margin:.2rem .2rem .2rem 0;font-family:var(--font-mono)}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge" style="background:var(--color-background-info);color:var(--color-text-info)"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 2 · Day 8</div>
+    <h1>Process Management</h1>
+    <p>Today you learn how Linux manages running programs — what processes are, how to inspect them with <code>ps</code>, <code>top</code>, and <code>htop</code>, how signals work, and what malicious processes look like versus legitimate ones.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 8 of ~90 · Week 2 begins</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">Processes · PID · states · signals · /proc</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>What is a process?</h3>
+      <p>Every running program on Linux is a process — a program loaded into memory with its own resources (CPU time, memory, file handles). The OS gives each process a unique Process ID (PID). Understanding processes is fundamental to both offense and defense: attackers hide malware as processes, defenders hunt for anomalies in the process list.</p>
+
+      <div class="g2">
+        <div class="mc"><div class="lbl">PID</div><div class="val">Process ID — unique integer assigned by the kernel. PID 1 is always <code>init</code> or <code>systemd</code> — the ancestor of all processes.</div></div>
+        <div class="mc"><div class="lbl">PPID</div><div class="val">Parent Process ID — every process has a parent. The process tree shows who spawned what. Unexpected parents are a red flag.</div></div>
+        <div class="mc"><div class="lbl">UID/EUID</div><div class="val">Real user and effective user. EUID is what matters for permissions — a SUID binary runs with EUID = owner, not the caller.</div></div>
+        <div class="mc"><div class="lbl">Nice value</div><div class="val">CPU scheduling priority. Range -20 (highest) to 19 (lowest). Malware often runs at -20 to grab CPU; defenders look for unusual values.</div></div>
+      </div>
+
+      <h3>Process states</h3>
+      <p>Each process is always in one of these states — visible in the <code>STAT</code> column of <code>ps aux</code>:</p>
+      <div style="margin:.5rem 0;display:flex;flex-wrap:wrap;gap:6px">
+        <span class="proc-state" style="background:var(--color-background-success);color:var(--color-text-success)">R — Running</span>
+        <span class="proc-state" style="background:var(--color-background-info);color:var(--color-text-info)">S — Sleeping (interruptible)</span>
+        <span class="proc-state" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">D — Disk sleep (uninterruptible)</span>
+        <span class="proc-state" style="background:var(--color-background-warning);color:var(--color-text-warning)">Z — Zombie (finished but not reaped)</span>
+        <span class="proc-state" style="background:var(--color-background-danger);color:var(--color-text-danger)">T — Stopped (paused)</span>
+        <span class="proc-state" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">I — Idle kernel thread</span>
+      </div>
+      <p>Additional modifiers: <code>s</code> = session leader, <code>l</code> = multi-threaded, <code>+</code> = foreground process group, <code>N</code> = low priority (nice). Example: <code>Ss</code> = sleeping session leader.</p>
+
+      <h3>Process signals</h3>
+      <p>Signals are notifications sent to processes by the kernel or by users via <code>kill</code>. Despite the name, <code>kill</code> sends any signal — it does not only terminate processes.</p>
+      <div style="margin:.5rem 0">
+        <div class="sig-row"><div class="sig-num">1</div><div class="sig-name">SIGHUP</div><div class="sig-desc">Hangup — often used to tell daemons to reload their configuration without restarting</div></div>
+        <div class="sig-row"><div class="sig-num">2</div><div class="sig-name">SIGINT</div><div class="sig-desc">Interrupt — what Ctrl+C sends to a foreground process. Can be caught and handled.</div></div>
+        <div class="sig-row"><div class="sig-num">9</div><div class="sig-name">SIGKILL</div><div class="sig-desc">Force kill — cannot be caught, blocked, or ignored. Instant termination. Use when SIGTERM fails.</div></div>
+        <div class="sig-row"><div class="sig-num">15</div><div class="sig-name">SIGTERM</div><div class="sig-desc">Graceful termination — default signal. Process can catch this and clean up before exiting.</div></div>
+        <div class="sig-row"><div class="sig-num">18</div><div class="sig-name">SIGCONT</div><div class="sig-desc">Continue a stopped process. Pair with SIGSTOP to pause/resume.</div></div>
+        <div class="sig-row"><div class="sig-num">19</div><div class="sig-name">SIGSTOP</div><div class="sig-desc">Pause a process — cannot be caught. Freezes execution without killing it.</div></div>
+        <div class="sig-row"><div class="sig-num">11</div><div class="sig-name">SIGSEGV</div><div class="sig-desc">Segmentation fault — process accessed memory it shouldn't. Often indicates a bug or exploit attempt.</div></div>
+      </div>
+
+      <h3>The /proc filesystem — live process data</h3>
+      <p>Every running process has a directory at <code>/proc/[PID]/</code> containing live information readable as files — no special tool needed.</p>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">/proc/[PID]/cmdline</div><div class="cmd-desc">Full command that started the process, null-separated. What is this process actually running?</div></div>
+        <div class="cmd-row"><div class="cmd">/proc/[PID]/exe</div><div class="cmd-desc">Symlink to the actual executable on disk. If it says <code>(deleted)</code>, the binary was removed after launch — classic malware behaviour.</div></div>
+        <div class="cmd-row"><div class="cmd">/proc/[PID]/maps</div><div class="cmd-desc">Memory map — what libraries and files are loaded. Useful for forensic analysis.</div></div>
+        <div class="cmd-row"><div class="cmd">/proc/[PID]/net/tcp</div><div class="cmd-desc">Network connections opened by this process. Identifies which process owns which socket.</div></div>
+        <div class="cmd-row"><div class="cmd">/proc/[PID]/environ</div><div class="cmd-desc">Environment variables at launch — may contain secrets, tokens, database URLs.</div></div>
+        <div class="cmd-row"><div class="cmd">/proc/[PID]/fd/</div><div class="cmd-desc">All open file descriptors. What files, sockets, pipes does this process have open?</div></div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=TJzltwv7jJs')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux processes explained — ps, top, htop, kill</div><div class="yt-c">HackerSploit · Security-focused walkthrough of process management tools</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=ZNO5mFhxWes')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux process management — full beginner guide</div><div class="yt-c">LearnLinuxTV · Covers ps aux, top, signals, background jobs end to end</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">ps · top · htop · kill · /proc · jobs</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — ps: the process snapshot tool</h3>
+      <div class="cb">ps aux                            # ALL processes, all users, extended format
+ps aux | head -5                  # header + first 4 processes (understand columns)
+ps aux | grep root                # only root-owned processes
+ps aux | grep -v root             # processes NOT owned by root
+ps aux | sort -k3 -rn | head -10  # top 10 by CPU usage (column 3)
+ps aux | sort -k4 -rn | head -10  # top 10 by memory usage (column 4)
+ps -ef                            # full-format: shows PPID (parent PID)
+ps -ef --forest                   # ASCII tree showing parent-child relationships
+ps -eo pid,ppid,user,stat,comm    # custom columns: PID, PPID, user, state, command</div>
+
+      <h3>Understanding ps aux columns</h3>
+      <div class="cb">USER   PID  %CPU  %MEM    VSZ   RSS  TTY  STAT  START  TIME  COMMAND
+root     1   0.0   0.1  168736  9876  ?    Ss   08:01  0:02  /sbin/init
+www-data 812  0.3   1.2  456720 25432 ?    S    08:05  0:15  /usr/sbin/apache2
+
+# VSZ = virtual memory size (total allocated)
+# RSS = resident set size (actually in RAM right now)
+# TTY = terminal  ? = no terminal (background daemon)
+# STAT = process state (S=sleep, R=run, Z=zombie, T=stopped)</div>
+
+      <h3>Exercise 2 — top: live process monitor</h3>
+      <div class="cb">top                         # launch top (q to quit)
+top -u www-data             # show only www-data processes
+top -p 1234                 # monitor specific PID only
+top -b -n 1                 # batch mode: one snapshot, no interactive UI
+top -b -n 1 | head -20      # good for scripting
+
+# Interactive keys inside top:
+# k  = kill a process (enter PID then signal)
+# r  = renice (change priority)
+# M  = sort by memory
+# P  = sort by CPU
+# u  = filter by user
+# 1  = show individual CPU cores
+# q  = quit</div>
+
+      <h3>Exercise 3 — htop: the better top</h3>
+      <div class="cb">sudo apt install htop -y     # install if needed
+htop                         # launch — arrow keys to navigate
+htop -u root                 # only root processes
+htop -p 1,2,3                # specific PIDs only
+
+# htop interactive:
+# F3 or /  = search for process by name
+# F5       = tree view (shows parent-child)
+# F6       = choose sort column
+# F9       = send signal to selected process
+# F10      = quit
+# Space    = tag a process (select multiple)</div>
+
+      <h3>Exercise 4 — sending signals with kill and killall</h3>
+      <div class="cb">sleep 9999 &                 # start a background process to practice on
+ps aux | grep sleep          # find its PID
+kill [PID]                   # sends SIGTERM (15) — graceful
+kill -9 [PID]                # sends SIGKILL — force (use when SIGTERM fails)
+kill -l                      # list all signal names and numbers
+
+killall sleep                # kill all processes named "sleep"
+killall -9 firefox           # force-kill all firefox processes
+pkill -u www-data            # kill all processes owned by www-data
+pgrep sshd                   # get PID(s) of all sshd processes without grep</div>
+
+      <h3>Exercise 5 — background jobs and process control</h3>
+      <div class="cb">sleep 300 &                  # run sleep in background (&)
+sleep 400 &                  # another one
+jobs                         # list background jobs in current shell
+fg %1                        # bring job 1 to foreground
+Ctrl+Z                       # suspend foreground process (sends SIGSTOP)
+bg %1                        # resume suspended job in background
+disown %1                    # detach job so it survives shell exit
+nohup long-command &         # run immune to hangup signal (survives logout)</div>
+
+      <h3>Exercise 6 — /proc for forensic process inspection</h3>
+      <div class="cb">ls /proc | head -20                      # all process PIDs as directories
+cat /proc/$$/cmdline | tr '\0' ' '      # current shell's command line
+cat /proc/1/cmdline | tr '\0' ' '       # PID 1 command line (init/systemd)
+ls -la /proc/$$/exe                     # what binary is running as current shell
+ls -la /proc/[PID]/exe                  # binary behind any process
+cat /proc/[PID]/environ | tr '\0' '\n'  # environment variables of a process
+ls /proc/[PID]/fd | wc -l               # count open file descriptors
+cat /proc/meminfo                        # system memory breakdown
+cat /proc/loadavg                        # 1/5/15-minute load averages</div>
+
+      <h3>Exercise 7 — niceness and priority</h3>
+      <div class="cb">nice -n 10 sleep 100 &        # start with low priority (nice 10)
+ps -o pid,ni,comm -p [PID]    # check nice value of a process
+sudo renice -n -5 [PID]       # raise priority (needs root for negative values)
+sudo renice -n 19 [PID]       # lowest priority — system scraps</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">Malicious process discovered via anomaly in ps output</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>A sysadmin notices a production web server is running unusually hot — CPU is at 94% but no deployments have been made. They investigate using only the tools from today's lesson.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 1 — check what's consuming CPU</div>
+        <p>They run <code>top</code> and immediately see a process called <code>kworker/2:1</code> consuming 87% CPU. Legitimate kernel workers never use that much CPU consistently — this is a red flag. The process is owned by <code>www-data</code>, not the kernel.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 2 — inspect the suspicious process</div>
+        <p>They note the PID (say, 3847) and run <code>ls -la /proc/3847/exe</code>. Instead of pointing to a kernel binary, it shows <code>/tmp/.k/kworker (deleted)</code> — the binary was launched from <code>/tmp</code> and then deleted from disk to hide it. Classic cryptominer behaviour.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 3 — check parent and network activity</div>
+        <p><code>ps -ef | grep 3847</code> shows its parent is PID 812, which is the Apache <code>www-data</code> process — confirming a web shell or RCE was used to launch it. <code>cat /proc/3847/net/tcp</code> shows an active outbound connection to an external mining pool IP.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 4 — find persistence</div>
+        <p><code>find /tmp /var/tmp -name ".*" -type f 2>/dev/null</code> finds a hidden dropper script. <code>crontab -l -u www-data</code> reveals a cron job re-launching the miner every 5 minutes — which is why killing it hasn't worked.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">Resolution</div>
+        <p>Remove the cron entry first, then kill the process. Patch the web vulnerability that allowed RCE. A <code>/proc/[PID]/exe (deleted)</code> entry is now one of the analyst's standard checks during any incident — learned directly from this scenario.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">Process injection · Hiding in plain sight · /proc abuse</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>Process enumeration after foothold</h3>
+      <p>A pentester inspects the process list immediately after gaining a shell — it reveals what services are running, what users are active, and what software versions might be vulnerable.</p>
+      <div class="cb">ps aux                                      # full process list
+ps aux | grep -v "\[" | awk '$1!="root"'    # non-root, non-kernel processes
+ps -ef --forest                             # tree: spot unusual parent-child pairs
+ps aux | sort -k3 -rn | head -5            # what's consuming the most CPU?
+ps aux | awk '$1=="root" && $3>10'         # root processes eating CPU (unusual)</div>
+
+      <h3>Spotting defensive tools in the process list</h3>
+      <p>Before running noisy tools, attackers check if any security monitoring is active:</p>
+      <div class="cb">ps aux | grep -iE "splunk|osquery|wazuh|falco|auditd|sysmon|crowdstrike|sentinel"
+ps aux | grep -iE "antivirus|clamav|sophos|carbon.?black"
+ls /proc/*/exe 2>/dev/null | xargs ls -la 2>/dev/null | grep -iE "splunk|osquery"</div>
+
+      <h3>Extracting credentials from process environment variables</h3>
+      <div class="cb">for pid in $(ls /proc | grep -E '^[0-9]+$'); do
+  cat /proc/$pid/environ 2>/dev/null | tr '\0' '\n' \
+  | grep -iE "password|secret|token|key|api" \
+  && echo "  [PID $pid]"
+done</div>
+      <p>Database URLs, API keys, and cloud credentials are frequently passed to processes as environment variables — and they live in <code>/proc/[PID]/environ</code> readable by root or the process owner.</p>
+
+      <h3>Process name masquerading</h3>
+      <p>Attackers rename malicious processes to blend in with legitimate system processes. Names like <code>kworker</code>, <code>kthreadd</code>, <code>bash</code>, or <code>sshd</code> are commonly used. The giveaway is checking <code>/proc/[PID]/exe</code> — a process named <code>kworker</code> should point to a kernel path, not <code>/tmp</code>.</p>
+      <div class="cb">ls -la /proc/*/exe 2>/dev/null | grep -v "kernel\|/usr\|/bin\|/sbin\|/lib"
+ls -la /proc/*/exe 2>/dev/null | grep "deleted"    # running from deleted binary</div>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Process baselining · Anomaly detection · Incident triage</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Establish a process baseline</h3>
+      <p>Know what normal looks like before an incident. On a clean server, capture the expected process list and compare against it during investigations.</p>
+      <div class="cb">ps aux --sort=pid > /root/process-baseline.txt   # save clean baseline
+diff /root/process-baseline.txt <(ps aux --sort=pid) # compare current vs baseline
+ps aux | awk '{print $1,$11}' | sort -u > /root/proc-users.txt  # user:process pairs</div>
+
+      <h3>Hunt for malicious process indicators</h3>
+      <div class="cb">ls -la /proc/*/exe 2>/dev/null | grep "(deleted)"     # running from deleted binary
+ls -la /proc/*/exe 2>/dev/null | grep "/tmp\|/dev/shm\|/var/tmp"  # ran from writable dir
+ps aux | awk '$3 > 80 {print}'                        # any process >80% CPU
+ps aux | awk '$11 ~ /^\[/ {next} $1!="root" && $11 ~ /^[^/]/ {print}'
+# processes whose command doesn't start with / (may be masquerading)</div>
+
+      <h3>Zombie and orphan process detection</h3>
+      <div class="cb">ps aux | awk '$8 ~ /Z/ {print "ZOMBIE:", $0}'    # all zombie processes
+ps aux | awk '$8 ~ /D/ {print "UNINTERRUPTIBLE:", $0}'  # D-state (disk wait — may indicate I/O attack)
+ps -eo pid,ppid,stat,comm | awk '$3 ~ /Z/'</div>
+
+      <h3>Monitor process creation with auditd</h3>
+      <div class="cb">auditctl -a always,exit -F arch=b64 -S execve -k process_exec
+ausearch -k process_exec | tail -30              # recent process executions
+ausearch -k process_exec | grep "www-data"       # processes spawned by web user</div>
+
+      <h3>Respond to malicious process</h3>
+      <div class="cb">kill -9 [PID]                    # terminate immediately
+cat /proc/[PID]/cmdline          # capture command before killing (evidence)
+cp /proc/[PID]/exe /root/malware-sample  # copy the binary before it's killed
+ls /proc/[PID]/fd                # what files/sockets did it have open?
+cat /proc/[PID]/maps             # memory map for forensic analysis</div>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · OverTheWire · HackTheBox</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux Process Analysis" (Free)</div><div class="ld">Hands-on room covering ps, top, process investigation and anomaly detection. Direct match to today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxprocessanalysis')">tryhackme.com/room/linuxprocessanalysis ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux Forensics" (Free)</div><div class="ld">Covers /proc investigation, process forensics, and memory artifacts — today's blue team content in a guided lab. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxforensics')">tryhackme.com/room/linuxforensics ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">OverTheWire — Bandit Levels 19–25 (Free)</div><div class="ld">These levels involve setuid programs and process execution — applies process concepts in a puzzle context. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org/wargames/bandit ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux Incident Surface" (Free)</div><div class="ld">Incident response room that heavily uses ps, /proc inspection, and process anomaly hunting. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxincidentsurface')">tryhackme.com/room/linuxincidentsurface ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">HackTheBox — "Starting Point: Appointment / Sequel" (Free tier)</div><div class="ld">Beginner machines where process and service enumeration is part of the compromise path. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://app.hackthebox.com/starting-point')">app.hackthebox.com/starting-point ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 9</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Run <code>ps aux --forest</code> and find 3 interesting parent-child process relationships on your system. For each one, identify the parent, the child, and why that relationship makes sense (or why it's suspicious). Save your analysis to <code>~/security-lab/notes/day8-processes.txt</code>.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Run the malicious-process hunt one-liner from the Blue Team section: <code>ls -la /proc/*/exe 2>/dev/null | grep "(deleted)"</code> and <code>ls -la /proc/*/exe 2>/dev/null | grep "/tmp\|/dev/shm"</code>. Note every result and explain what each finding would mean in a real investigation.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Use <code>htop</code> in tree view (F5) to explore your entire process hierarchy. Identify: the init/systemd process at the root, all processes owned by non-root service accounts, and any processes with unusual CPU or memory consumption. Screenshot or record observations in your notes.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Write a bash one-liner that lists every process's PID, owner, and the full path of the binary it's running (from <code>/proc/[PID]/exe</code>), filtering out kernel threads. This is the foundation of the process enumeration section in next week's <code>enum.sh</code> project.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Add a new section to your <code>~/security-lab/scripts/recon.sh</code> from Day 7 called "PROCESS AUDIT" that: lists top 10 CPU-consuming processes, checks for any processes running from <code>/tmp</code> or <code>/dev/shm</code>, and flags any deleted-binary processes. This keeps recon.sh growing each day.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div style="display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem">
+        <div style="width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-info)"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">How Linux Works — Brian Ward (Chapter 8: Processes and Jobs)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Chapter 8 is the definitive beginner-accessible explanation of how Linux processes work — the lifecycle, signals, process groups, job control, and the relationship between processes and the kernel. Ward explains the <em>why</em> behind everything you practiced today, which gives you the mental model to reason about unusual process behaviour rather than just memorising commands. This is the book that makes <code>/proc</code> feel intuitive rather than magical.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tb">Chapter 8 tonight</span><span class="tag tg">Explains the why</span><span class="tag ta">Beginner to intermediate</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">LinkedIn — the cryptominer detection story is a compelling real-world narrative</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">Twitter/X — a signal number cheatsheet image gets strong engagement in the security community</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Screenshot of <code>htop</code> in tree view with labels pointing at interesting processes</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"One file in /proc can tell you if a process on your server is malware"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">Day 8 of my cybersecurity journey — Linux Process Management
+
+Today I learned that every running process on Linux is completely transparent if you know where to look.
+
+The file that changed how I think about malware detection:
+
+/proc/[PID]/exe
+
+It's a symlink to the actual binary running as that process.
+
+If it shows "(deleted)" — the program launched, then deleted its own binary from disk.
+
+That is one of the clearest indicators of malware on a Linux system. The process is still running but the file that created it has been erased to hide the evidence.
+
+Today I also learned:
+→ How to read ps aux output and decode every column
+→ The difference between SIGTERM (graceful) and SIGKILL (force — cannot be ignored)
+→ Why zombie processes appear and what they mean
+→ How to identify which process is consuming the most CPU in one command
+
+The command I'll never forget:
+ls -la /proc/*/exe 2>/dev/null | grep "(deleted)"
+
+Run it on any Linux system. If you see results — investigate immediately.
+
+Day 8 of 90. Week 2 underway. 🛡️
+
+#Linux #Cybersecurity #BlueTeam #IncidentResponse #Forensics #SOC #LearnInPublic #100DaysOfCyber #InfoSec</div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">How professionals think about processes</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Always check <code>/proc/[PID]/exe</code> before killing a suspicious process — and copy the binary first if you can (<code>cp /proc/[PID]/exe /root/evidence-sample</code>). Once you kill the process, the <code>/proc/[PID]/</code> directory disappears permanently. Evidence first, containment second.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Processes named to mimic kernel threads (like <code>kworker</code>, <code>kthreadd</code>, <code>ksoftirqd</code>) are a common evasion technique. Real kernel threads appear in square brackets in <code>ps aux</code> output: <code>[kworker/0:0]</code>. If you see one without brackets, it's a userspace process masquerading. Investigate immediately.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Use <code>ps -ef --forest</code> not just <code>ps aux</code>. The tree view immediately reveals abnormal parent-child relationships — a web server process spawning a bash shell is a major red flag (possible web shell execution), invisible in the flat <code>ps aux</code> view.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: using <code>kill -9</code> immediately without trying <code>kill -15</code> (SIGTERM) first. SIGKILL does not allow cleanup — databases may corrupt, log files may be left incomplete, and important forensic state is lost. Always try SIGTERM first in non-emergency situations.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: confusing process priority. Lower nice values mean higher priority — <code>nice -n -20</code> is the highest priority, not the lowest. The name is counterintuitive: being "nice" means yielding to others (higher number = lower priority = more polite to other processes).</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: in incident response, the process list is your first window into what happened. Before touching anything else, capture it with <code>ps aux > /tmp/ps-capture.txt</code> and timestamp it. This snapshot becomes evidence. Systems change every second — the process that was running malware may self-terminate in minutes.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer all 5 from memory. These appear constantly in blue team interviews and CTF challenges.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between SIGTERM (15) and SIGKILL (9)? Which one can a process catch and handle, and which one cannot be ignored?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does a <code>(deleted)</code> entry in <code>/proc/[PID]/exe</code> indicate? Why is this considered a malware indicator on Linux?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does the <code>STAT</code> column in <code>ps aux</code> tell you? Name 4 state codes and what each means.</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">How do you identify which process is consuming the most CPU using <code>ps aux</code> without launching an interactive tool?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is a zombie process? How does it appear in the process list and what causes it?</div></div>
+      <div class="div"></div>
+      <p>5/5 and Day 8 is complete. Tomorrow is <strong>Day 9: Services + Systemd + Cron</strong> — how Linux manages long-running services, how attackers abuse cron for persistence, and how defenders audit both.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 9 →</span><span class="tag tg">Services · Systemd · Cron · Persistence</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o);
+  if(c)c.classList.toggle('open',!o);
+}
+tog('theory');
+</script>
