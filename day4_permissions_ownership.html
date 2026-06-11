@@ -1,0 +1,533 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--color-background-danger);color:var(--color-text-danger);font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:36%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary)}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.book-card{display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem}
+.bc-icon{width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-danger)}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:155px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.perm-visual{font-family:var(--font-mono);font-size:13px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.5rem 0;line-height:2}
+.perm-row{display:flex;gap:4px;align-items:center;margin-bottom:4px;flex-wrap:wrap}
+.pbit{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:var(--border-radius-md);font-size:12px;font-weight:500;border:0.5px solid var(--color-border-tertiary)}
+.pbit.on{background:var(--color-background-success);color:var(--color-text-success)}
+.pbit.off{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.pbit.spc{background:var(--color-background-danger);color:var(--color-text-danger)}
+.pbit.sep{background:transparent;border:none;color:var(--color-text-tertiary);width:12px}
+.plbl{font-size:11px;color:var(--color-text-secondary);margin-left:6px}
+.oct-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:.5rem 0}
+.oct-cell{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.5rem;text-align:center}
+.oct-num{font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.oct-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.oct-bits{font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.suid-box{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.5rem 0;background:var(--color-background-secondary)}
+.suid-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.suid-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 1 · Day 4</div>
+    <h1>Permissions + Ownership</h1>
+    <p>Today covers <code>chmod</code>, <code>chown</code>, SUID, and SGID — the access control engine of Linux. Understanding this is the direct prerequisite to understanding privilege escalation, one of the most common attack techniques in the field.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 4 of ~90</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">Permission bits · Octal · SUID · SGID · Sticky</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>Reading the permission string</h3>
+      <p>Every file and directory has a 10-character permission string visible in <code>ls -la</code>. Here is what each character means:</p>
+
+      <div class="perm-visual">
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:6px">example: -rwxr-xr-- (a script owned by user, readable by group, no access for others)</div>
+        <div class="perm-row">
+          <div class="pbit off">-</div>
+          <span class="plbl">file type</span>
+          <div class="pbit sep">|</div>
+          <div class="pbit on">r</div><div class="pbit on">w</div><div class="pbit on">x</div>
+          <span class="plbl">owner</span>
+          <div class="pbit sep">|</div>
+          <div class="pbit on">r</div><div class="pbit off">-</div><div class="pbit on">x</div>
+          <span class="plbl">group</span>
+          <div class="pbit sep">|</div>
+          <div class="pbit on">r</div><div class="pbit off">-</div><div class="pbit off">-</div>
+          <span class="plbl">others</span>
+        </div>
+      </div>
+
+      <div class="g2" style="margin-top:.75rem">
+        <div class="mc"><div class="lbl">File type character</div><div class="val"><code>-</code> regular file · <code>d</code> directory · <code>l</code> symlink · <code>b</code> block device · <code>c</code> char device</div></div>
+        <div class="mc"><div class="lbl">Permission bits</div><div class="val"><code>r</code> read (4) · <code>w</code> write (2) · <code>x</code> execute (1) · <code>-</code> no permission (0)</div></div>
+      </div>
+
+      <h3>Octal notation — the fast way to set permissions</h3>
+      <p>Each permission triplet (owner/group/others) maps to a single octal digit by adding the values of set bits.</p>
+      <div class="oct-row">
+        <div class="oct-cell"><div class="oct-num">7</div><div class="oct-bits">rwx</div><div class="oct-lbl">full access</div></div>
+        <div class="oct-cell"><div class="oct-num">6</div><div class="oct-bits">rw-</div><div class="oct-lbl">read + write</div></div>
+        <div class="oct-cell"><div class="oct-num">5</div><div class="oct-bits">r-x</div><div class="oct-lbl">read + exec</div></div>
+        <div class="oct-cell"><div class="oct-num">4</div><div class="oct-bits">r--</div><div class="oct-lbl">read only</div></div>
+      </div>
+      <div class="oct-row">
+        <div class="oct-cell"><div class="oct-num">3</div><div class="oct-bits">-wx</div><div class="oct-lbl">write + exec</div></div>
+        <div class="oct-cell"><div class="oct-num">2</div><div class="oct-bits">-w-</div><div class="oct-lbl">write only</div></div>
+        <div class="oct-cell"><div class="oct-num">1</div><div class="oct-bits">--x</div><div class="oct-lbl">execute only</div></div>
+        <div class="oct-cell"><div class="oct-num">0</div><div class="oct-bits">---</div><div class="oct-lbl">no access</div></div>
+      </div>
+      <p style="margin-top:.5rem">So <code>chmod 755 file</code> means owner=<code>rwx</code>(7), group=<code>r-x</code>(5), others=<code>r-x</code>(5). This is the most common permission for executables.</p>
+
+      <h3>Common permission patterns</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">755 (rwxr-xr-x)</div><div class="cmd-desc">Standard for executables and directories. Owner can do everything; others can read and execute. Default for most system binaries.</div></div>
+        <div class="cmd-row"><div class="cmd">644 (rw-r--r--)</div><div class="cmd-desc">Standard for regular files. Owner reads and writes; others only read. Default for config files and documents.</div></div>
+        <div class="cmd-row"><div class="cmd">600 (rw-------)</div><div class="cmd-desc">Private files. Owner only. Used for SSH private keys — anything else is a security misconfiguration.</div></div>
+        <div class="cmd-row"><div class="cmd">777 (rwxrwxrwx)</div><div class="cmd-desc">Everyone has full access. Almost always a misconfiguration. Never use on production systems.</div></div>
+        <div class="cmd-row"><div class="cmd">640 (rw-r-----)</div><div class="cmd-desc">Owner reads/writes, group reads, others have no access. Used for sensitive group-shared files like <code>/etc/shadow</code>.</div></div>
+      </div>
+
+      <h3>SUID, SGID, and Sticky bit — the special bits</h3>
+      <p>Beyond the 9 standard bits there are 3 special bits. These are where Linux privilege escalation vulnerabilities live.</p>
+
+      <div class="suid-box">
+        <div class="suid-title">SUID — Set User ID (bit 4 of the leading octal)</div>
+        <div class="suid-desc">When set on an executable, it runs as the file's <em>owner</em> rather than the person executing it. Classic example: <code>/usr/bin/passwd</code> is SUID root — it needs root to write to <code>/etc/shadow</code>, but any user can run it. In <code>ls -la</code> you see <code>s</code> in the owner-execute position: <code>rwsr-xr-x</code>. If a vulnerable SUID binary exists, an attacker can use it to run commands as root.</div>
+      </div>
+      <div class="suid-box" style="margin-top:6px">
+        <div class="suid-title">SGID — Set Group ID (bit 2 of the leading octal)</div>
+        <div class="suid-desc">On executables: runs as the file's group. On directories: new files created inside inherit the directory's group rather than the creator's group. Used for shared team directories. Shows as <code>s</code> in the group-execute position: <code>rwxr-sr-x</code>.</div>
+      </div>
+      <div class="suid-box" style="margin-top:6px">
+        <div class="suid-title">Sticky bit (bit 1 of the leading octal)</div>
+        <div class="suid-desc">On directories (especially <code>/tmp</code>): users can only delete their own files, not files owned by others — even if the directory is world-writable. Shows as <code>t</code> in the others-execute position: <code>rwxrwxrwt</code>. Run <code>ls -la /</code> and look at <code>tmp</code>.</div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=BmFvHQABa_o')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux File Permissions — chmod, chown, SUID explained</div><div class="yt-c">NetworkChuck · Visual, beginner-friendly walkthrough with real examples</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=dsl_2nNqFoo')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux SUID, SGID and Sticky Bit — Privilege Escalation Explained</div><div class="yt-c">HackerSploit · Focuses on the security angle, connects to real privesc techniques</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">chmod · chown · find SUID · umask</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — read permissions like a pro</h3>
+      <div class="cb">ls -la /etc/passwd        # rw-r--r-- (644) — world-readable
+ls -la /etc/shadow        # rw-r----- (640) — root + shadow group only
+ls -la /bin/passwd        # rwsr-xr-x — SUID root (the s is the key)
+ls -la /tmp               # rwxrwxrwt — world-writable + sticky bit
+ls -la /etc/sudoers       # r--r----- (440) — root read-only
+stat /etc/passwd          # detailed: permissions, owner, timestamps</div>
+
+      <h3>Exercise 2 — chmod with octal notation</h3>
+      <div class="cb">touch ~/security-lab/test-permissions.txt
+ls -la ~/security-lab/test-permissions.txt     # default: 644
+
+chmod 600 ~/security-lab/test-permissions.txt  # private — owner only
+ls -la ~/security-lab/test-permissions.txt     # now: rw-------
+
+chmod 755 ~/security-lab/test-permissions.txt  # executable
+ls -la ~/security-lab/test-permissions.txt     # now: rwxr-xr-x
+
+chmod 777 ~/security-lab/test-permissions.txt  # DANGEROUS — for demo only
+ls -la ~/security-lab/test-permissions.txt     # now: rwxrwxrwx
+
+chmod 644 ~/security-lab/test-permissions.txt  # restore safe default</div>
+
+      <h3>Exercise 3 — chmod with symbolic notation</h3>
+      <div class="cb">chmod u+x script.sh          # add execute for owner (u=user/owner)
+chmod g-w file.txt           # remove write from group
+chmod o-rwx sensitive.txt    # remove all permissions for others
+chmod a+r public.txt         # add read for all (a=all)
+chmod u=rw,g=r,o= file       # set precise: owner rw, group r, others nothing</div>
+
+      <h3>Exercise 4 — chown (change ownership)</h3>
+      <div class="cb">touch ~/security-lab/owned.txt
+ls -la ~/security-lab/owned.txt                  # shows your username as owner
+
+sudo chown root ~/security-lab/owned.txt         # change owner to root
+ls -la ~/security-lab/owned.txt                  # now owned by root
+
+sudo chown root:root ~/security-lab/owned.txt    # owner AND group to root
+sudo chown $USER:$USER ~/security-lab/owned.txt  # give it back to yourself
+
+sudo chown -R $USER ~/security-lab/              # -R = recursive for whole dir</div>
+
+      <h3>Exercise 5 — find all SUID binaries (critical recon command)</h3>
+      <div class="cb">find / -perm -4000 -type f 2>/dev/null          # all SUID files
+find / -perm -2000 -type f 2>/dev/null          # all SGID files
+find / -perm -4000 -type f 2>/dev/null | xargs ls -la   # detailed view
+find / -perm /6000 -type f 2>/dev/null          # SUID or SGID (combined)</div>
+
+      <h3>Exercise 6 — umask (default permission control)</h3>
+      <div class="cb">umask                        # view current umask (typically 022)
+touch ~/test-umask.txt
+ls -la ~/test-umask.txt      # 644 = 666 - 022 (umask subtracted)
+umask 077                    # more restrictive: new files will be 600
+touch ~/test-umask2.txt
+ls -la ~/test-umask2.txt     # now 600 — private by default
+umask 022                    # restore default</div>
+
+      <h3>Exercise 7 — set the sticky bit and SUID (understand, don't abuse)</h3>
+      <div class="cb">mkdir ~/security-lab/shared-dir
+chmod 1777 ~/security-lab/shared-dir     # world-writable + sticky bit
+ls -la ~/security-lab/ | grep shared-dir # see the 't' at end of permissions
+
+chmod 4755 ~/security-lab/test-suid     # set SUID on a file (demo only)
+ls -la ~/security-lab/test-suid         # see the 's' in owner execute position</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">SUID misconfiguration leads to full root access</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>A developer installs a custom backup tool on a production server and accidentally leaves it SUID root. An attacker with low-privilege access discovers it and escalates to root in seconds.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 1 — initial access, low privilege</div>
+        <p>The attacker has a shell as <code>www-data</code> via a web vulnerability. They run <code>id</code> — they're not root. Not yet.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 2 — SUID hunting</div>
+        <p>They run <code>find / -perm -4000 -type f 2>/dev/null</code>. Among standard system files they spot <code>/opt/backup/run-backup</code> owned by root with the SUID bit set. This isn't a standard binary.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 3 — exploit the SUID binary</div>
+        <p>The binary calls <code>cp</code> without a full path — it uses the environment's <code>PATH</code>. The attacker creates a fake <code>cp</code> in <code>/tmp</code> that spawns a shell, adds <code>/tmp</code> to the front of <code>PATH</code>, and runs <code>/opt/backup/run-backup</code>. The SUID binary executes as root, calls the fake <code>cp</code>, and the attacker gets a root shell.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 4 — full system compromise</div>
+        <p>With root they read <code>/etc/shadow</code>, add a new root user, install a backdoor, and exfiltrate everything. The entire escalation took under 2 minutes from finding the SUID binary.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">What should have happened</div>
+        <p>The backup tool should never have been SUID root. It should have run as a dedicated low-privilege service account. Regular audits of SUID binaries (<code>find / -perm -4000</code>) would have caught the misconfiguration before an attacker did.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">Permission-based privilege escalation</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>The privesc checklist — permissions edition</h3>
+      <p>After getting a foothold, a pentester systematically checks permissions for escalation paths. This is one of the most common routes to root on CTFs and real engagements.</p>
+      <div class="cb">find / -perm -4000 -type f 2>/dev/null          # SUID files
+find / -perm -2000 -type f 2>/dev/null          # SGID files
+find / -writable -type f -not -path "*/proc/*" 2>/dev/null  # writable files
+find / -writable -type d 2>/dev/null            # writable directories
+ls -la /etc/crontab /etc/cron.d/* 2>/dev/null  # writable cron configs?
+sudo -l                                          # what can I run as root?</div>
+
+      <h3>GTFOBins — the attacker's SUID reference</h3>
+      <p>GTFOBins (<code>gtfobins.github.io</code>) is a curated list of Unix binaries that can be abused to escape restrictions or escalate privilege when given SUID or sudo permissions. Common targets:</p>
+      <ul>
+        <li><code>find</code> with SUID or sudo — can execute arbitrary commands via <code>-exec</code></li>
+        <li><code>vim</code> / <code>nano</code> with sudo — can open a shell from within the editor</li>
+        <li><code>python</code> / <code>perl</code> with SUID — can spawn a privileged shell in one line</li>
+        <li><code>cp</code> / <code>mv</code> with sudo — can overwrite <code>/etc/passwd</code> or <code>/etc/sudoers</code></li>
+        <li><code>bash</code> with SUID — <code>bash -p</code> opens an effective-root shell instantly</li>
+      </ul>
+      <div class="cb">bash -p                       # if bash is SUID — instant root shell
+find . -exec /bin/sh \; -quit # if find is SUID or in sudo -l
+python3 -c "import os; os.setuid(0); os.system('/bin/bash')"  # python SUID</div>
+
+      <h3>World-writable file exploitation</h3>
+      <div class="cb">find / -perm -0002 -type f 2>/dev/null    # 777 files
+find / -perm -0002 -type f 2>/dev/null | xargs ls -la 2>/dev/null
+echo "malicious_command" >> /path/to/world-writable-script.sh</div>
+      <p>If a root-owned script is world-writable and runs on a schedule (cron), an attacker can append commands that execute as root.</p>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Audit · Harden · Monitor permissions</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Audit SUID/SGID binaries regularly</h3>
+      <p>Establish a known-good baseline of SUID binaries and alert on any new additions. This is a standard hardening step on any Linux server.</p>
+      <div class="cb">find / -perm -4000 -type f 2>/dev/null | sort > /root/suid-baseline.txt
+find / -perm -2000 -type f 2>/dev/null | sort > /root/sgid-baseline.txt
+diff /root/suid-baseline.txt <(find / -perm -4000 -type f 2>/dev/null | sort)
+</div>
+
+      <h3>Fix common permission misconfigurations</h3>
+      <div class="cb">chmod 644 /etc/passwd         # should be readable by all but only root-writable
+chmod 640 /etc/shadow         # root read/write, shadow group read, others nothing
+chmod 440 /etc/sudoers        # read-only for root and sudo group
+chmod 600 ~/.ssh/id_rsa       # SSH private key — owner only, no exceptions
+chmod 644 ~/.ssh/id_rsa.pub   # public key can be world-readable
+chmod 700 ~/.ssh              # .ssh directory — owner only
+find /var/www -perm -0002 2>/dev/null   # find world-writable web files (critical)</div>
+
+      <h3>Remove unnecessary SUID bits</h3>
+      <div class="cb">chmod u-s /path/to/binary     # remove SUID from a specific binary
+chmod g-s /path/to/binary     # remove SGID from a specific binary</div>
+
+      <h3>Monitor with auditd</h3>
+      <div class="cb">auditctl -a always,exit -F arch=b64 -S chmod -S chown -k perm_change
+auditctl -a always,exit -F arch=b64 -S execve -F euid=0 -k root_exec
+ausearch -k perm_change        # see all permission change events
+ausearch -k root_exec          # see all commands executed as root</div>
+
+      <h3>Set a restrictive umask in /etc/profile</h3>
+      <p>A system-wide <code>umask 027</code> ensures new files are created as <code>640</code> (owner rw, group r, others nothing) rather than the default <code>644</code>, reducing accidental world-readable file creation.</p>
+      <div class="cb">echo "umask 027" >> /etc/profile    # apply to all login shells system-wide</div>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · GTFOBins · OverTheWire</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux PrivEsc" room (Free)</div><div class="ld">Full privilege escalation room covering SUID, sudo misconfigs, writable files. The most direct lab for today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxprivesc')">tryhackme.com/room/linuxprivesc ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux Strength Training" (Free)</div><div class="ld">Hands-on permission and file-based challenges. Builds speed with chmod and find. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxstrengthtraining')">tryhackme.com/room/linuxstrengthtraining ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">GTFOBins reference (Free)</div><div class="ld">The definitive list of exploitable SUID binaries — bookmark and study this. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://gtfobins.github.io')">gtfobins.github.io ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">OverTheWire — Bandit Levels 10–15 (Free)</div><div class="ld">Levels in this range involve reading files with restricted permissions — practicing today's topic under pressure. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org/wargames/bandit ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Common Linux Privesc" (Free)</div><div class="ld">Covers SUID, path hijacking, sudo -l, cron misconfigs — all permission-based privesc techniques. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/commonlinuxprivesc')">tryhackme.com/room/commonlinuxprivesc ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 5</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Run <code>find / -perm -4000 -type f 2>/dev/null</code> on your system. List every SUID binary you find. Open GTFOBins and look up at least 3 of them. Note which ones could be abused and how. Save findings to <code>~/security-lab/notes/suid-audit.txt</code>.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Create 3 files in your security-lab with different permissions — <code>777</code>, <code>644</code>, and <code>600</code>. Practice reading the output of <code>ls -la</code> until you can instantly decode every character of the permission string without thinking about it.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Translate these octal permissions to symbolic notation from memory: <code>755</code>, <code>644</code>, <code>600</code>, <code>640</code>, <code>777</code>, <code>400</code>. Then verify with <code>chmod</code> and <code>ls -la</code>. Repeat in reverse — write the octal for <code>rwxr-xr-x</code>, <code>rw-r--r--</code>, <code>rw-------</code>.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Complete the TryHackMe "Linux PrivEsc" room (free). Focus especially on the SUID and sudo sections. This is a preview of Month 2 content but the permissions foundation makes it accessible today.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Harden your own system: run <code>ls -la ~/.ssh/</code> and verify that <code>id_rsa</code> is <code>600</code>, <code>authorized_keys</code> is <code>600</code>, and the <code>.ssh</code> directory itself is <code>700</code>. If any are wrong, fix them. Then check <code>/etc/shadow</code> permissions — they should be <code>640</code> or <code>000</code>.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div class="book-card">
+        <div class="bc-icon"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-danger)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">How Linux Works — Brian Ward (Chapter 7: System Configuration)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Chapter 7 covers users, groups, and permissions in depth — exactly what Days 4 and 5 are about. Ward explains <em>why</em> the permission model was designed the way it was, which gives you the mental model to reason about misconfigurations rather than just memorizing commands. The book is widely regarded as the best explanation of how Linux actually works under the hood, written for people who want to understand rather than just use it.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tr">Must-own for Linux security</span><span class="tag tb">Chapter 7 today</span><span class="tag tg">Beginner to intermediate</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">LinkedIn — permission misconfig stories get high engagement from security pros</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">Twitter/X thread — octal cheatsheet as an image works well here</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Annotated screenshot of <code>ls -la</code> output with arrows labeling each field</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"One misconfigured bit on a Linux file can give an attacker root access"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">Day 4 of my cybersecurity journey — Linux Permissions + SUID
+
+One of the most common ways attackers get from "regular user" to "full root access" on a Linux system is through a single misconfigured permission bit.
+
+It's called SUID — Set User ID.
+
+When an executable has the SUID bit set, it runs as the file's owner rather than the person running it. Most of the time this is intentional and safe (like /usr/bin/passwd running as root to update /etc/shadow).
+
+But when a developer accidentally leaves a custom script or tool SUID root? Game over.
+
+Today I learned:
+→ How to read -rwsr-xr-x and know instantly that it's SUID root
+→ The difference between 777, 755, 644, and 600 and when each is appropriate
+→ How to find ALL SUID binaries on a system in one command
+→ Why GTFOBins exists and why every pentester has it bookmarked
+
+The command every attacker runs after getting a shell:
+find / -perm -4000 -type f 2>/dev/null
+
+Day 4 of 90. 🛡️
+
+#Linux #Cybersecurity #EthicalHacking #PrivilegeEscalation #SUID #Permissions #LearnInPublic #100DaysOfCyber #InfoSec</div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">What separates beginners from professionals</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Memorize the octal table cold. In CTFs and real engagements you need to decode <code>4755</code> or <code>2644</code> instantly without reaching for a calculator. The 4-2-1 pattern (read-write-execute) is the only thing to remember — everything else follows from it.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>When you see an <code>s</code> where you'd expect an <code>x</code> in <code>ls -la</code> output, stop and investigate. That is SUID or SGID. On a custom binary that shouldn't need elevated privileges, it's a red flag.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Bookmark <code>gtfobins.github.io</code> today. It is to Linux privesc what a dictionary is to a writer. During a CTF or engagement, check every SUID binary you find against it within seconds.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: confusing file permissions with directory permissions. For a directory, <code>r</code> means list contents, <code>w</code> means create/delete files inside, and <code>x</code> means traverse (enter) the directory. You can have <code>x</code> without <code>r</code> — you can enter but not list.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: thinking <code>chmod 777</code> is "fine just for testing." Permissions set for testing almost always make it to production. Treat every permission decision as permanent from the start.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: using <code>chown</code> without <code>-R</code> on directories. Setting ownership on a directory does not change the files inside it. Always check whether you need the recursive flag.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: approach permissions as the principle of least privilege in action. Every extra permission bit is an unnecessary risk. Before adding a permission, ask: what is the minimum access this user or process actually needs? Default to restricting, not permitting.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer all 5 from memory. If any stumps you, run the relevant command in your terminal before sleeping.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Decode this permission string entirely: <code>-rwsr-xr-x 1 root root</code>. What file type? Who can do what? What is the security-relevant special bit and what does it do?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Convert <code>chmod 640</code> to symbolic notation. What are the exact read/write/execute permissions for owner, group, and others?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the exact one-liner command a pentester runs to find all SUID files on a Linux system?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is GTFOBins and why does it matter for SUID exploitation?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does the sticky bit do and on which directory is it most commonly set by default on Linux?</div></div>
+      <div class="div"></div>
+      <p>5/5 means Day 4 is complete. Tomorrow is <strong>Day 5: Users + Groups</strong> — <code>/etc/passwd</code>, <code>/etc/shadow</code>, and <code>sudo</code> internals. Directly builds on everything you learned today.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 5 →</span><span class="tag tg">Users + Groups · /etc/passwd · /etc/shadow · sudo</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o);
+  if(c)c.classList.toggle('open',!o);
+}
+tog('theory');
+</script>
