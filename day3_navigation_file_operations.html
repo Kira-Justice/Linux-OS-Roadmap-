@@ -1,0 +1,485 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--color-background-warning);color:var(--color-text-warning);font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:27%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary)}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.book-card{display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem}
+.bc-icon{width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-warning)}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:160px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 1 · Day 3</div>
+    <h1>Navigation + File Operations</h1>
+    <p>Today you master moving around Linux and manipulating files — the hands-on skills every pentester, sysadmin, and SOC analyst uses every single day. This is muscle memory training.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 3 of ~90</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">Core concepts · Paths · File operations</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>Absolute vs relative paths</h3>
+      <p>This is the single most important navigation concept. Get it wrong and every command fails.</p>
+      <div class="g2">
+        <div class="mc"><div class="lbl">Absolute path</div><div class="val">Starts with <code>/</code> — always the same no matter where you are. Example: <code>/etc/passwd</code></div></div>
+        <div class="mc"><div class="lbl">Relative path</div><div class="val">Starts from your current location. Example: <code>../home/user</code> goes up one level then into home/user</div></div>
+      </div>
+
+      <h3>Special path shortcuts</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">~</div><div class="cmd-desc">Your home directory — expands to <code>/home/username</code> or <code>/root</code> for root</div></div>
+        <div class="cmd-row"><div class="cmd">.</div><div class="cmd-desc">Current directory — used in commands like <code>./script.sh</code></div></div>
+        <div class="cmd-row"><div class="cmd">..</div><div class="cmd-desc">Parent directory — <code>cd ..</code> goes up one level</div></div>
+        <div class="cmd-row"><div class="cmd">-</div><div class="cmd-desc">Previous directory — <code>cd -</code> jumps back to where you just were</div></div>
+        <div class="cmd-row"><div class="cmd">/</div><div class="cmd-desc">Root of the entire filesystem — top of the tree</div></div>
+      </div>
+
+      <h3>Navigation commands</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">pwd</div><div class="cmd-desc">Print working directory — "where am I right now?"</div></div>
+        <div class="cmd-row"><div class="cmd">cd &lt;path&gt;</div><div class="cmd-desc">Change directory — your primary movement tool</div></div>
+        <div class="cmd-row"><div class="cmd">ls</div><div class="cmd-desc">List directory contents. Use <code>-la</code> always (hidden files + permissions)</div></div>
+        <div class="cmd-row"><div class="cmd">tree</div><div class="cmd-desc">Visual directory tree. Great for mapping structure at a glance</div></div>
+      </div>
+
+      <h3>File operation commands</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">touch &lt;file&gt;</div><div class="cmd-desc">Create empty file or update timestamps on existing file</div></div>
+        <div class="cmd-row"><div class="cmd">mkdir -p &lt;dir&gt;</div><div class="cmd-desc">Create directory. <code>-p</code> creates parent directories too</div></div>
+        <div class="cmd-row"><div class="cmd">cp -r &lt;src&gt; &lt;dst&gt;</div><div class="cmd-desc">Copy file or directory. <code>-r</code> for recursive (directories)</div></div>
+        <div class="cmd-row"><div class="cmd">mv &lt;src&gt; &lt;dst&gt;</div><div class="cmd-desc">Move or rename. Same command for both operations</div></div>
+        <div class="cmd-row"><div class="cmd">rm -rf &lt;target&gt;</div><div class="cmd-desc">Delete file or directory. <code>-r</code> recursive, <code>-f</code> force — no undo, use carefully</div></div>
+        <div class="cmd-row"><div class="cmd">ln -s &lt;src&gt; &lt;link&gt;</div><div class="cmd-desc">Create a symbolic link (shortcut). Critical to understand for security</div></div>
+      </div>
+
+      <h3>Reading file contents</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">cat &lt;file&gt;</div><div class="cmd-desc">Print entire file to screen. Fast but overwhelming for large files</div></div>
+        <div class="cmd-row"><div class="cmd">less &lt;file&gt;</div><div class="cmd-desc">Page through file interactively. Press <code>q</code> to quit, <code>/term</code> to search</div></div>
+        <div class="cmd-row"><div class="cmd">head -n 20</div><div class="cmd-desc">Show first 20 lines. Default is 10</div></div>
+        <div class="cmd-row"><div class="cmd">tail -n 20</div><div class="cmd-desc">Show last 20 lines. <code>-f</code> flag follows file live (perfect for logs)</div></div>
+        <div class="cmd-row"><div class="cmd">file &lt;target&gt;</div><div class="cmd-desc">Identify file type regardless of extension — critical in forensics</div></div>
+        <div class="cmd-row"><div class="cmd">xxd &lt;file&gt;</div><div class="cmd-desc">Hex dump — see raw bytes of any file. Used in malware analysis</div></div>
+      </div>
+
+      <h3>Searching for files</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">find &lt;path&gt; -name</div><div class="cmd-desc">Search by filename. Supports wildcards: <code>find / -name "*.conf"</code></div></div>
+        <div class="cmd-row"><div class="cmd">find -type f/d</div><div class="cmd-desc"><code>f</code> = files only, <code>d</code> = directories only</div></div>
+        <div class="cmd-row"><div class="cmd">find -mtime -1</div><div class="cmd-desc">Files modified in the last 1 day — critical for incident response</div></div>
+        <div class="cmd-row"><div class="cmd">find -size +10M</div><div class="cmd-desc">Files larger than 10MB — find data exfiltration staging</div></div>
+        <div class="cmd-row"><div class="cmd">locate &lt;name&gt;</div><div class="cmd-desc">Faster than find — uses a pre-built index. Run <code>updatedb</code> to refresh</div></div>
+        <div class="cmd-row"><div class="cmd">which &lt;command&gt;</div><div class="cmd-desc">Find where a binary lives: <code>which python3</code> → <code>/usr/bin/python3</code></div></div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=IVquJh3DXUA')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux Commands for Beginners — Navigation & File Management</div><div class="yt-c">NetworkChuck · Engaging and beginner-friendly, covers all of today's commands</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=oxuRxtrO2Ag')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux File System & Commands — Full Tutorial</div><div class="yt-c">freeCodeCamp · Deep and thorough, good for today and Days 4–5 preview</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">Hands-on exercises · Build muscle memory</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — navigation drills</h3>
+      <div class="cb">pwd                          # confirm where you are
+cd /                         # go to root
+ls -la                       # list with hidden + permissions
+cd /etc                      # jump to /etc
+cd ../var/log                # relative: up one, into var/log
+cd ~                         # back to home instantly
+cd -                         # toggle back to /var/log
+echo $PWD                    # another way to see current path</div>
+
+      <h3>Exercise 2 — build a practice directory tree</h3>
+      <div class="cb">mkdir -p ~/security-lab/{notes,scripts,evidence,tools}
+ls ~/security-lab            # verify structure
+tree ~/security-lab          # visual tree (install: apt install tree)
+mkdir -p ~/security-lab/evidence/day3
+touch ~/security-lab/notes/day3-commands.txt
+echo "Day 3 notes" > ~/security-lab/notes/day3-commands.txt
+cat ~/security-lab/notes/day3-commands.txt</div>
+
+      <h3>Exercise 3 — copy, move, rename</h3>
+      <div class="cb">cp /etc/hostname ~/security-lab/evidence/hostname_copy
+cp -r /etc/ssh ~/security-lab/evidence/ssh_backup    # copy directory
+mv ~/security-lab/evidence/hostname_copy ~/security-lab/evidence/hostname_renamed
+ls -la ~/security-lab/evidence/</div>
+
+      <h3>Exercise 4 — reading files like a pro</h3>
+      <div class="cb">cat /etc/passwd                          # view whole file
+less /etc/passwd                         # paginate (q to quit)
+head -5 /etc/passwd                      # first 5 lines
+tail -5 /etc/passwd                      # last 5 lines
+tail -f /var/log/syslog                  # live log follow (Ctrl+C to stop)
+wc -l /etc/passwd                        # count lines in file</div>
+
+      <h3>Exercise 5 — find files like an attacker</h3>
+      <div class="cb">find /home -name "*.txt" 2>/dev/null
+find / -name "id_rsa" 2>/dev/null        # hunt for SSH private keys
+find / -name "*.conf" -type f 2>/dev/null | head -20
+find /tmp -type f -newer /tmp 2>/dev/null
+find / -mtime -1 -type f 2>/dev/null | head -20  # modified last 24h
+find / -size +5M -type f 2>/dev/null | head -10  # large files</div>
+
+      <h3>Exercise 6 — file type identification (forensics basics)</h3>
+      <div class="cb">file /bin/bash                    # shows: ELF 64-bit executable
+file /etc/passwd                  # shows: ASCII text
+file /var/log/syslog              # shows: ASCII text (with timestamps)
+file ~/security-lab/notes/day3-commands.txt
+xxd /bin/bash | head -3           # see ELF magic bytes: 7f 45 4c 46</div>
+
+      <h3>Exercise 7 — symlinks (understand for privilege escalation)</h3>
+      <div class="cb">ln -s /etc/hostname ~/security-lab/tools/hostname_link
+ls -la ~/security-lab/tools/     # see the -> arrow pointing to target
+cat ~/security-lab/tools/hostname_link    # reads through the link
+readlink -f ~/security-lab/tools/hostname_link  # resolve full real path</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">Attack & defense story</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>An attacker gains a low-privilege shell on a web server via a file upload vulnerability. They now use navigation and file operations to escalate and persist — everything they do today is what you practiced.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 1 — orient and enumerate</div>
+        <p>They run <code>pwd</code>, <code>id</code>, <code>uname -a</code>. They're <code>www-data</code> in <code>/var/www/html</code>. They run <code>ls -la</code> and find a <code>.env</code> file the developer left in the web root containing database credentials.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 2 — search for interesting files</div>
+        <p>They run <code>find / -name "*.conf" 2>/dev/null</code> and find a backup config at <code>/opt/app/config.bak</code> with SSH credentials in plaintext. They also run <code>find /home -name ".bash_history" 2>/dev/null</code> and read the developer's command history.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 3 — copy evidence and stage tools</div>
+        <p>They <code>cp</code> the config files to <code>/tmp/.attacker/</code> (hidden directory via dot prefix), then use <code>find / -mtime -7 -type f 2>/dev/null</code> to see what files changed in the last 7 days — revealing recently deployed credentials.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 4 — cover tracks with mv and touch</div>
+        <p>They rename their dropped files to blend in, use <code>touch -t</code> to fake timestamps on modified files, and delete their working directory with <code>rm -rf /tmp/.attacker/</code> before leaving.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">Defender lesson</div>
+        <p>No plaintext credentials in accessible locations. File integrity monitoring would catch new files in <code>/tmp</code>. Monitoring <code>find</code> and <code>cp</code> commands in auditd logs would expose the recon. Restricting what <code>www-data</code> can read with proper permissions (Day 4) is the real fix.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">How attackers use navigation and file ops</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>Post-exploitation navigation checklist</h3>
+      <p>The moment an attacker gets a shell, they follow a mental checklist using exactly the commands from today. Speed matters — defenders may detect and kill the session.</p>
+      <div class="cb">id && whoami && hostname      # who am I and where
+uname -a                      # OS + kernel version for exploit selection
+cat /etc/os-release           # distro details
+ls -la /home                  # other users on the system
+cat ~/.bash_history           # what has this user done recently
+env                           # environment variables — often has secrets
+find / -perm -4000 2>/dev/null    # SUID binaries for privesc
+find / -writable -type f 2>/dev/null | grep -v proc  # writable files</div>
+
+      <h3>Data exfiltration file operations</h3>
+      <div class="cb">find / -name "*.sql" 2>/dev/null      # database dumps
+find / -name "id_rsa*" 2>/dev/null    # SSH private keys
+find / -name "*.pem" 2>/dev/null      # SSL/TLS private keys
+find / -name "*.kdbx" 2>/dev/null     # KeePass password databases
+cp /etc/shadow /tmp/.s && cat /tmp/.s # copy and read shadow file
+tar czf /tmp/.loot.tgz /home/ 2>/dev/null  # archive home dirs for exfil</div>
+
+      <h3>Hiding in the filesystem</h3>
+      <ul>
+        <li>Use dot-prefix names: <code>mkdir /tmp/.hidden</code> — invisible to plain <code>ls</code></li>
+        <li>Use <code>touch -t 202201010000</code> to backdate file timestamps</li>
+        <li>Write to <code>/dev/shm</code> — lives in RAM, no disk writes, harder to detect</li>
+        <li>Use <code>mv</code> to rename payloads to look like system files</li>
+        <li>Overwrite rather than create: less likely to trigger new-file alerts</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Detect suspicious file operations</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Audit file access with auditd</h3>
+      <p>Linux's audit daemon can log file reads, writes, and executions. This is how defenders catch attackers doing the same <code>find</code> and <code>cat</code> commands you practiced today.</p>
+      <div class="cb">auditctl -w /etc/passwd -p r -k passwd_read   # alert on reads of passwd
+auditctl -w /etc/shadow -p r -k shadow_read   # alert on reads of shadow
+auditctl -w /tmp -p x -k tmp_exec             # alert on execution in /tmp
+ausearch -k shadow_read                       # search audit log for that key</div>
+
+      <h3>Detect recent file changes (incident response)</h3>
+      <div class="cb">find / -mtime -1 -type f 2>/dev/null     # files changed last 24h
+find /tmp /dev/shm -type f 2>/dev/null   # unexpected files in temp areas
+find / -name ".*" -type f 2>/dev/null | grep -v "^/proc"  # all hidden files
+ls -lat /etc/ | head -20                 # most recently modified in /etc
+stat /etc/passwd                         # check if timestamps were tampered</div>
+
+      <h3>Detect hidden directories</h3>
+      <div class="cb">find /tmp /var/tmp /dev/shm -name ".*" 2>/dev/null
+find / -maxdepth 4 -name ".*" -type d 2>/dev/null | grep -v "^/home\|^/root\|^/proc"</div>
+
+      <h3>Protect against destructive rm -rf</h3>
+      <ul>
+        <li>Use immutable flags on critical files: <code>chattr +i /etc/passwd</code></li>
+        <li>Regular backups — <code>rsync</code>, <code>tar</code>, or dedicated backup tools</li>
+        <li>Restrict shell access — attackers can't run <code>rm</code> if they can't get a shell</li>
+        <li>Monitor with auditd for mass deletion events — sudden spike in <code>unlink</code> syscalls</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · OverTheWire · more</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux Fundamentals Part 2" (Free)</div><div class="ld">Directly covers file operations, navigation, flags and switches. Perfect Day 3 lab. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxfundamentalspart2')">tryhackme.com/room/linuxfundamentalspart2 ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux Fundamentals Part 3" (Free)</div><div class="ld">Advanced file operations, automation, processes. Great Day 3 extension. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxfundamentalspart3')">tryhackme.com/room/linuxfundamentalspart3 ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">OverTheWire — Bandit Levels 5–10 (Free)</div><div class="ld">Levels 5–10 require find with size/type/permissions flags — exactly today's skills. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org/wargames/bandit ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">CMD Challenge (Free browser game)</div><div class="ld">Progressive Linux command challenges directly in your browser — no setup. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://cmdchallenge.com')">cmdchallenge.com ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">Linux Journey — Grasshopper section (Free)</div><div class="ld">Interactive lessons on navigation, file ops, and I/O redirection. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://linuxjourney.com')">linuxjourney.com ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 4</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Build your personal <code>~/security-lab/</code> directory structure from Exercise 2 and keep it for the rest of the 90-day roadmap. Every day you will add notes, scripts, and evidence to it. Start today.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Run <code>find / -name "id_rsa" 2>/dev/null</code> and <code>find / -name "*.conf" 2>/dev/null | head -30</code> on your system. Document what you find. If anything looks sensitive, note the path and permissions.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Use <code>file</code> on at least 10 different files across the filesystem (binaries, text files, logs, images if any). Notice the pattern — what do ELF files look like vs scripts vs data? Add findings to your notes.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Complete OverTheWire Bandit Levels 5, 6, and 7. Each level requires <code>find</code> with specific flags. If you get stuck, read the hints on the Bandit page — figuring out the right <code>find</code> flags IS the lesson.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Write a simple shell one-liner that finds all <code>.txt</code> files modified in the last 3 days anywhere on the system and copies them to <code>~/security-lab/evidence/</code>. Use <code>find</code> + <code>-exec cp</code> or a pipe to <code>xargs</code>. This is forensic collection in one line.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div class="book-card">
+        <div class="bc-icon"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-warning)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">The Linux Command Line — William Shotts (Chapters 4–8)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Picking up from Day 2 where we left off at Chapters 1–4. Chapters 4–8 cover file manipulation (<code>cp</code>, <code>mv</code>, <code>rm</code>, <code>ln</code>), working with commands, I/O redirection, and pipelines. This is directly what today is about and sets you up perfectly for Days 5 and 6 (text processing). Free at <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://linuxcommand.org/tlcl.php')">linuxcommand.org/tlcl.php ↗</span></div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tb">Free PDF</span><span class="tag tg">Chapters 4–8 today</span><span class="tag ta">Builds on Day 2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">Twitter/X thread — command cheatsheets perform very well here</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">LinkedIn — share a terminal screenshot with a "what I learned" caption</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Screenshot your <code>tree ~/security-lab</code> output — shows progress visually</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"One Linux command that every attacker runs right after getting a shell"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn / Twitter post</h3>
+      <div class="post-box">Day 3 of learning cybersecurity — Navigation + File Operations
+
+The first thing an attacker does after getting a shell is run these 5 commands:
+
+1. pwd — where am I?
+2. id — who am I?
+3. ls -la — what's here, including hidden files?
+4. find / -name "*.conf" 2>/dev/null — what config files can I read?
+5. cat ~/.bash_history — what has this user been doing?
+
+Today I learned that the same commands I use as a student to navigate Linux are the exact commands used in real penetration tests.
+
+I also built my ~/security-lab/ directory that I'll use for the next 87 days of this roadmap. It's my personal forensics toolkit in the making.
+
+Day 3 complete. 🛡️
+
+#Linux #Cybersecurity #EthicalHacking #PenTesting #LearnInPublic #100DaysOfCyber #InfoSec #Bash</div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">Habits that separate beginners from professionals</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Always use <code>ls -la</code>, never just <code>ls</code>. The <code>-a</code> flag reveals hidden files (dot-prefixed). Every single professional does this automatically. Make it a reflex from Day 3.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Use <code>Tab</code> completion constantly. Start typing a path, press Tab — the shell autocompletes. Double-Tab shows all options. This eliminates typos and speeds you up dramatically.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Use <code>Ctrl+R</code> to search your command history. Start typing any part of a previous command and it appears. Far faster than pressing the up arrow 30 times.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Pipe commands together. <code>find / -name "*.log" 2>/dev/null | wc -l</code> counts all log files. The pipe <code>|</code> passes output of one command into the next. This is one of Linux's most powerful features.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: running <code>rm -rf</code> without double-checking the path. There is no recycle bin in Linux. One wrong path and critical files are gone permanently. Always verify with <code>ls</code> first.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common mistake: confusing <code>mv</code> and <code>cp</code>. <code>mv</code> removes the source. <code>cp</code> keeps it. When in doubt during incident response, always <code>cp</code> — preserve the original.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: think in pipelines, not individual commands. Real work looks like: <code>find /var/log -mtime -1 -type f | xargs grep -l "Failed password" 2>/dev/null</code> — find recent log files then search each for failed passwords. One line, massive power.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer these 5 without looking. If any stumps you, revisit that section tomorrow morning.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between an absolute path and a relative path? Give one example of each.</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>find / -mtime -1 -type f 2>/dev/null</code> do? When would a defender or attacker use it?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between <code>cp</code> and <code>mv</code>? Why does it matter during incident response?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">How would an attacker hide a file or directory from a plain <code>ls</code> command?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>tail -f /var/log/auth.log</code> do and why is it useful for a SOC analyst?</div></div>
+      <div class="div"></div>
+      <p>5/5 from memory = Day 3 complete. Tomorrow is the big one — permissions, <code>chmod</code>, <code>chown</code>, and SUID/SGID, the foundation of Linux privilege escalation.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 4 →</span><span class="tag tr">Permissions + Ownership (chmod, chown, SUID/SGID)</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o);
+  if(c)c.classList.toggle('open',!o);
+}
+tog('theory');
+</script>
