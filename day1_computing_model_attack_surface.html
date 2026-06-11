@@ -1,0 +1,501 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .wrap { max-width: 680px; padding: 1.5rem 0; }
+  .hero { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--color-background-info); color: var(--color-text-info); font-size: 12px; padding: 3px 10px; border-radius: var(--border-radius-md); margin-bottom: 0.75rem; }
+  .hero h1 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.3rem; }
+  .hero p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; }
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; margin-bottom: 1.5rem; }
+  .toc-item { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.6rem 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.15s; }
+  .toc-item:hover { background: var(--color-background-secondary); }
+  .toc-item i { font-size: 16px; color: var(--color-text-secondary); }
+  .toc-item span { font-size: 12px; color: var(--color-text-secondary); line-height: 1.3; }
+  .section { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); margin-bottom: 1rem; overflow: hidden; }
+  .sec-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; cursor: pointer; gap: 12px; }
+  .sec-header:hover { background: var(--color-background-secondary); }
+  .sec-left { display: flex; align-items: center; gap: 10px; }
+  .sec-icon { width: 32px; height: 32px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sec-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+  .sec-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 1px; }
+  .chevron { font-size: 16px; color: var(--color-text-secondary); transition: transform 0.2s; }
+  .chevron.open { transform: rotate(180deg); }
+  .sec-body { padding: 0 1.25rem 1.25rem; display: none; }
+  .sec-body.open { display: block; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); margin-right: 4px; margin-bottom: 4px; }
+  .tag-blue { background: var(--color-background-info); color: var(--color-text-info); }
+  .tag-red { background: var(--color-background-danger); color: var(--color-text-danger); }
+  .tag-green { background: var(--color-background-success); color: var(--color-text-success); }
+  .tag-amber { background: var(--color-background-warning); color: var(--color-text-warning); }
+  h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 1rem 0 0.4rem; }
+  h3:first-child { margin-top: 0; }
+  p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 0.5rem; }
+  ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+  li { font-size: 14px; color: var(--color-text-secondary); line-height: 1.8; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--color-background-secondary); padding: 1px 5px; border-radius: 4px; color: var(--color-text-primary); }
+  .codeblock { font-family: var(--font-mono); font-size: 12px; background: var(--color-background-secondary); padding: 0.75rem 1rem; border-radius: var(--border-radius-md); color: var(--color-text-primary); line-height: 1.8; margin: 0.5rem 0; white-space: pre-wrap; border: 0.5px solid var(--color-border-tertiary); }
+  .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.75rem; }
+  .mini-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; border: 0.5px solid var(--color-border-tertiary); }
+  .mini-card .label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .mini-card .val { font-size: 13px; font-weight: 500; color: var(--color-text-primary); line-height: 1.5; }
+  .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.6rem 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .task-item:last-child { border-bottom: none; }
+  .task-num { width: 22px; height: 22px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .task-text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+  .lab-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.5rem 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .lab-item:last-child { border-bottom: none; }
+  .lab-icon { width: 28px; height: 28px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .lab-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .lab-desc { font-size: 12px; color: var(--color-text-secondary); }
+  .story-block { border-left: 2px solid var(--color-border-tertiary); padding-left: 1rem; margin: 0.5rem 0; }
+  .story-phase { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+  .post-box { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; margin: 0.5rem 0; }
+  .yt-link { display: flex; align-items: center; gap: 10px; background: var(--color-background-danger); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; margin-top: 0.5rem; cursor: pointer; border: 0.5px solid var(--color-border-tertiary); }
+  .yt-link i { font-size: 20px; color: var(--color-text-danger); }
+  .yt-link .yt-title { font-size: 13px; font-weight: 500; color: var(--color-text-danger); }
+  .yt-link .yt-ch { font-size: 11px; color: var(--color-text-danger); opacity: 0.8; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 0.75rem 0; }
+  .tip-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 0.5rem; }
+  .tip-item i { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .tip-item p { margin: 0; }
+  .book-card { display: flex; gap: 12px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; border: 0.5px solid var(--color-border-tertiary); margin-top: 0.5rem; }
+  .book-cover { width: 40px; height: 54px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; background: var(--color-background-info); }
+  .book-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+  .book-reason { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .progress-bar { height: 4px; background: var(--color-border-tertiary); border-radius: 2px; margin-bottom: 1.5rem; }
+  .progress-fill { height: 100%; width: 9%; background: var(--color-text-info); border-radius: 2px; }
+  .progress-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-badge"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 1 · Day 1</div>
+    <h1>Computing Model + Attack Surface</h1>
+    <p>First principles of how computers work and where attackers strike. By end of day, you'll understand the full stack of a system — and how to think like both attacker and defender.</p>
+  </div>
+
+  <div class="progress-label">Roadmap progress — Day 1 of ~90</div>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+
+  <div class="toc">
+    <div class="toc-item" onclick="toggle('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="toc-item" onclick="toggle('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="toc-item" onclick="toggle('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="toc-item" onclick="toggle('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="toc-item" onclick="toggle('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="toc-item" onclick="toggle('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="toc-item" onclick="toggle('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="toc-item" onclick="toggle('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="toc-item" onclick="toggle('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="toc-item" onclick="toggle('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="toc-item" onclick="toggle('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="section" id="s-theory">
+    <div class="sec-header" onclick="toggle('theory')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">1. Theory Section</div><div class="sec-sub">Core concepts · Definitions · How it works</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-theory">
+      <h3>The Computing Model (OSI-inspired stack)</h3>
+      <p>Every system you will ever attack or defend is made of layered components. Understanding this stack is the foundation of all cybersecurity thinking.</p>
+      <div class="codeblock">Hardware (CPU, RAM, Disk, NIC)
+    ↓
+OS Kernel (Linux, Windows — manages resources)
+    ↓
+System Libraries (libc, OpenSSL, etc.)
+    ↓
+Applications (web servers, databases, browsers)
+    ↓
+Network (Ethernet → IP → TCP → HTTP/S)
+    ↓
+User / Human (the biggest attack surface of all)</div>
+
+      <h3>What is an attack surface?</h3>
+      <p>The attack surface is the total sum of different points (called attack vectors) where an unauthorized user can try to enter or extract data. The larger the surface, the more risk.</p>
+      <div class="card-row">
+        <div class="mini-card"><div class="label">Attack Vector</div><div class="val">A specific path or method an attacker uses to reach a target</div></div>
+        <div class="mini-card"><div class="label">Attack Surface</div><div class="val">ALL possible vectors combined — every open port, service, user</div></div>
+        <div class="mini-card"><div class="label">Threat</div><div class="val">Any potential danger that could exploit a vulnerability</div></div>
+        <div class="mini-card"><div class="label">Vulnerability</div><div class="val">A weakness in a system that can be exploited by a threat</div></div>
+      </div>
+
+      <h3>The CIA Triad — the core security model</h3>
+      <ul>
+        <li><strong>Confidentiality</strong> — only authorized users see data (encryption, access control)</li>
+        <li><strong>Integrity</strong> — data is not tampered with (hashes, digital signatures)</li>
+        <li><strong>Availability</strong> — systems are up when needed (DDoS prevention, backups)</li>
+      </ul>
+
+      <h3>Key first-principles concepts</h3>
+      <ul>
+        <li><strong>Least privilege:</strong> give users/processes only the minimum permissions needed</li>
+        <li><strong>Defense in depth:</strong> multiple layers of security, not just one wall</li>
+        <li><strong>Assume breach:</strong> design as if attackers are already inside</li>
+        <li><strong>Zero trust:</strong> never trust, always verify — even internal traffic</li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="yt-link" onclick="openLink('https://www.youtube.com/watch?v=3Kq1MIfTWCE')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-title">Cybersecurity for Beginners — Full Course</div><div class="yt-ch">Professor Messer · Free, beginner-friendly theory deep dive</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt-link" onclick="openLink('https://www.youtube.com/watch?v=inWWhr5tnEA')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-title">How the Internet Works in 5 Minutes</div><div class="yt-ch">Aaron · Great visual intro to the network computing model</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="section" id="s-practical">
+    <div class="sec-header" onclick="toggle('practical')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">2. Practical Section</div><div class="sec-sub">Hands-on commands · Step-by-step exercises</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-practical">
+      <h3>Exercise 1 — map your own attack surface</h3>
+      <p>Open a Linux terminal (or use TryHackMe's AttackBox). Run these commands and observe what's exposed:</p>
+      <div class="codeblock">uname -a                    # OS version + kernel
+hostname                    # machine name
+whoami                      # current user
+id                          # user ID, group memberships
+cat /etc/os-release         # distro details</div>
+
+      <h3>Exercise 2 — see what's listening on the network</h3>
+      <div class="codeblock">ss -tuln                    # open TCP/UDP ports
+netstat -tuln               # alternative (older systems)
+cat /etc/services           # what services map to which ports</div>
+
+      <h3>Exercise 3 — list running processes (potential attack surface)</h3>
+      <div class="codeblock">ps aux                      # all running processes
+ps aux | grep root          # root-owned processes (high risk)
+top                         # live process viewer</div>
+
+      <h3>Exercise 4 — check installed software (version = vulnerability)</h3>
+      <div class="codeblock">dpkg -l                     # Debian/Ubuntu installed packages
+rpm -qa                     # RHEL/CentOS installed packages
+which nc nmap curl wget     # check for common tools present</div>
+
+      <h3>Exercise 5 — map network connections</h3>
+      <div class="codeblock">ip addr                     # all network interfaces + IPs
+ip route                    # routing table
+cat /etc/hosts              # local DNS mappings
+cat /etc/resolv.conf        # DNS server config</div>
+
+      <p style="margin-top:0.75rem">After each command, ask yourself: <em>"What could an attacker learn from this output?"</em> This mindset shift is the core of security thinking.</p>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="section" id="s-scenario">
+    <div class="sec-header" onclick="toggle('scenario')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">3. Real-World Scenario</div><div class="sec-sub">Attack & defense story based on today's topic</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-scenario">
+      <p><strong>Scenario:</strong> A fintech startup launches a new payment API. The developer left SSH (port 22) open on the production server with default credentials, and exposed a debug endpoint on port 8080.</p>
+      <div class="divider"></div>
+      <div class="story-block">
+        <div class="story-phase" style="color:var(--color-text-danger)">Attacker reconnaissance</div>
+        <p>The attacker runs a port scan using Shodan (an internet search engine for devices) and finds the exposed server. They see port 22 and 8080 open.</p>
+      </div>
+      <div class="story-block">
+        <div class="story-phase" style="color:var(--color-text-danger)">Exploitation</div>
+        <p>They attempt <code>admin:admin</code> and <code>root:password</code> on SSH. It succeeds. They now have shell access to a production payment server.</p>
+      </div>
+      <div class="story-block">
+        <div class="story-phase" style="color:var(--color-text-danger)">Impact</div>
+        <p>The debug endpoint at <code>:8080/debug/env</code> leaks database credentials. The attacker exfiltrates 40,000 customer records.</p>
+      </div>
+      <div class="story-block">
+        <div class="story-phase" style="color:var(--color-text-success)">What should have happened</div>
+        <p>Firewall rules limiting SSH to known IPs, key-based SSH auth only, no debug endpoints in production, regular port scanning of your own infrastructure.</p>
+      </div>
+      <p><strong>Lesson:</strong> The attack surface was unnecessarily large. Every open port is a door. Every service is a potential vulnerability.</p>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="section" id="s-redteam">
+    <div class="sec-header" onclick="toggle('redteam')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">4. Red Team Perspective</div><div class="sec-sub">How attackers think and exploit this concept</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-redteam">
+      <h3>Attacker mindset: enumerate everything</h3>
+      <p>Before exploiting anything, attackers map the attack surface completely. The methodology is: <strong>Reconnaissance → Scanning → Enumeration → Exploitation</strong>.</p>
+      <h3>What attackers look for on a computing model</h3>
+      <ul>
+        <li><strong>Hardware layer:</strong> physical access, USB attacks, BIOS/UEFI firmware exploits</li>
+        <li><strong>OS layer:</strong> outdated kernel, misconfigurations, SUID binaries, cron jobs</li>
+        <li><strong>Application layer:</strong> unpatched software, default credentials, debug modes left on</li>
+        <li><strong>Network layer:</strong> open ports, unencrypted protocols (Telnet, FTP, HTTP), weak TLS</li>
+        <li><strong>Human layer:</strong> phishing, social engineering, password reuse — most successful vector</li>
+      </ul>
+      <h3>Red team tools introduced (learn these over time)</h3>
+      <div class="codeblock">nmap -sV target_ip          # port scan + service version detection
+shodan.io                   # search internet-exposed devices
+theHarvester                # OSINT: emails, domains, IPs
+whois target.com            # domain ownership info</div>
+      <h3>Key red team principle</h3>
+      <p>Attackers don't need to exploit every vulnerability — just one entry point. That's why reducing attack surface is more effective than trying to patch every flaw.</p>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="section" id="s-blueteam">
+    <div class="sec-header" onclick="toggle('blueteam')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">5. Blue Team Perspective</div><div class="sec-sub">Detect · Prevent · Respond</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-blueteam">
+      <h3>Reduce the attack surface (Prevention)</h3>
+      <ul>
+        <li>Close all ports not in use — run <code>ss -tuln</code> regularly and close unexpected listeners</li>
+        <li>Remove unused software — every extra package is potential vulnerability</li>
+        <li>Enforce least privilege — users and services get only what they need</li>
+        <li>Disable default accounts and change default credentials immediately</li>
+        <li>Use firewalls (<code>ufw</code>, <code>iptables</code>) to allow only necessary traffic</li>
+      </ul>
+      <h3>Detect anomalies (Detection)</h3>
+      <div class="codeblock">last                        # recent login history
+lastb                       # failed login attempts
+cat /var/log/auth.log       # SSH and auth logs
+journalctl -xe              # systemd logs (recent events)
+ausearch -m USER_LOGIN      # auditd login events</div>
+      <h3>Respond (Incident Response basics)</h3>
+      <ul>
+        <li>Isolate the affected system from the network immediately</li>
+        <li>Preserve logs before they are overwritten or deleted</li>
+        <li>Identify the entry point — which service, which credential, which port</li>
+        <li>Patch the vulnerability, then restore from clean backup</li>
+      </ul>
+      <h3>Blue team principle</h3>
+      <p>You can't protect what you don't know exists. Asset inventory and regular surface mapping are the foundation of all defense.</p>
+    </div>
+  </div>
+
+  <!-- 6. LABS -->
+  <div class="section" id="s-labs">
+    <div class="sec-header" onclick="toggle('labs')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">6. Free Labs</div><div class="sec-sub">TryHackMe · HackTheBox · PicoCTF · more</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-labs">
+      <div class="lab-item">
+        <div class="lab-icon" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div>
+          <div class="lab-name">TryHackMe — "Pre-Security" Path (Free)</div>
+          <div class="lab-desc">Starts from zero. Covers networking, Linux, web fundamentals. Direct match for today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/path/outline/presecurity')">tryhackme.com/path/outline/presecurity ↗</span></div>
+        </div>
+      </div>
+      <div class="lab-item">
+        <div class="lab-icon" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div>
+          <div class="lab-name">TryHackMe — "What is Networking?" Room (Free)</div>
+          <div class="lab-desc">Covers the computing model, OSI, IP addressing. Perfect for Day 1. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/whatisnetworking')">tryhackme.com/room/whatisnetworking ↗</span></div>
+        </div>
+      </div>
+      <div class="lab-item">
+        <div class="lab-icon" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div>
+          <div class="lab-name">TryHackMe — "Introductory Networking" (Free)</div>
+          <div class="lab-desc">OSI model, TCP/IP stack, networking tools. Essential first-principles. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/introtonetworking')">tryhackme.com/room/introtonetworking ↗</span></div>
+        </div>
+      </div>
+      <div class="lab-item">
+        <div class="lab-icon" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div>
+          <div class="lab-name">PicoCTF — General Skills Challenges (Free)</div>
+          <div class="lab-desc">Beginner CTF challenges covering Linux commands, basic enumeration. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://picoctf.org')">picoctf.org ↗</span></div>
+        </div>
+      </div>
+      <div class="lab-item">
+        <div class="lab-icon" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div>
+          <div class="lab-name">OverTheWire — Bandit (Free)</div>
+          <div class="lab-desc">Linux CLI wargame, starts from absolute zero. Great alongside Week 1. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org/wargames/bandit ↗</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. TASKS -->
+  <div class="section" id="s-tasks">
+    <div class="sec-header" onclick="toggle('tasks')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">7. Daily Tasks & Challenges</div><div class="sec-sub">Complete before moving to Day 2</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-tasks">
+      <div class="task-item"><div class="task-num">1</div><div class="task-text">Run all 5 practical exercises above on your Linux machine or a TryHackMe AttackBox. Screenshot your terminal output for each and write one sentence about what it reveals from an attacker's perspective.</div></div>
+      <div class="task-item"><div class="task-num">2</div><div class="task-text">Draw the computing model stack (hardware → OS → libraries → apps → network → human) by hand or in a notes app. For each layer, write one real attack example you can think of or research.</div></div>
+      <div class="task-item"><div class="task-num">3</div><div class="task-text">Complete the TryHackMe "What is Networking?" room (free, ~30 min). Note 3 things that surprised you.</div></div>
+      <div class="task-item"><div class="task-num">4</div><div class="task-text">Write the CIA Triad from memory, then find one real-world breach news story and label which part of the CIA Triad was violated. (Search: "data breach 2024 site:krebsonsecurity.com")</div></div>
+      <div class="task-item"><div class="task-num">5</div><div class="task-text">Create a new text file called <code>attack_surface_notes.txt</code> and write a 5-line summary: what an attack surface is, why it matters, and 3 ways to reduce it. This becomes your personal knowledge base.</div></div>
+    </div>
+  </div>
+
+  <!-- 8. BOOK -->
+  <div class="section" id="s-book">
+    <div class="sec-header" onclick="toggle('book')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">8. Book of the Day</div><div class="sec-sub">One highly recommended resource for today's topic</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-book">
+      <div class="book-card">
+        <div class="book-cover"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div>
+          <div class="book-title">The Web Application Hacker's Handbook — Chapter 1: Web Application (In)Security</div>
+          <div class="book-reason" style="margin-top:4px">Even though titled for web apps, Chapter 1 lays out the computing model and attack surface thinking in the clearest way for beginners. It explains why systems get compromised at a first-principles level. Free PDF widely available online. If you want a pure fundamentals book, pair with <em>CompTIA Security+ Get Certified Get Ahead</em> by Darril Gibson — Chapter 1 covers CIA Triad and attack concepts in textbook style.</div>
+        </div>
+      </div>
+      <div style="margin-top:0.75rem">
+        <span class="tag tag-blue">Free PDF available</span>
+        <span class="tag tag-green">Beginner friendly</span>
+        <span class="tag tag-amber">Industry standard</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CONTENT -->
+  <div class="section" id="s-content">
+    <div class="sec-header" onclick="toggle('content')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">9. Content Creation Guide</div><div class="sec-sub">What to post today · Platform · Hashtags</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-content">
+      <div class="card-row">
+        <div class="mini-card"><div class="label">Best platform today</div><div class="val">LinkedIn (professional audience loves beginner journey posts)</div></div>
+        <div class="mini-card"><div class="label">Secondary platform</div><div class="val">Twitter/X (cybersec community very active, use threads)</div></div>
+        <div class="mini-card"><div class="label">Format</div><div class="val">Text post with a numbered list or a 60-sec Reel/Short of your terminal</div></div>
+        <div class="mini-card"><div class="label">Post timing</div><div class="val">8–10 AM or 6–8 PM local time for max reach</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">
+🔐 Day 1 of my cybersecurity learning journey — Computing Model & Attack Surface
+
+Today I learned something that changes how you look at every system:
+
+Every attack happens at a layer.
+• Hardware → firmware exploits, USB attacks
+• OS → kernel vulnerabilities, misconfigs
+• Applications → unpatched software, default creds
+• Network → open ports, weak protocols
+• Human → phishing, social engineering
+
+The "attack surface" is the total of everything exposed to potential attackers. The smaller you make it, the safer the system.
+
+First command I ran today: ss -tuln
+It showed me every open port on my own Linux machine. That's my attack surface.
+
+Building in public. 90 days. Let's go. 🛡️
+
+#Cybersecurity #EthicalHacking #Linux #LearnInPublic #InfoSec #CyberSecCommunity #100DaysOfCyber #SOCAnalyst
+      </div>
+      <h3>Sample Twitter/X thread opener</h3>
+      <div class="post-box">
+Day 1 of learning cybersecurity from scratch 🧵
+
+Topic: Computing Model + Attack Surface
+
+Most people think hacking is magic. It's not. Every single attack targets a layer of a system. Here's the mental model that changes everything 👇
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. TIPS -->
+  <div class="section" id="s-tips">
+    <div class="sec-header" onclick="toggle('tips')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">10. Pro Tips & Mindset</div><div class="sec-sub">Advice · Common mistakes · How pros think</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p><strong>Think in layers, always.</strong> When you see any system, instinctively ask: what layer am I looking at, and what could go wrong here?</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p><strong>Curiosity over memorization.</strong> Don't memorize commands. Understand WHY each command exists. Google and <code>man pages</code> exist for syntax. Thinking doesn't.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p><strong>Document everything.</strong> Professionals keep notes on every system they touch. Start this habit on Day 1. Your notes become your second brain.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p><strong>Common mistake:</strong> Skipping theory and jumping to tools. Tools change. Concepts don't. Nmap is useless if you don't understand what a port is.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p><strong>Common mistake:</strong> Practicing only on your own machine. Use TryHackMe/HTB legal environments. Never scan systems you don't own.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p><strong>Common mistake:</strong> Treating cybersecurity as only technical. The human layer is the most exploited attack surface. Psychology matters as much as code.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p><strong>Pro mindset:</strong> Always ask "what's the impact?" not just "is this exploitable?" Severity = likelihood × impact. This is how real security reports are written.</p></div>
+    </div>
+  </div>
+
+  <!-- 11. RECAP -->
+  <div class="section" id="s-recap">
+    <div class="sec-header" onclick="toggle('recap')">
+      <div class="sec-left">
+        <div class="sec-icon" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div>
+        <div><div class="sec-title">11. Quick Recap</div><div class="sec-sub">Review before sleeping · Key takeaways</div></div>
+      </div>
+      <i class="ti ti-chevron-down chevron" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sec-body" id="body-recap">
+      <p>Before you sleep, confirm you can answer these 5 questions from memory:</p>
+      <div class="task-item"><div class="task-num">✓</div><div class="task-text">What are the 6 layers of the computing model, from hardware to human?</div></div>
+      <div class="task-item"><div class="task-num">✓</div><div class="task-text">What is an attack surface, and what is an attack vector? (Give an example of each.)</div></div>
+      <div class="task-item"><div class="task-num">✓</div><div class="task-text">What does CIA stand for in cybersecurity, and what does each letter mean?</div></div>
+      <div class="task-item"><div class="task-num">✓</div><div class="task-text">What Linux command shows you open listening ports on a system?</div></div>
+      <div class="task-item"><div class="task-num">✓</div><div class="task-text">Name 3 ways to reduce the attack surface of a Linux server.</div></div>
+      <div class="divider"></div>
+      <p>If you can answer all 5 without looking — Day 1 complete. ✅ Move to Day 2: Linux Filesystem Hierarchy.</p>
+      <div style="margin-top:0.75rem">
+        <span class="tag tag-blue">Day 2 →</span>
+        <span class="tag tag-green">Linux Filesystem Hierarchy</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(id) {
+  const body = document.getElementById('body-' + id);
+  const chev = document.getElementById('chev-' + id);
+  if (!body) return;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (chev) chev.classList.toggle('open', !isOpen);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  toggle('theory');
+});
+window.addEventListener('load', () => {
+  const body = document.getElementById('body-theory');
+  if (body && !body.classList.contains('open')) toggle('theory');
+});
+</script>
