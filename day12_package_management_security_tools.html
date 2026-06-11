@@ -1,0 +1,586 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:94%;background:var(--color-text-info);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary);line-height:1.3}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:175px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.tool-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.7rem 1rem;margin:.35rem 0;display:flex;align-items:flex-start;gap:10px}
+.tc-name{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:105px;flex-shrink:0;margin-top:1px}
+.tc-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-calendar" aria-hidden="true"></i> Month 1 · Week 2 · Day 12</div>
+    <h1>Package Management + Security Tools</h1>
+    <p>Today you master how Linux software is installed, verified, and kept updated — including how packages can be a supply chain attack vector. You also install and get hands-on with the essential security tools every analyst and pentester uses daily.</p>
+  </div>
+  <div class="prog-lbl">Roadmap progress — Day 12 of ~90</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('theory')"><i class="ti ti-book-2" aria-hidden="true"></i><span>Theory</span></div>
+    <div class="ti" onclick="tog('practical')"><i class="ti ti-terminal-2" aria-hidden="true"></i><span>Practical</span></div>
+    <div class="ti" onclick="tog('scenario')"><i class="ti ti-shield-exclamation" aria-hidden="true"></i><span>Scenario</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('tasks')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Tasks</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('content')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>Content Guide</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Recap</span></div>
+  </div>
+
+  <!-- 1. THEORY -->
+  <div class="sec">
+    <div class="sh" onclick="tog('theory')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-book-2" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">1. Theory Section</div><div class="ss">apt · dpkg · repos · GPG signing · supply chain</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-theory" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-theory">
+
+      <h3>How Linux package management works</h3>
+      <p>A package manager is a system for installing, upgrading, configuring, and removing software. It handles dependencies automatically and — critically for security — verifies the integrity and authenticity of packages using cryptographic signatures. Understanding this pipeline is essential because every unpatched package is a potential vulnerability, and every untrusted repository is a potential supply chain attack.</p>
+
+      <div class="g2">
+        <div class="mc"><div class="lbl">apt</div><div class="val">High-level package manager for Debian/Ubuntu. Resolves dependencies, downloads, and installs packages. The tool you use daily.</div></div>
+        <div class="mc"><div class="lbl">dpkg</div><div class="val">Low-level package tool — installs, removes, and queries .deb files directly. apt calls dpkg under the hood.</div></div>
+        <div class="mc"><div class="lbl">apt-get / apt-cache</div><div class="val">Older CLI variants of apt. Still widely used in scripts. <code>apt-cache search</code> is fast for finding packages.</div></div>
+        <div class="mc"><div class="lbl">snap / flatpak</div><div class="val">Containerised package formats. Sandboxed but have their own security model — snap packages run with confinement profiles.</div></div>
+      </div>
+
+      <h3>The package lifecycle — from repo to disk</h3>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">Repository</div><div class="cmd-desc">A server hosting .deb packages and metadata. Defined in <code>/etc/apt/sources.list</code> and <code>/etc/apt/sources.list.d/</code>. Each repo is signed with a GPG key.</div></div>
+        <div class="cmd-row"><div class="cmd">GPG signature</div><div class="cmd-desc">Every package and repo metadata is cryptographically signed. apt verifies the signature before installing anything. A tampered package will be rejected.</div></div>
+        <div class="cmd-row"><div class="cmd">apt update</div><div class="cmd-desc">Downloads fresh package lists (metadata) from all repos. Does NOT install anything — just refreshes what's available.</div></div>
+        <div class="cmd-row"><div class="cmd">apt upgrade</div><div class="cmd-desc">Installs available updates for all installed packages. Run this regularly — unpatched packages are a primary attack vector.</div></div>
+        <div class="cmd-row"><div class="cmd">Package cache</div><div class="cmd-desc">Downloaded .deb files are cached in <code>/var/cache/apt/archives/</code>. Can be cleared with <code>apt clean</code>.</div></div>
+      </div>
+
+      <h3>Supply chain security — why this matters for security professionals</h3>
+      <p>Package managers are a trust chain. You trust the OS vendor, who trusts the package maintainer, who trusts the upstream developer. Each link is an attack surface:</p>
+      <ul>
+        <li><strong>Malicious repository:</strong> An attacker adds a fake repo to <code>/etc/apt/sources.list.d/</code> that serves a backdoored version of a common tool.</li>
+        <li><strong>Typosquatting:</strong> A malicious package named <code>openssh-server</code> vs <code>openssl-server</code> — one character difference, same install command.</li>
+        <li><strong>Compromised upstream:</strong> The legitimate package source is compromised — the attacker modifies source code before the maintainer packages it.</li>
+        <li><strong>GPG key theft:</strong> An attacker who steals a maintainer's signing key can sign malicious packages that apt accepts without warning.</li>
+      </ul>
+      <p>Always verify repository sources, GPG key fingerprints, and checksums of binaries installed outside the package manager.</p>
+
+      <h3>Package managers by distro family</h3>
+      <div class="g2">
+        <div class="mc"><div class="lbl">Debian / Ubuntu</div><div class="val"><code>apt</code>, <code>apt-get</code>, <code>dpkg</code> — .deb packages</div></div>
+        <div class="mc"><div class="lbl">RHEL / CentOS / Fedora</div><div class="val"><code>dnf</code>, <code>yum</code>, <code>rpm</code> — .rpm packages</div></div>
+        <div class="mc"><div class="lbl">Arch Linux</div><div class="val"><code>pacman</code> — rolling release, very current packages</div></div>
+        <div class="mc"><div class="lbl">Cross-distro</div><div class="val"><code>snap</code>, <code>flatpak</code>, <code>AppImage</code> — distribution-independent formats</div></div>
+      </div>
+
+      <div class="div"></div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=1kicKPsXRs4')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux package management — apt, dpkg explained</div><div class="yt-c">LearnLinuxTV · Complete beginner guide to apt and package management</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+      <div class="yt" onclick="openLink('https://www.youtube.com/watch?v=oHUC6f3_oHQ')">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i>
+        <div><div class="yt-t">Linux security tools you need to know — Kali tools explained</div><div class="yt-c">NetworkChuck · Covers the security toolset every analyst and pentester uses</div></div>
+        <i class="ti ti-external-link" style="margin-left:auto;font-size:14px;color:var(--color-text-danger)" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRACTICAL -->
+  <div class="sec">
+    <div class="sh" onclick="tog('practical')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-terminal-2" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">2. Practical Section</div><div class="ss">apt · dpkg · repos · security tools installation</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-practical" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-practical">
+
+      <h3>Exercise 1 — apt fundamentals</h3>
+      <div class="cb">sudo apt update                          # refresh package lists (always run first)
+sudo apt upgrade                         # install all available updates
+sudo apt full-upgrade                    # upgrade + handle dependency changes
+sudo apt install nmap -y                 # install a package
+sudo apt install nmap wireshark netcat-openbsd -y  # install multiple
+sudo apt remove nmap                     # remove package (keep config files)
+sudo apt purge nmap                      # remove package AND config files
+sudo apt autoremove                      # remove orphaned dependencies
+sudo apt clean                           # delete cached .deb files
+apt show nmap                            # detailed info about a package
+apt list --installed                     # all installed packages
+apt list --installed | grep -c ""        # count installed packages</div>
+
+      <h3>Exercise 2 — apt search and investigation</h3>
+      <div class="cb">apt search nmap                          # search by name/description
+apt-cache search port scanner            # keyword search
+apt-cache show nmap                      # version, size, description, dependencies
+apt-cache depends nmap                   # what does nmap depend on?
+apt-cache rdepends nmap                  # what depends on nmap?
+apt-cache policy nmap                    # installed vs available versions + repo source
+dpkg -l | grep nmap                      # confirm installation and version
+dpkg -L nmap                             # list all files installed by a package
+dpkg -S /usr/bin/nmap                    # which package owns this file?</div>
+
+      <h3>Exercise 3 — dpkg for .deb files</h3>
+      <div class="cb">dpkg -i package.deb                      # install a local .deb file
+dpkg -r package-name                     # remove package
+dpkg -l                                  # list all installed packages
+dpkg -l | grep "^ii"                     # only correctly installed packages
+dpkg -l | grep "^rc"                     # packages removed but config remains
+dpkg --get-selections                    # full package selection state</div>
+
+      <h3>Exercise 4 — repository management and GPG</h3>
+      <div class="cb">cat /etc/apt/sources.list                # main repo sources
+ls /etc/apt/sources.list.d/              # additional repos (audit these regularly)
+apt-key list                             # trusted GPG keys (deprecated but shows existing)
+ls /etc/apt/trusted.gpg.d/              # modern location for trusted repo keys
+sudo apt-key fingerprint                 # verify key fingerprints
+
+# Add an external repo safely (example: GitHub CLI):
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+  | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] \
+  https://cli.github.com/packages stable main" \
+  | sudo tee /etc/apt/sources.list.d/github-cli.list</div>
+
+      <h3>Exercise 5 — essential security tools installation</h3>
+      <div class="cb">sudo apt update
+
+# Network analysis and scanning:
+sudo apt install -y nmap wireshark tshark netcat-openbsd tcpdump
+
+# Vulnerability and enumeration:
+sudo apt install -y nikto dirb gobuster hydra
+
+# Forensics and analysis:
+sudo apt install -y foremost binwalk strings hexedit
+
+# Password and hash tools:
+sudo apt install -y john hashcat
+
+# System monitoring and audit:
+sudo apt install -y htop iotop nethogs fail2ban auditd aide lynis
+
+# Useful utilities every security person needs:
+sudo apt install -y curl wget git vim tree jq python3-pip net-tools dnsutils</div>
+
+      <h3>Exercise 6 — verify installed tools and check for updates</h3>
+      <div class="cb">which nmap wireshark netcat john          # verify tools are in PATH
+nmap --version                           # version checks for key tools
+john --version
+lynis --version
+
+apt list --upgradable                    # what has available updates?
+sudo apt list --upgradable 2>/dev/null | grep -v "^Listing"  # clean output
+
+# Check for security updates specifically:
+sudo apt-get --just-print upgrade 2>&1 | grep "^Inst" | grep -i security</div>
+
+      <h3>Exercise 7 — lynis: automated system audit</h3>
+      <div class="cb">sudo apt install lynis -y
+sudo lynis audit system                  # full system security audit (takes ~2 min)
+sudo lynis audit system --quick          # faster version
+
+# After the audit:
+cat /var/log/lynis.log                   # full detailed log
+cat /var/log/lynis-report.dat            # machine-readable findings
+grep "warning\|suggestion" /var/log/lynis-report.dat | head -20
+# Lynis gives you a hardening index score and prioritised recommendations
+# This is exactly what security auditors run on new systems</div>
+    </div>
+  </div>
+
+  <!-- 3. SCENARIO -->
+  <div class="sec">
+    <div class="sh" onclick="tog('scenario')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-shield-exclamation" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">3. Real-World Scenario</div><div class="ss">Malicious third-party repository backdoors 40,000 servers</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-scenario" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-scenario">
+      <p>A popular Linux tutorial blog publishes a guide for setting up a development environment. The guide instructs readers to add a third-party apt repository and install a toolchain. The repository is later compromised.</p>
+      <div class="div"></div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 1 — the malicious repo is introduced</div>
+        <p>An attacker compromises the blog's repository server and replaces legitimate package files with backdoored versions. The packages are still signed with the same GPG key (the attacker also stole the private key). apt considers the packages fully trusted — the signature is valid.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 2 — mass installation via trusted instructions</div>
+        <p>Thousands of developers and sysadmins following the guide run <code>sudo apt update && sudo apt install toolchain</code>. They install the backdoored package silently. No warnings appear — the signature is valid, the package name is correct.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 3 — persistence across 40,000 systems</div>
+        <p>The backdoor establishes a systemd service on each system (sound familiar from Day 9?) that phones home. By the time the compromise is discovered, tens of thousands of servers have been affected for weeks.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Step 4 — detection is delayed</div>
+        <p>Because the installation was legitimate-looking (correct package name, valid signature, expected behavior), no automated security tools flagged it. Detection came from a researcher who noticed anomalous outbound connections in network traffic analysis.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-success)">Defender lessons</div>
+        <p>Audit <code>/etc/apt/sources.list.d/</code> regularly — every third-party repo is a trust extension. Verify GPG key fingerprints against official sources. Use <code>dpkg -l</code> to audit installed packages. Monitor outbound network connections for unexpected destinations. Tools like <code>lynis</code> flag unrecognised repos as a finding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">4. Red Team Perspective</div><div class="ss">Package enumeration · software versions · living off the land</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>Installed software enumeration after foothold</h3>
+      <p>The package list is a goldmine for finding exploitable software. Every installed package with a known CVE is a potential privilege escalation or lateral movement path.</p>
+      <div class="cb">dpkg -l                                  # full installed package list
+dpkg -l | awk '{print $2,$3}' | grep -v "^Name\|^+-" | sort
+# clean package:version list for vulnerability lookup
+
+dpkg -l | grep -iE "openssh|apache|nginx|mysql|postgres|php|python|perl|ruby"
+# look for network-facing services with version numbers
+
+cat /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null
+# what repos is this system pulling from? any unusual third-party repos?</div>
+
+      <h3>Version fingerprinting for CVE lookup</h3>
+      <div class="cb">dpkg -l openssh-server                   # SSH server version
+dpkg -l apache2 2>/dev/null              # Apache version
+dpkg -l linux-image-* | grep "^ii"      # kernel version from packages
+uname -r                                 # current running kernel version
+
+# Cross-reference versions at:
+# https://cve.mitre.org/cve/search_cve_list.html
+# https://nvd.nist.gov/vuln/search</div>
+
+      <h3>Tools found on the system — LOLBins and more</h3>
+      <div class="cb">which python3 perl ruby php curl wget nc socat ncat  2>/dev/null
+# what scripting runtimes and network tools are available?
+
+dpkg -l | grep -iE "netcat|socat|ncat|nc" 2>/dev/null
+# network redirection tools — useful for shells and tunnelling
+
+find /usr/bin /usr/sbin /bin /sbin -perm -u+x -type f | xargs dpkg -S 2>/dev/null | grep -v "^dpkg"
+# map every executable to its owning package — spot unpackaged binaries</div>
+
+      <h3>Identifying unpackaged binaries (possible implants)</h3>
+      <div class="cb">find /usr/local/bin /usr/local/sbin /opt -type f -executable 2>/dev/null
+# unpackaged locations — not managed by apt, not tracked
+
+find /usr/bin /bin -type f | while read f; do
+  dpkg -S "$f" &>/dev/null || echo "UNPACKAGED: $f"
+done
+# any executable in standard bin dirs not owned by a package is suspicious</div>
+    </div>
+  </div>
+
+  <!-- 5. BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">5. Blue Team Perspective</div><div class="ss">Patch management · repo audit · lynis · unattended upgrades</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>Automate security updates</h3>
+      <div class="cb">sudo apt install unattended-upgrades -y
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+# configure automatic security-only updates
+
+cat /etc/apt/apt.conf.d/50unattended-upgrades
+# review what's configured for auto-upgrade
+
+sudo unattended-upgrades --dry-run --debug  # test without applying</div>
+
+      <h3>Audit installed packages and repositories</h3>
+      <div class="cb">cat /etc/apt/sources.list
+ls -la /etc/apt/sources.list.d/          # audit all third-party repos
+ls /etc/apt/trusted.gpg.d/              # trusted signing keys
+
+dpkg -l | grep "^rc"                     # packages removed but config remains — may contain credentials
+dpkg --get-selections | grep deinstall   # packages marked for removal but not cleaned
+
+find /usr/local/bin /opt -type f -executable -newer /etc/apt/sources.list 2>/dev/null
+# executables installed after the repo config was last changed — anomaly indicator</div>
+
+      <h3>Run lynis for automated security auditing</h3>
+      <div class="cb">sudo lynis audit system
+# After completion, check the hardening index and focus on:
+grep "warning" /var/log/lynis-report.dat      # security warnings
+grep "suggestion" /var/log/lynis-report.dat | head -20  # hardening suggestions
+grep "hardening_index" /var/log/lynis-report.dat        # overall score (aim for 80+)</div>
+
+      <h3>Check for vulnerable packages</h3>
+      <div class="cb">sudo apt-get --just-print upgrade 2>&1 | grep "^Inst" | grep -i security
+# packages with available security updates
+
+sudo apt list --upgradable 2>/dev/null
+sudo apt upgrade --dry-run               # what would upgrade change?
+
+debsecan 2>/dev/null || sudo apt install debsecan -y && debsecan
+# Debian Security Analyzer — lists CVEs affecting installed packages</div>
+
+      <h3>Add package audit to recon.sh</h3>
+      <div class="cb">banner "PACKAGE AUDIT"
+echo "--- Third-party repositories ---"
+cat /etc/apt/sources.list.d/* 2>/dev/null
+
+echo "--- Packages with security updates available ---"
+apt-get --just-print upgrade 2>&1 | grep "^Inst" | grep -i security | head -20
+
+echo "--- Unpackaged executables in /usr/local ---"
+find /usr/local/bin /usr/local/sbin -type f -executable 2>/dev/null</div>
+    </div>
+  </div>
+
+  <!-- 6. ESSENTIAL SECURITY TOOLS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tools')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-tool" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">Essential Security Tools Reference</div><div class="ss">Install · use · know why each matters</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tools" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tools">
+      <h3>Network and scanning</h3>
+      <div class="tool-card"><div class="tc-name">nmap</div><div class="tc-desc">Port scanner and service fingerprinter. The most widely used recon tool. <code>nmap -sV -sC target</code> is the standard starting scan. <span class="tag tb">core tool</span></div></div>
+      <div class="tool-card"><div class="tc-name">wireshark</div><div class="tc-desc">GUI packet capture and analysis. See every byte of network traffic. Essential for understanding protocols and detecting anomalies. <span class="tag tb">core tool</span></div></div>
+      <div class="tool-card"><div class="tc-name">tshark</div><div class="tc-desc">CLI version of Wireshark. Scriptable packet capture and analysis. <code>tshark -i eth0 -w capture.pcap</code></div></div>
+      <div class="tool-card"><div class="tc-name">tcpdump</div><div class="tc-desc">Lightweight CLI packet capture. Always available on servers without Wireshark. <code>tcpdump -i eth0 -w file.pcap</code></div></div>
+      <div class="tool-card"><div class="tc-name">netcat (nc)</div><div class="tc-desc">The Swiss Army knife of networking. Port scanning, banner grabbing, file transfer, shells. <code>nc -lvnp 4444</code> listens for connections. <span class="tag tb">core tool</span></div></div>
+
+      <h3>Web application and enumeration</h3>
+      <div class="tool-card"><div class="tc-name">nikto</div><div class="tc-desc">Web server scanner. Detects misconfigurations, outdated software, dangerous files. <code>nikto -h http://target</code></div></div>
+      <div class="tool-card"><div class="tc-name">gobuster</div><div class="tc-desc">Directory and file brute-forcer. Find hidden paths on web servers. <code>gobuster dir -u http://target -w /usr/share/wordlists/dirb/common.txt</code></div></div>
+      <div class="tool-card"><div class="tc-name">curl / wget</div><div class="tc-desc">Already installed. HTTP requests, header inspection, file downloading. <code>curl -I url</code> for headers. <span class="tag tg">already installed</span></div></div>
+
+      <h3>Password and hash analysis</h3>
+      <div class="tool-card"><div class="tc-name">john (John the Ripper)</div><div class="tc-desc">Password hash cracker. Supports hundreds of hash formats. <code>john --wordlist=rockyou.txt hashes.txt</code> <span class="tag ta">use legally and ethically only</span></div></div>
+      <div class="tool-card"><div class="tc-name">hashcat</div><div class="tc-desc">GPU-accelerated hash cracker. Much faster than John on supported hardware. <code>hashcat -m 1800 hashes.txt wordlist.txt</code> <span class="tag ta">use legally and ethically only</span></div></div>
+
+      <h3>System hardening and audit</h3>
+      <div class="tool-card"><div class="tc-name">lynis</div><div class="tc-desc">Automated security auditing tool. Scans the entire system and gives a hardening index score with prioritised recommendations. Run on every new server. <span class="tag tg">run now</span></div></div>
+      <div class="tool-card"><div class="tc-name">auditd</div><div class="tc-desc">Kernel-level audit daemon. Logs file accesses, system calls, user actions. Already covered in Week 1 — now you know how to install it on new systems. <span class="tag tg">already covered</span></div></div>
+      <div class="tool-card"><div class="tc-name">fail2ban</div><div class="tc-desc">Intrusion prevention. Bans IPs after repeated failed auth attempts. Covered Day 11. <span class="tag tg">already covered</span></div></div>
+      <div class="tool-card"><div class="tc-name">aide</div><div class="tc-desc">File integrity monitor. Creates a database of filesystem state — alerts when files change unexpectedly. <code>aide --init</code> then <code>aide --check</code></div></div>
+
+      <h3>Forensics and malware analysis</h3>
+      <div class="tool-card"><div class="tc-name">strings</div><div class="tc-desc">Extract printable strings from any binary or file. First thing to run on a suspicious file. <code>strings /tmp/suspicious-binary | head -50</code></div></div>
+      <div class="tool-card"><div class="tc-name">binwalk</div><div class="tc-desc">Firmware and binary analysis. Identify embedded files and file systems. Used in CTF challenges constantly.</div></div>
+      <div class="tool-card"><div class="tc-name">foremost</div><div class="tc-desc">File carving tool. Recover files from disk images or raw data based on file headers.</div></div>
+    </div>
+  </div>
+
+  <!-- 7. LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">6. Free Labs</div><div class="ss">TryHackMe · HackTheBox · VulnHub</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Nmap" room (Free)</div><div class="ld">Dedicated nmap room covering all scan types, output formats, and how to interpret results. Direct practice for the most important tool installed today. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/furthernmap')">tryhackme.com/room/furthernmap ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Wireshark: The Basics" (Free)</div><div class="ld">Hands-on introduction to packet capture and analysis with Wireshark. Directly extends Day 10's networking knowledge. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/wiresharkthebasics')">tryhackme.com/room/wiresharkthebasics ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "John the Ripper" room (Free)</div><div class="ld">Complete guide to password hash cracking with John. Covers format detection, wordlists, and rules. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/johntheripper0')">tryhackme.com/room/johntheripper0 ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">HackTheBox — Starting Point machines (Free tier)</div><div class="ld">These beginner machines require nmap, nikto, and netcat — all installed today. Perfect immediate practice. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://app.hackthebox.com/starting-point')">hackthebox.com ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">Lynis documentation — CISOfy (Free)</div><div class="ld">Read the lynis documentation to understand what each test checks. Understanding the tool makes its findings actionable. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://cisofy.com/documentation/lynis/')">cisofy.com/documentation/lynis ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. TASKS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tasks')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-checklist" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">7. Daily Tasks & Challenges</div><div class="ss">Complete before moving to Day 13</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tasks" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tasks">
+      <div class="task-item"><div class="tnum">1</div><div class="ttxt">Run <code>sudo lynis audit system</code> on your machine. Read the full output. Find your hardening index score. Pick the top 5 warnings (not suggestions — warnings are higher severity) and for each one: look up what it means, why it matters from a security perspective, and how to remediate it. Save this as a mini-report in <code>~/security-lab/notes/day12-lynis-audit.txt</code>.</div></div>
+      <div class="task-item"><div class="tnum">2</div><div class="ttxt">Audit <code>/etc/apt/sources.list</code> and every file in <code>/etc/apt/sources.list.d/</code>. For each third-party repository, verify: where it came from, what GPG key it uses (<code>ls /etc/apt/trusted.gpg.d/</code>), and whether you can trace it to an official source. Document your findings — any repo you cannot account for is a security finding.</div></div>
+      <div class="task-item"><div class="tnum">3</div><div class="ttxt">Install all the essential security tools from Exercise 5. Then verify each one is installed and working by running its <code>--version</code> flag. For nmap, wireshark, and netcat specifically: run a basic operation on localhost (not an external target) to confirm they function correctly. Add a tool inventory section to your security-lab notes.</div></div>
+      <div class="task-item"><div class="tnum">4</div><div class="ttxt">Complete the TryHackMe "Nmap" room. After completing it, come back to your terminal and run nmap against <code>localhost</code> (<code>127.0.0.1</code>) with the <code>-sV -sC</code> flags. Compare the output to what <code>ss -tulnp</code> shows. They should match — if they don't, investigate why.</div></div>
+      <div class="task-item"><div class="tnum">5</div><div class="ttxt">Add the "PACKAGE AUDIT" section from the Blue Team area to <code>recon.sh</code>. Also add a line that outputs the count of installed packages and the count of packages with available security updates. Your script now has 9 sections covering the full local attack surface — it's nearly complete for the Week 2 project.</div></div>
+    </div>
+  </div>
+
+  <!-- 9. BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">8. Book of the Day</div><div class="ss">One highly recommended resource</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div style="display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem">
+        <div style="width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-success)"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-success)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Linux Bible — Christopher Negus (Chapter 20: Securing Linux)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Chapter 20 of the Linux Bible covers system hardening, security tools, and package management from a defensive perspective — directly aligned with today's content. It covers auditd, PAM, firewall configuration, and security scanning tools in a practical, hands-on format. After the more offensive Red Team perspective of recent days, this chapter regrounds you in the systematic approach to Linux security that real system administrators use. Widely available in libraries and as an ebook.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tg">Chapter 20 tonight</span><span class="tag tb">Defensive perspective</span><span class="tag ta">Builds on Days 4–9</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. CONTENT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('content')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">9. Content Creation Guide</div><div class="ss">What to post · Platform · Hashtags</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-content" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-content">
+      <div class="g2">
+        <div class="mc"><div class="lbl">Best platform</div><div class="val">LinkedIn — the supply chain attack scenario is a timely, relatable story for developers and security teams alike</div></div>
+        <div class="mc"><div class="lbl">Secondary</div><div class="val">Twitter/X — share your lynis hardening score and top 3 findings as a thread</div></div>
+        <div class="mc"><div class="lbl">Visual idea</div><div class="val">Screenshot of your lynis audit output showing the hardening index — shows real applied work</div></div>
+        <div class="mc"><div class="lbl">Strong hook</div><div class="val">"Every apt repo you add to a server is a trust extension — and a potential attack vector"</div></div>
+      </div>
+      <h3 style="margin-top:1rem">Sample LinkedIn post</h3>
+      <div class="post-box">Day 12 of my cybersecurity journey — Package Management + Security Tools
+
+A fact that changed how I look at Linux software:
+
+Every third-party repository you add to /etc/apt/sources.list.d/ is a trust decision.
+
+When you run "sudo apt install something" from a third-party repo, you're trusting that server to deliver what it claims — signed with a key you accepted. If that server is ever compromised, you get whatever the attacker puts there, with a valid signature, no warnings.
+
+This is called a supply chain attack. It's how thousands of servers have been compromised by following legitimate-looking installation guides.
+
+What I do now before adding any repository:
+→ Verify the GPG key fingerprint against the official source
+→ Audit /etc/apt/sources.list.d/ regularly on any server I manage
+→ Run "dpkg -l" to spot packages I didn't install
+
+Today I also ran lynis — a free automated security auditing tool:
+sudo lynis audit system
+
+It scanned my system and gave it a hardening index score with 47 prioritised recommendations. That single command showed me more misconfigurations than days of manual checking.
+
+Essential security tools installed today: nmap, Wireshark, tcpdump, netcat, john, fail2ban, lynis.
+
+Day 12 of 90. Toolkit is growing. 🛡️
+
+#Linux #Cybersecurity #PackageManagement #SupplyChain #BlueTeam #InfoSec #LearnInPublic #100DaysOfCyber</div>
+    </div>
+  </div>
+
+  <!-- 11. TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">10. Pro Tips & Mindset</div><div class="ss">Package hygiene and tool habits of professionals</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Always run <code>sudo apt update</code> before installing anything. Without it, apt works from a potentially stale package list and may install an older version — or fail entirely on a new repo. Make it a reflex: <code>update</code> then <code>install</code>, always in that order.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Run <code>lynis audit system</code> on every new server you set up or take responsibility for. The 2 minutes it takes produces a prioritised hardening checklist that would take hours to compile manually. Your hardening index score is also a useful metric to track over time — it should go up as you apply recommendations.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Use <code>dpkg -S /path/to/binary</code> to answer "what package owns this file?" any time you encounter an unexpected executable. If the answer is "dpkg: no path found matching pattern" — that binary is not managed by apt and deserves investigation. This is one of the fastest ways to spot implants or unmanaged software on a system.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Never pipe a shell script directly from curl into bash without reading it first — <code>curl https://example.com/install.sh | sudo bash</code> is a common installation pattern but it executes whatever the server returns, bypassing every security check. Download the script first, inspect it, then run it: <code>curl -o install.sh URL && less install.sh && bash install.sh</code>.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Don't install every security tool on every system. Production servers should have the minimum software necessary — each additional package is additional attack surface. Security tools like nmap and nikto belong on your dedicated security workstation or a dedicated scanning VM, not on a production database server.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset: think of your system's package list as a security inventory. Every installed package is a responsibility — you are responsible for keeping it updated, knowing what it does, and removing it when it's no longer needed. <code>apt autoremove</code> after removing a package cleans orphaned dependencies. A lean, well-maintained package list is meaningfully more secure than a bloated one.</p></div>
+    </div>
+  </div>
+
+  <!-- 12. RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">11. Quick Recap</div><div class="ss">5 questions before you sleep</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <p>Answer all 5 from memory. These appear in DevOps, sysadmin, and security engineer interviews regularly.</p>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is the difference between <code>apt update</code> and <code>apt upgrade</code>? What does <code>apt purge</code> do that <code>apt remove</code> does not?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">How does apt verify that a package is authentic and hasn't been tampered with? What is the role of GPG signing in this process?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">Name 3 ways a package repository can be a supply chain attack vector. What command would you run to audit all repositories on a system?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What does <code>dpkg -S /usr/bin/nmap</code> tell you? How would you find all executable files on a system that are not owned by any package?</div></div>
+      <div class="task-item"><div class="tnum">✓</div><div class="ttxt">What is lynis and what does its hardening index score represent? Name 3 categories of findings it reports.</div></div>
+      <div class="div"></div>
+      <p>5/5 and Day 12 is complete. Tomorrow is <strong>Day 13: Logs + Monitoring</strong> — the complete picture of Linux logging, log aggregation, and how to build a monitoring baseline that catches real threats. Two days before the Week 2 project.</p>
+      <div style="margin-top:.75rem"><span class="tag tb">Day 13 →</span><span class="tag tg">Logs + Monitoring · journald · syslog · auditd · SIEM basics</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const isOpen=b.classList.contains('open');
+  b.classList.toggle('open',!isOpen);
+  if(c)c.classList.toggle('open',!isOpen);
+}
+tog('theory');
+</script>
