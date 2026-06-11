@@ -1,0 +1,712 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.w{max-width:680px;padding:1.5rem 0}
+.hero{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:var(--border-radius-md);margin-bottom:.75rem}
+.hero h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:.3rem}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.prog-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.prog{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin-bottom:1.25rem}
+.prog-fill{height:100%;width:63%;background:var(--color-text-success);border-radius:2px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-bottom:1.25rem}
+.ti{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.ti:hover{background:var(--color-background-secondary)}
+.ti i{font-size:16px;color:var(--color-text-secondary)}
+.ti span{font-size:12px;color:var(--color-text-secondary);line-height:1.3}
+.sec{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:1rem;overflow:hidden}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;cursor:pointer;gap:12px}
+.sh:hover{background:var(--color-background-secondary)}
+.sl{display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.ss{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.chev{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.chev.open{transform:rotate(180deg)}
+.sb{padding:0 1.25rem 1.25rem;display:none}
+.sb.open{display:block}
+h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1rem 0 .4rem}
+h3:first-child{margin-top:0}
+p{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.5rem}
+ul{padding-left:1.2rem;margin-bottom:.5rem}
+li{font-size:14px;color:var(--color-text-secondary);line-height:1.9}
+code{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;color:var(--color-text-primary)}
+.cb{font-family:var(--font-mono);font-size:12px;background:var(--color-background-secondary);padding:.75rem 1rem;border-radius:var(--border-radius-md);color:var(--color-text-primary);line-height:1.9;margin:.5rem 0;white-space:pre-wrap;border:0.5px solid var(--color-border-tertiary)}
+.div{height:0.5px;background:var(--color-border-tertiary);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin:.5rem 0}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;border:0.5px solid var(--color-border-tertiary)}
+.mc .lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px}
+.tb{background:var(--color-background-info);color:var(--color-text-info)}
+.tr{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tg{background:var(--color-background-success);color:var(--color-text-success)}
+.ta{background:var(--color-background-warning);color:var(--color-text-warning)}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.task-item:last-child{border-bottom:none}
+.tnum{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tnumg{background:var(--color-background-success);color:var(--color-text-success)}
+.ttxt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.lab-item{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.lab-item:last-child{border-bottom:none}
+.li-ic{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ln{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.ld{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.yt{display:flex;align-items:center;gap:10px;background:var(--color-background-danger);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin-top:.5rem;cursor:pointer;border:0.5px solid var(--color-border-tertiary)}
+.yt i{font-size:20px;color:var(--color-text-danger)}
+.yt .yt-t{font-size:13px;font-weight:500;color:var(--color-text-danger)}
+.yt .yt-c{font-size:11px;color:var(--color-text-danger);opacity:.8}
+.tip-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:.6rem}
+.tip-item i{font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-item p{margin:0}
+.post-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin:.5rem 0}
+.story-block{border-left:2px solid var(--color-border-tertiary);padding-left:1rem;margin:.5rem 0;border-radius:0}
+.sp{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.cmd-row{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.cmd-row:last-child{border-bottom:none}
+.cmd{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:150px;flex-shrink:0}
+.cmd-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.cert-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.4rem 0;display:flex;align-items:flex-start;gap:12px}
+.cert-icon{width:36px;height:36px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cert-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.cert-meta{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.cv-block{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.4rem 0}
+.cv-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-secondary);margin-bottom:.4rem}
+.cv-content{font-size:13px;color:var(--color-text-secondary);line-height:1.7}
+.cv-content strong{font-weight:500;color:var(--color-text-primary)}
+.li-section{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;margin:.4rem 0}
+.li-field{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.04em}
+.li-val{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.week-check{display:flex;align-items:flex-start;gap:10px;padding:.4rem 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.week-check:last-child{border-bottom:none}
+.wc-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:11px}
+.wc-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+</style>
+
+<div class="w">
+  <div class="hero">
+    <div class="badge" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-trophy" aria-hidden="true"></i> Month 1 · Week 1 Complete · Day 7</div>
+    <h1>Week 1 Review + recon.sh Project</h1>
+    <p>Today you consolidate everything from Days 1–6 into one professional-grade bash script, review your knowledge gaps, earn your first free certificates, and update your CV and LinkedIn to reflect Week 1 skills.</p>
+  </div>
+  <div class="prog-lbl">Week 1 complete — Day 7 of ~90 (Week 2 starts tomorrow)</div>
+  <div class="prog"><div class="prog-fill"></div></div>
+
+  <div class="toc">
+    <div class="ti" onclick="tog('review')"><i class="ti ti-checklist" aria-hidden="true"></i><span>Week 1 Review</span></div>
+    <div class="ti" onclick="tog('project')"><i class="ti ti-code" aria-hidden="true"></i><span>recon.sh Project</span></div>
+    <div class="ti" onclick="tog('redteam')"><i class="ti ti-sword" aria-hidden="true"></i><span>Red Team</span></div>
+    <div class="ti" onclick="tog('blueteam')"><i class="ti ti-shield-check" aria-hidden="true"></i><span>Blue Team</span></div>
+    <div class="ti" onclick="tog('certs')"><i class="ti ti-certificate" aria-hidden="true"></i><span>Free Certificates</span></div>
+    <div class="ti" onclick="tog('cv')"><i class="ti ti-file-cv" aria-hidden="true"></i><span>CV Updates</span></div>
+    <div class="ti" onclick="tog('linkedin')"><i class="ti ti-brand-linkedin" aria-hidden="true"></i><span>LinkedIn Update</span></div>
+    <div class="ti" onclick="tog('labs')"><i class="ti ti-flask" aria-hidden="true"></i><span>Free Labs</span></div>
+    <div class="ti" onclick="tog('book')"><i class="ti ti-books" aria-hidden="true"></i><span>Book of Day</span></div>
+    <div class="ti" onclick="tog('tips')"><i class="ti ti-bulb" aria-hidden="true"></i><span>Pro Tips</span></div>
+    <div class="ti" onclick="tog('recap')"><i class="ti ti-moon" aria-hidden="true"></i><span>Week Recap</span></div>
+  </div>
+
+  <!-- WEEK 1 REVIEW -->
+  <div class="sec">
+    <div class="sh" onclick="tog('review')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-checklist" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">Week 1 Review</div><div class="ss">Knowledge check · 42 concepts from 6 days</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-review" aria-hidden="true"></i>
+    </div>
+    <div class="sb open" id="body-review">
+      <h3>Day 1 — Computing model + attack surface</h3>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">The 6-layer computing model: hardware → OS → libraries → apps → network → human</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Attack surface vs attack vector — definitions and difference</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">CIA Triad — Confidentiality, Integrity, Availability with real examples of each being violated</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Least privilege, defense in depth, assume breach, zero trust — the 4 core security principles</div></div>
+
+      <h3>Day 2 — Linux filesystem hierarchy</h3>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Purpose of every top-level directory especially <code>/etc</code>, <code>/var/log</code>, <code>/tmp</code>, <code>/proc</code>, <code>/home</code></div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Why <code>/tmp</code> is dangerous and what mount flags reduce the risk</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">LOLBins — what they are and which directories they live in</div></div>
+
+      <h3>Day 3 — Navigation + file operations</h3>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Absolute vs relative paths and all 5 special shortcuts (<code>~</code> <code>.</code> <code>..</code> <code>-</code> <code>/</code>)</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>find</code> with <code>-name</code>, <code>-type</code>, <code>-mtime</code>, <code>-size</code>, <code>-perm</code> flags</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>file</code> command for forensic type identification — magic bytes concept</div></div>
+
+      <h3>Day 4 — Permissions + ownership</h3>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">10-character permission string decoded: file type + owner + group + others</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Octal notation — 4=read, 2=write, 1=execute — common patterns 755/644/600/640</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">SUID/SGID/Sticky bit — what each does and why SUID is a privilege escalation vector</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">GTFOBins — bookmark and use it for any SUID or sudo binary found on a target</div></div>
+
+      <h3>Day 5 — Users + groups</h3>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">7 fields of <code>/etc/passwd</code> — every field, what <code>x</code> means, UID significance</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>/etc/shadow</code> hash prefixes — <code>$1$</code> MD5 vs <code>$6$</code> SHA-512 and what <code>!</code> means</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>sudo -l</code> — first command after foothold, NOPASSWD danger, GTFOBins workflow</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text">Dangerous groups: <code>docker</code> = root, <code>shadow</code> = hash access, <code>disk</code> = raw device access</div></div>
+
+      <h3>Day 6 — Text processing</h3>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>grep</code> with <code>-i -r -v -n -c -E -o -A -B</code> flags</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>awk -F: '{print $1}'</code> pattern — field separator and field selection</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>sort | uniq -c | sort -rn</code> — the universal frequency analysis pipeline</div></div>
+      <div class="week-check"><div class="wc-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i></div><div class="wc-text"><code>sed -i</code> risk and how to test safely before in-place editing</div></div>
+    </div>
+  </div>
+
+  <!-- RECON.SH PROJECT -->
+  <div class="sec">
+    <div class="sh" onclick="tog('project')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-code" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">recon.sh — Week 1 Project</div><div class="ss">Full automated Linux reconnaissance script</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-project" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-project">
+      <p>This script combines everything from Days 1–6 into one professional recon tool. Save it, run it, extend it. This is your first real security tool — add it to your GitHub portfolio today.</p>
+
+      <h3>Complete recon.sh script</h3>
+      <div class="cb">#!/bin/bash
+# ============================================================
+# recon.sh — Week 1 Linux Security Reconnaissance Script
+# Author  : [Your Name]
+# Purpose : Automated local Linux recon for security auditing
+# Usage   : sudo bash recon.sh [--output /path/report.txt]
+# ============================================================
+
+OUTPUT="${2:-$HOME/security-lab/evidence/recon-$(date +%Y%m%d-%H%M%S).txt}"
+mkdir -p "$(dirname "$OUTPUT")"
+exec > >(tee "$OUTPUT") 2>&1
+
+RED='\033[0;31m'; YEL='\033[0;33m'; GRN='\033[0;32m'
+CYN='\033[0;36m'; NC='\033[0m'; BOLD='\033[1m'
+
+banner() { echo -e "\n${BOLD}${CYN}========== $1 ==========${NC}"; }
+warn()   { echo -e "${YEL}[!] $1${NC}"; }
+alert()  { echo -e "${RED}[ALERT] $1${NC}"; }
+ok()     { echo -e "${GRN}[OK] $1${NC}"; }
+
+echo -e "${BOLD}recon.sh | $(date) | $(hostname)${NC}"
+echo "Output: $OUTPUT"
+
+# ------ SECTION 1: System Identity (Day 1 + 2) ------
+banner "SYSTEM IDENTITY"
+echo "Hostname  : $(hostname)"
+echo "OS        : $(cat /etc/os-release | grep PRETTY_NAME | cut -d= -f2 | tr -d '\"')"
+echo "Kernel    : $(uname -r)"
+echo "Arch      : $(uname -m)"
+echo "Uptime    : $(uptime -p 2>/dev/null || uptime)"
+
+# ------ SECTION 2: Network Exposure (Day 1) ------
+banner "OPEN PORTS + LISTENING SERVICES"
+ss -tuln 2>/dev/null || netstat -tuln 2>/dev/null
+echo ""
+echo "--- Active connections ---"
+ss -tunp 2>/dev/null | head -20
+
+# ------ SECTION 3: User Enumeration (Day 5) ------
+banner "USER ACCOUNT AUDIT"
+
+echo "--- All loginable accounts ---"
+grep -v "nologin\|false\|sync\|halt\|shutdown" /etc/passwd \
+  | awk -F: '{print $1, "(UID:"$3, "Shell:"$7}'
+
+echo ""
+echo "--- UID-0 accounts (should only be root) ---"
+awk -F: '$3==0 {print $1}' /etc/passwd | while read u; do
+  [[ "$u" != "root" ]] && alert "Non-root UID-0 account: $u" || ok "Only root has UID 0"
+done
+
+echo ""
+echo "--- Privileged group memberships ---"
+for g in sudo wheel admin docker shadow disk adm; do
+  members=$(getent group "$g" 2>/dev/null | cut -d: -f4)
+  [[ -n "$members" ]] && warn "Group '$g' members: $members"
+done
+
+# ------ SECTION 4: Password Policy (Day 5) ------
+banner "PASSWORD + SHADOW AUDIT"
+if [[ $EUID -eq 0 ]]; then
+  echo "--- Accounts with no password (empty hash) ---"
+  awk -F: '($2=="" || $2=="::"){print "[NO PASSWORD] "$1}' /etc/shadow 2>/dev/null
+  echo "--- Locked accounts ---"
+  awk -F: '$2~/^!/{print "[LOCKED] "$1}' /etc/shadow 2>/dev/null
+  echo "--- Hash algorithms in use ---"
+  awk -F: 'NF>1 && $2!~/^[!*]/ && $2!="" {print $1": "substr($2,1,3)}' /etc/shadow 2>/dev/null \
+    | sed 's/\$1\$/MD5 (WEAK)/;s/\$5\$/SHA-256/;s/\$6\$/SHA-512/;s/\$y\$/yescrypt/'
+else
+  warn "Run as root to audit /etc/shadow"
+fi
+
+# ------ SECTION 5: Sudo Configuration (Day 5) ------
+banner "SUDO AUDIT"
+echo "--- Current user sudo rights ---"
+sudo -l 2>/dev/null || echo "No sudo access for current user"
+
+echo ""
+echo "--- NOPASSWD entries (high risk) ---"
+grep -r "NOPASSWD" /etc/sudoers /etc/sudoers.d/ 2>/dev/null \
+  | grep -v "^#" && warn "NOPASSWD entries found — check GTFOBins for each binary" \
+  || ok "No NOPASSWD entries found"
+
+# ------ SECTION 6: SUID/SGID Binaries (Day 4) ------
+banner "SUID / SGID BINARIES"
+echo "--- SUID binaries (run as owner, often root) ---"
+find / -perm -4000 -type f 2>/dev/null | while read f; do
+  owner=$(stat -c '%U' "$f" 2>/dev/null)
+  echo "$f  [owner: $owner]"
+  [[ "$owner" == "root" ]] && warn "SUID root binary — check GTFOBins: $f"
+done
+
+echo ""
+echo "--- SGID binaries ---"
+find / -perm -2000 -type f 2>/dev/null | head -20
+
+# ------ SECTION 7: Writable Directories (Day 3 + 4) ------
+banner "WORLD-WRITABLE LOCATIONS"
+echo "--- World-writable directories ---"
+find / -writable -type d -not -path "*/proc/*" 2>/dev/null | grep -v "^/sys" | head -20
+echo ""
+echo "--- Files in /tmp and /dev/shm ---"
+find /tmp /dev/shm -type f 2>/dev/null | while read f; do
+  warn "File in writable area: $f"
+done
+
+# ------ SECTION 8: Recent File Changes (Day 3 + 6) ------
+banner "RECENTLY MODIFIED FILES (last 24h)"
+find / -mtime -1 -type f \
+  -not -path "*/proc/*" \
+  -not -path "*/sys/*" \
+  2>/dev/null | head -30
+
+# ------ SECTION 9: Log Analysis (Day 6) ------
+banner "AUTHENTICATION LOG ANALYSIS"
+AUTH="/var/log/auth.log"
+if [[ -r "$AUTH" ]]; then
+  total_lines=$(wc -l < "$AUTH")
+  failed=$(grep -c "Failed password" "$AUTH" 2>/dev/null)
+  accepted=$(grep -c "Accepted" "$AUTH" 2>/dev/null)
+  echo "Total auth log lines : $total_lines"
+  echo "Failed login attempts: $failed"
+  echo "Successful logins    : $accepted"
+
+  echo ""
+  echo "--- Top 10 IPs by failed attempts ---"
+  grep "Failed password" "$AUTH" 2>/dev/null \
+    | awk '{print $11}' | sort | uniq -c | sort -rn | head -10
+
+  echo ""
+  echo "--- Top targeted usernames ---"
+  grep "Failed password" "$AUTH" 2>/dev/null \
+    | awk '{print $9}' | sort | uniq -c | sort -rn | head -10
+
+  echo ""
+  echo "--- Successful login sources ---"
+  grep "Accepted" "$AUTH" 2>/dev/null \
+    | awk '{print $11}' | sort | uniq
+else
+  warn "Cannot read $AUTH — try running as root"
+fi
+
+# ------ SECTION 10: Sensitive File Hunt (Day 2 + 3) ------
+banner "SENSITIVE FILE DISCOVERY"
+echo "--- SSH private keys ---"
+find / -name "id_rsa" -o -name "*.pem" -o -name "*.key" 2>/dev/null \
+  | grep -v "^/proc" | while read f; do warn "Private key: $f"; done
+
+echo ""
+echo "--- Plaintext credentials in common locations ---"
+grep -rE "password\s*=\s*['\"]?[^'\" ]{4,}" \
+  /etc/ /var/www/ /opt/ 2>/dev/null \
+  | grep -v "^Binary" | head -20
+
+echo ""
+echo "--- .bash_history files ---"
+find /home /root -name ".bash_history" 2>/dev/null | while read f; do
+  lines=$(wc -l < "$f" 2>/dev/null)
+  warn ".bash_history found: $f ($lines lines)"
+done
+
+# ------ SUMMARY ------
+banner "SCAN COMPLETE"
+echo "Report saved to: $OUTPUT"
+echo "Scan time: $(date)"
+echo ""
+echo "Next steps:"
+echo "  1. Check each SUID binary against gtfobins.github.io"
+echo "  2. Review all NOPASSWD sudo entries"
+echo "  3. Investigate any non-root UID-0 accounts"
+echo "  4. Review sensitive files found in Section 10"</div>
+
+      <h3>How to use it</h3>
+      <div class="cb">chmod +x ~/security-lab/scripts/recon.sh
+sudo bash ~/security-lab/scripts/recon.sh
+cat ~/security-lab/evidence/recon-*.txt | less   # read the report</div>
+
+      <h3>Push to GitHub portfolio</h3>
+      <div class="cb">cd ~/security-lab
+git init
+git add scripts/recon.sh
+git commit -m "Add Week 1 recon.sh — Linux security reconnaissance script"
+git remote add origin https://github.com/yourusername/security-tools
+git push -u origin main</div>
+      <p>A public GitHub repo with a working script is worth more on your CV than any coursework entry. Recruiters check GitHub. Make it clean — add a <code>README.md</code> explaining what the script does and why you built it.</p>
+    </div>
+  </div>
+
+  <!-- RED TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('redteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-danger)"><i class="ti ti-sword" style="color:var(--color-text-danger)" aria-hidden="true"></i></div><div><div class="st">Red Team Perspective</div><div class="ss">What Week 1 skills look like in an engagement</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-redteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-redteam">
+      <h3>Week 1 skills in a real penetration test</h3>
+      <p>Every concept from this week is directly used in real engagements. Here is how they chain together after initial access on a Linux target:</p>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Phase 1 — orient (Days 1, 2, 3)</div>
+        <p><code>pwd</code>, <code>id</code>, <code>uname -a</code>, <code>ls -la</code>. Know the layer you're on, map the filesystem, find hidden files with dot prefixes.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Phase 2 — enumerate identity (Day 5)</div>
+        <p><code>cat /etc/passwd</code>, <code>sudo -l</code>, check group memberships for <code>docker</code>/<code>shadow</code>. One NOPASSWD entry = game over.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Phase 3 — permission exploitation (Day 4)</div>
+        <p><code>find / -perm -4000 2>/dev/null</code>. Every SUID binary checked against GTFOBins. One misconfigured binary = root shell.</p>
+      </div>
+      <div class="story-block">
+        <div class="sp" style="color:var(--color-text-danger)">Phase 4 — extract intelligence (Days 3, 6)</div>
+        <p><code>grep -r "password" /etc/ /var/www/</code>, <code>find / -name "id_rsa"</code>, parse logs with <code>awk | sort | uniq -c</code> to understand what the system has been doing.</p>
+      </div>
+      <p>Your <code>recon.sh</code> script automates all four phases. On real engagements, tools like <code>LinPEAS</code> do the same thing but at far greater depth — you now understand what every section of LinPEAS is doing because you built the same concepts from scratch.</p>
+    </div>
+  </div>
+
+  <!-- BLUE TEAM -->
+  <div class="sec">
+    <div class="sh" onclick="tog('blueteam')">
+      <div class="sl"><div class="si" style="background:var(--color-background-success)"><i class="ti ti-shield-check" style="color:var(--color-text-success)" aria-hidden="true"></i></div><div><div class="st">Blue Team Perspective</div><div class="ss">Week 1 hardening — run this checklist on any Linux server</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-blueteam" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-blueteam">
+      <h3>The Week 1 hardening checklist</h3>
+      <p>Everything you learned this week corresponds to a hardening action. Use this on any Linux server you administer.</p>
+      <div style="margin:.5rem 0">
+        <div class="cmd-row"><div class="cmd">Filesystem</div><div class="cmd-desc">Mount <code>/tmp</code> with <code>noexec,nosuid,nodev</code> in <code>/etc/fstab</code> · Enable auditd watches on <code>/etc/passwd</code> and <code>/etc/shadow</code></div></div>
+        <div class="cmd-row"><div class="cmd">Permissions</div><div class="cmd-desc">Audit SUID binaries monthly · Remove world-readable permissions from config files · Verify <code>~/.ssh/id_rsa</code> is <code>600</code></div></div>
+        <div class="cmd-row"><div class="cmd">Users</div><div class="cmd-desc">Lock departed accounts immediately · Quarterly review of sudo access · Remove all NOPASSWD entries not strictly needed · Enforce <code>chage</code> password expiry</div></div>
+        <div class="cmd-row"><div class="cmd">Logs</div><div class="cmd-desc">Run brute-force detection pipeline weekly · Install <code>fail2ban</code> for automated IP blocking · Centralise logs to a remote syslog server so they can't be tampered with</div></div>
+        <div class="cmd-row"><div class="cmd">Monitoring</div><div class="cmd-desc">Run your <code>recon.sh</code> script on a cron schedule and email the output to yourself — it becomes your continuous security audit</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FREE CERTIFICATES -->
+  <div class="sec">
+    <div class="sh" onclick="tog('certs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-certificate" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">Free Certificates — Week 1</div><div class="ss">Earn these before starting Week 2</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-certs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-certs">
+      <p>These certificates are 100% free, legitimately recognized in CVs, and directly aligned to the Week 1 content you just completed. Earn them this weekend before Week 2 starts.</p>
+
+      <h3>Tier 1 — Earn immediately (aligned to Week 1)</h3>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:var(--color-background-success)"><i class="ti ti-award" style="color:var(--color-text-success)" aria-hidden="true"></i></div>
+        <div>
+          <div class="cert-title">TryHackMe — Pre-Security Certificate</div>
+          <div class="cert-meta"><span class="tag tg">Free</span><span class="tag tb">Beginner</span> Complete the Pre-Security learning path on TryHackMe. Covers networking, Linux, and web fundamentals — everything from Week 1. Earns a shareable certificate with your name on it. Estimated time: 40 hours but you've already done most of it. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/path/outline/presecurity')">tryhackme.com/path/outline/presecurity ↗</span></div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:var(--color-background-info)"><i class="ti ti-award" style="color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div>
+          <div class="cert-title">Google Cybersecurity Certificate — Course 1 (Foundations)</div>
+          <div class="cert-meta"><span class="tag tg">Free to audit</span><span class="tag tb">Coursera</span> The first course in Google's full Cybersecurity Certificate covers security frameworks, CIA Triad, and attack surface thinking — exactly Day 1 and Day 5. Free to audit (no payment for certificate unless you want it). <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://www.coursera.org/professional-certificates/google-cybersecurity')">coursera.org · Google Cybersecurity ↗</span></div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:var(--color-background-warning)"><i class="ti ti-award" style="color:var(--color-text-warning)" aria-hidden="true"></i></div>
+        <div>
+          <div class="cert-title">Cisco NetAcad — Linux Essentials Certificate</div>
+          <div class="cert-meta"><span class="tag tg">Free</span><span class="tag ta">Cisco verified</span> Cisco's free Linux Unhatched and Linux Essentials courses cover the entire Week 1 curriculum — filesystem, permissions, users, text processing. Certificate issued by Cisco — recognisable on a CV. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://www.netacad.com/courses/os-it/ndg-linux-unhatched')">netacad.com · Linux Unhatched ↗</span></div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:var(--color-background-danger)"><i class="ti ti-award" style="color:var(--color-text-danger)" aria-hidden="true"></i></div>
+        <div>
+          <div class="cert-title">IBM Cybersecurity Analyst — Course 1 (Free audit)</div>
+          <div class="cert-meta"><span class="tag tg">Free to audit</span><span class="tag tr">IBM</span> IBM's Cybersecurity Analyst Professional Certificate on Coursera — first course covers security concepts, Linux administration, and defensive thinking. Free to audit without certificate. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://www.coursera.org/professional-certificates/ibm-cybersecurity-analyst')">coursera.org · IBM Cybersecurity ↗</span></div>
+        </div>
+      </div>
+
+      <h3>Tier 2 — Earn by end of Month 1</h3>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:var(--color-background-info)"><i class="ti ti-award" style="color:var(--color-text-info)" aria-hidden="true"></i></div>
+        <div>
+          <div class="cert-title">TryHackMe — Jr Penetration Tester Certificate</div>
+          <div class="cert-meta"><span class="tag tg">Free rooms</span><span class="tag tb">$14/mo for cert</span> The most recognized beginner pentesting certificate in the community. Covers everything you'll learn in Months 1–2 of this roadmap. The individual rooms are free — the path completion certificate requires a subscription but is worth it by Month 2. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/path/outline/jrpenetrationtester')">tryhackme.com ↗</span></div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon" style="background:var(--color-background-success)"><i class="ti ti-award" style="color:var(--color-text-success)" aria-hidden="true"></i></div>
+        <div>
+          <div class="cert-title">LPI Linux Essentials (010) — Self-study</div>
+          <div class="cert-meta"><span class="tag ta">Paid exam ~$120</span><span class="tag tg">Free study materials</span> The Linux Professional Institute Linux Essentials certification is the most respected entry-level Linux cert in the industry. Study materials are free on lpi.org. By end of Month 1 you will have covered 80% of the exam content. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://www.lpi.org/our-certifications/linux-essentials-overview')">lpi.org ↗</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV UPDATES -->
+  <div class="sec">
+    <div class="sh" onclick="tog('cv')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-file-cv" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">CV / Resume Updates</div><div class="ss">Exactly what to add after Week 1</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-cv" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-cv">
+      <p>Your CV should grow every week of this roadmap. Here is exactly what to add after Week 1 — copy, personalise, and paste directly into your CV document.</p>
+
+      <h3>Skills section additions</h3>
+      <div class="cv-block">
+        <div class="cv-label">Technical skills — add these</div>
+        <div class="cv-content">
+          <strong>Operating Systems:</strong> Linux (Ubuntu/Debian) — filesystem navigation, user/group management, permission hardening<br>
+          <strong>Security Tools:</strong> Bash scripting, auditd, grep/awk/sed for log analysis, find for security enumeration<br>
+          <strong>Concepts:</strong> CIA Triad, attack surface reduction, least privilege, SUID/SGID privilege escalation, Linux hardening
+        </div>
+      </div>
+
+      <h3>Projects section — add recon.sh</h3>
+      <div class="cv-block">
+        <div class="cv-label">Project entry — copy and edit</div>
+        <div class="cv-content">
+          <strong>Linux Security Reconnaissance Tool (recon.sh)</strong> · Personal Project · [Month Year]<br><br>
+          Built an automated Bash script for Linux security auditing combining 6 key reconnaissance techniques: user and privilege enumeration, SUID/SGID binary discovery, writable directory mapping, SSH key discovery, authentication log analysis (brute-force detection), and sensitive credential hunting. Script outputs colour-coded reports and integrates with the system's audit trail.<br><br>
+          <span class="tag tg">Bash</span><span class="tag tb">Linux Security</span><span class="tag ta">Incident Response</span><span class="tag tr">Privilege Escalation Detection</span>
+        </div>
+      </div>
+
+      <h3>Education / Training section</h3>
+      <div class="cv-block">
+        <div class="cv-label">Training entry — copy and edit</div>
+        <div class="cv-content">
+          <strong>Self-directed Cybersecurity Learning Roadmap</strong> · In Progress · [Start Month Year]<br>
+          Structured 90-day cybersecurity curriculum covering Linux fundamentals, network security, web application security, and penetration testing methodologies. Week 1 completion: Linux filesystem hierarchy, permissions model (chmod/chown/SUID), user management, and text processing for log analysis.<br><br>
+          Platforms: TryHackMe, OverTheWire (Bandit), HackTheBox
+        </div>
+      </div>
+
+      <h3>Certifications section — after earning them</h3>
+      <div class="cv-block">
+        <div class="cv-label">Certifications to add as you earn them</div>
+        <div class="cv-content">
+          <strong>TryHackMe Pre-Security</strong> · TryHackMe · [Month Year] · <em>Credential ID: [your ID]</em><br>
+          <strong>Linux Unhatched</strong> · Cisco Networking Academy · [Month Year]<br>
+          <strong>Google Cybersecurity Certificate — Foundations</strong> · Google / Coursera · [Month Year]<br>
+          <strong>LPI Linux Essentials (010)</strong> · Linux Professional Institute · [Month Year] <em>(add when passed)</em>
+        </div>
+      </div>
+
+      <h3>CV formatting tips for security roles</h3>
+      <ul>
+        <li>Keep it to 1 page until you have 3+ years of experience</li>
+        <li>Use the exact keywords from job descriptions: "privilege escalation", "log analysis", "Linux hardening" — ATS systems scan for these</li>
+        <li>Link your GitHub repo with <code>recon.sh</code> in the Projects section — hiring managers do check</li>
+        <li>Include your TryHackMe profile URL — rank and completed rooms are visible and impressive to employers</li>
+        <li>Quantify where possible: "Completed 6 TryHackMe rooms covering Linux privilege escalation" is stronger than "Studied Linux security"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LINKEDIN UPDATE -->
+  <div class="sec">
+    <div class="sh" onclick="tog('linkedin')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-brand-linkedin" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">LinkedIn Profile Update</div><div class="ss">Headline · About · Skills · Featured · Post</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-linkedin" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-linkedin">
+      <p>LinkedIn is where security recruiters find candidates. Update these 5 sections today — the changes take 10 minutes and immediately signal you are actively building security skills.</p>
+
+      <h3>Headline — update now</h3>
+      <div class="li-section">
+        <div class="li-field">Before</div>
+        <div class="li-val">Student | Software Developer | Looking for opportunities</div>
+      </div>
+      <div class="li-section">
+        <div class="li-field">After — choose one that fits your background</div>
+        <div class="li-val">
+          Aspiring Cybersecurity Analyst · Linux Security · Penetration Testing<br><br>
+          <em>or</em><br><br>
+          Junior Security Researcher · Building in Public · 90-Day Cyber Roadmap<br><br>
+          <em>or (if you have a current job)</em><br><br>
+          [Current Role] → Transitioning to Cybersecurity · Linux · Blue Team
+        </div>
+      </div>
+
+      <h3>About section — add this paragraph</h3>
+      <div class="li-section">
+        <div class="li-field">Add to your About section</div>
+        <div class="li-val">I am currently following a structured 90-day cybersecurity learning roadmap, building hands-on skills in Linux security, network fundamentals, web application security, and penetration testing. Week 1 focus: Linux filesystem hierarchy, permission models, privilege escalation fundamentals, user management, and log analysis with text processing tools. I document my learning publicly and build real security tools as I go. GitHub: [your link] | TryHackMe: [your profile link]</div>
+      </div>
+
+      <h3>Skills section — add these 10 skills</h3>
+      <div class="li-section">
+        <div class="li-field">Add to LinkedIn Skills</div>
+        <div class="li-val">
+          Linux Administration · Bash Scripting · Cybersecurity · Penetration Testing · Log Analysis · Information Security · Network Security · Vulnerability Assessment · Security Auditing · Incident Response
+        </div>
+      </div>
+
+      <h3>Featured section — add 2 items</h3>
+      <div class="li-section">
+        <div class="li-field">Add to Featured</div>
+        <div class="li-val">
+          1. Link your GitHub repo containing <code>recon.sh</code> — title it "Linux Security Reconnaissance Tool" with a 1-line description<br><br>
+          2. Link your TryHackMe public profile — it shows your completed rooms and rank visually
+        </div>
+      </div>
+
+      <h3>Week 1 completion post — publish today</h3>
+      <div class="post-box">🛡️ Week 1 of my 90-day cybersecurity learning roadmap — complete.
+
+Here's what 7 days of focused Linux security study actually looks like:
+
+Day 1 — Computing model and attack surface thinking
+Day 2 — Linux filesystem hierarchy (why /tmp and /etc matter to attackers)
+Day 3 — Navigation and file operations (the first commands any attacker runs)
+Day 4 — Permissions, chmod, SUID/SGID (the #1 Linux privilege escalation vector)
+Day 5 — Users, groups, /etc/shadow, sudo misconfigurations
+Day 6 — Text processing: grep, awk, sed, sort (turning logs into threat intelligence)
+Day 7 — Built recon.sh, a full bash reconnaissance script combining all 6 days
+
+What I can do now that I couldn't 7 days ago:
+→ Read any Linux permission string instantly
+→ Find all SUID binaries on a system in one command
+→ Detect a brute-force attack from raw auth logs using a single pipeline
+→ Audit user accounts, sudo access, and group memberships for misconfigurations
+
+recon.sh is live on my GitHub: [link]
+TryHackMe profile: [link]
+
+Week 2 starts tomorrow: networking fundamentals, TCP/IP, Wireshark, and port scanning.
+
+Building in public. 7 down. 83 to go. 🔐
+
+#Cybersecurity #Linux #EthicalHacking #LearnInPublic #100DaysOfCyber #InfoSec #SOCAnalyst #PenTesting #LearningJourney</div>
+    </div>
+  </div>
+
+  <!-- LABS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('labs')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-flask" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">Free Labs — Week 1 Consolidation</div><div class="ss">Complete these before Week 2</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-labs" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-labs">
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Pre-Security" full path (Free)</div><div class="ld">Complete the entire path to earn your first shareable certificate. You have already done most rooms from this week's daily work. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/path/outline/presecurity')">tryhackme.com ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-danger)"><i class="ti ti-arrow-right" style="color:var(--color-text-danger);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">OverTheWire — Bandit Levels 0–20 (Free)</div><div class="ld">Finish all levels 0–20 this weekend. Every level tests exactly Week 1 skills. By Level 20 you'll be fluent in Linux navigation, permissions, and text processing. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://overthewire.org/wargames/bandit/')">overthewire.org ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-warning)"><i class="ti ti-arrow-right" style="color:var(--color-text-warning);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">TryHackMe — "Linux PrivEsc" room (Free)</div><div class="ld">Consolidates Days 4 and 5 in a guided challenge environment. The perfect capstone for SUID and sudo work. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://tryhackme.com/room/linuxprivesc')">tryhackme.com ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-info)"><i class="ti ti-arrow-right" style="color:var(--color-text-info);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">Cisco NetAcad — Linux Unhatched (Free + Certificate)</div><div class="ld">2-hour free course that earns a Cisco-issued certificate. Direct match to Week 1 and adds a credible name to your CV. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://www.netacad.com/courses/os-it/ndg-linux-unhatched')">netacad.com ↗</span></div></div>
+      </div>
+      <div class="lab-item">
+        <div class="li-ic" style="background:var(--color-background-success)"><i class="ti ti-arrow-right" style="color:var(--color-text-success);font-size:14px" aria-hidden="true"></i></div>
+        <div><div class="ln">HackTheBox — Starting Point "Meow" + "Fawn" (Free)</div><div class="ld">First two Starting Point machines. Involves enumeration, file navigation and credential discovery — Week 1 applied in a real machine environment. <span style="color:var(--color-text-info);cursor:pointer" onclick="openLink('https://app.hackthebox.com/starting-point')">hackthebox.com ↗</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOK -->
+  <div class="sec">
+    <div class="sh" onclick="tog('book')">
+      <div class="sl"><div class="si" style="background:var(--color-background-info)"><i class="ti ti-books" style="color:var(--color-text-info)" aria-hidden="true"></i></div><div><div class="st">Book of the Day</div><div class="ss">Week 1 recap reading</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-book" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-book">
+      <div style="display:flex;gap:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;border:0.5px solid var(--color-border-tertiary);margin-top:.5rem">
+        <div style="width:40px;height:54px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--color-background-success)"><i class="ti ti-book" style="font-size:20px;color:var(--color-text-success)" aria-hidden="true"></i></div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Penetration Testing — Georgia Weidman (Chapters 1–3)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5">Chapters 1–3 of this book are the bridge between Week 1 Linux fundamentals and Month 2 offensive security. Weidman covers setting up a pentest lab, Linux basics in a security context, and the methodology behind structured engagements. It's the most practical intro-to-pentesting book written, and Chapters 1–3 are directly accessible at your current level. Widely available physically and as an ebook — published by No Starch Press.</div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <span class="tag tg">Chapters 1–3 this weekend</span><span class="tag tb">Bridge to Month 2</span><span class="tag ta">No Starch Press</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="sec">
+    <div class="sh" onclick="tog('tips')">
+      <div class="sl"><div class="si" style="background:var(--color-background-warning)"><i class="ti ti-bulb" style="color:var(--color-text-warning)" aria-hidden="true"></i></div><div><div class="st">Pro Tips — Week 1 Mindset</div><div class="ss">Lessons from professionals who've done this journey</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-tips" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-tips">
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>The gap between people who succeed at this roadmap and those who drop off in Month 2 is not intelligence — it is consistency. 45 focused minutes every day beats 6 hours on a Sunday. Set a daily alarm. Treat it like a meeting you cannot miss.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Your <code>~/security-lab/</code> directory is your most important asset right now. It is your notes, your scripts, your evidence, your portfolio — all in one place. Commit it to a private GitHub repo daily so you never lose it. By Month 3 it will look impressive.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Document what breaks, not just what works. When a command fails with a confusing error message, write down what you tried, what the error was, and how you fixed it. These notes are worth more than perfect notes from commands that worked first time.</p></div>
+      <div class="tip-item"><i class="ti ti-star" style="color:var(--color-text-warning)" aria-hidden="true"></i><p>Post on LinkedIn or Twitter every week. Not every day — every week. A 7-day summary post gets more engagement than daily posts and requires less effort. The content creation habit builds your network, which accelerates job opportunities by Month 6.</p></div>
+      <div class="tip-item"><i class="ti ti-alert-triangle" style="color:var(--color-text-danger)" aria-hidden="true"></i><p>Common Week 1 mistake: skipping the OverTheWire Bandit wargame because it feels repetitive alongside TryHackMe. Bandit is not repetitive — it builds a completely different muscle. TryHackMe guides you. Bandit gives you a problem and leaves you alone with the man pages. That independence is the real skill.</p></div>
+      <div class="tip-item"><i class="ti ti-shield" style="color:var(--color-text-success)" aria-hidden="true"></i><p>Pro mindset going into Week 2: you now have the map (filesystem), the rules (permissions), the identities (users), and the analysis tools (text processing). Week 2 adds the network layer — how data moves between machines, how protocols work, and how attackers intercept and manipulate that traffic. Every concept from Week 1 applies to Week 2; they are not separate topics, they stack.</p></div>
+    </div>
+  </div>
+
+  <!-- RECAP -->
+  <div class="sec">
+    <div class="sh" onclick="tog('recap')">
+      <div class="sl"><div class="si" style="background:var(--color-background-secondary)"><i class="ti ti-moon" style="color:var(--color-text-secondary)" aria-hidden="true"></i></div><div><div class="st">Week 1 Complete — Final Recap</div><div class="ss">Everything you now know · What's next</div></div></div>
+      <i class="ti ti-chevron-down chev" id="chev-recap" aria-hidden="true"></i>
+    </div>
+    <div class="sb" id="body-recap">
+      <h3>Before you close today, confirm these 7 things are done</h3>
+      <div class="task-item"><div class="tnum tnumg">1</div><div class="ttxt"><code>recon.sh</code> written, runs without errors, and pushed to a public GitHub repo with a README explaining what it does.</div></div>
+      <div class="task-item"><div class="tnum tnumg">2</div><div class="ttxt">TryHackMe Pre-Security path either completed or in progress — at minimum 5 rooms finished from this week's daily work.</div></div>
+      <div class="task-item"><div class="tnum tnumg">3</div><div class="ttxt">Cisco Linux Unhatched course started — free, 2 hours, earns a certificate. Complete it this weekend.</div></div>
+      <div class="task-item"><div class="tnum tnumg">4</div><div class="ttxt">LinkedIn headline updated, About section updated with your learning journey, GitHub repo linked in Featured section.</div></div>
+      <div class="task-item"><div class="tnum tnumg">5</div><div class="ttxt">Week 1 completion post published on LinkedIn. Include your recon.sh GitHub link. Tag it with the hashtags from the Content Guide.</div></div>
+      <div class="task-item"><div class="tnum tnumg">6</div><div class="ttxt">CV updated with: Skills additions, recon.sh project entry, and training section with TryHackMe/OverTheWire referenced.</div></div>
+      <div class="task-item"><div class="tnum tnumg">7</div><div class="ttxt">OverTheWire Bandit — at minimum Levels 0–10 complete. Push to 20 over the weekend.</div></div>
+
+      <div class="div"></div>
+      <h3>What you built this week</h3>
+      <div class="g2">
+        <div class="mc"><div class="lbl">Knowledge areas</div><div class="val">7 complete topics from Computing Model to Text Processing</div></div>
+        <div class="mc"><div class="lbl">Practical tools</div><div class="val">recon.sh, security-lab/ directory, personal command cheatsheets</div></div>
+        <div class="mc"><div class="lbl">Community presence</div><div class="val">LinkedIn updated, GitHub repo live, TryHackMe profile public</div></div>
+        <div class="mc"><div class="lbl">Certificates in progress</div><div class="val">TryHackMe Pre-Security, Cisco Linux Unhatched, Google Foundations</div></div>
+      </div>
+
+      <div class="div"></div>
+      <p>Week 2 begins tomorrow. The focus shifts from the local machine to the network — TCP/IP, the OSI model, packet analysis with Wireshark, and your first active port scans with Nmap. Every skill from Week 1 stays relevant and gets applied in a network context.</p>
+      <div style="margin-top:.75rem">
+        <span class="tag tb">Week 2 →</span>
+        <span class="tag tg">Networking Fundamentals + TCP/IP + Wireshark + Nmap</span>
+        <span class="tag ta">Month 1, Week 2</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tog(id){
+  const b=document.getElementById('body-'+id);
+  const c=document.getElementById('chev-'+id);
+  if(!b)return;
+  const o=b.classList.contains('open');
+  b.classList.toggle('open',!o);
+  if(c)c.classList.toggle('open',!o);
+}
+tog('review');
+</script>
